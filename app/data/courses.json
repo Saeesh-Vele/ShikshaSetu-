@@ -1,0 +1,799 @@
+[
+  {
+    "id": 1,
+    "title": "Aeronautical Engineering",
+    "eligibility": "10+2 with PCM",
+    "courses": ["B.Tech Aeronautical Engineering", "M.Tech Aeronautical Engineering / Avionics", "PhD Aerospace Engineering"],
+    "careers": ["Aircraft Design Engineer", "Flight Test Engineer", "Aerospace Scientist", "Aviation & Defence Sector"]
+  },
+  {
+    "id": 2,
+    "title": "Aerospace Engineering",
+    "eligibility": "10+2 with PCM (JEE for IITs)",
+    "courses": ["B.Tech Aerospace Engineering", "M.Tech Aerospace Engineering", "PhD Aerospace Engineering"],
+    "careers": ["Spacecraft Designer", "Satellite Engineer", "ISRO/DRDO Scientist", "Aviation Sector"]
+  },
+  {
+    "id": 3,
+    "title": "Architecture Engineering",
+    "eligibility": "10+2 Science Stream (JEE/NATA)",
+    "courses": ["B.Arch", "M.Arch", "PhD Architecture"],
+    "careers": ["Architect", "Urban Planner", "Interior Designer", "Landscape Architect"]
+  },
+  {
+    "id": 4,
+    "title": "Artificial Intelligence and Machine Learning",
+    "eligibility": "10+2 with Science, B.Tech + valid GATE for PG",
+    "courses": ["B.Tech CSE (AI/ML)", "M.Tech AI/ML", "PhD AI"],
+    "careers": ["AI Engineer", "Data Scientist", "Machine Learning Engineer", "Research Scientist"]
+  },
+  {
+    "id": 5,
+    "title": "Astronomy and Astrophysics",
+    "eligibility": "10+2 PCM, Entrance (JEST/INAT/CSIR-NET for higher studies)",
+    "courses": ["B.Sc Physics", "M.Sc Astronomy/Astrophysics", "PhD Astrophysics"],
+    "careers": ["Astronomer", "Astrophysicist", "Observatory Scientist", "Research in Space Science"]
+  },
+  {
+    "id": 6,
+    "title": "Automobile Engineering",
+    "eligibility": "10+2 with Science + Engineering entrance",
+    "courses": ["B.Tech Automobile Engineering", "M.Tech Automobile Engineering"],
+    "careers": ["Automobile Designer", "Production Engineer", "R&D Engineer", "Transport Industry"]
+  },
+  {
+    "id": 7,
+    "title": "Biomedical Engineering",
+    "eligibility": "10+2 with PCB/PCM + JEE for IITs",
+    "courses": ["B.Tech Biomedical Engineering", "M.Tech Biomedical Engineering", "PhD Biomedical Engineering"],
+    "careers": ["Biomedical Engineer", "Prosthetics Designer", "Medical Device Developer", "Research Scientist"]
+  },
+  {
+    "id": 8,
+    "title": "Biotechnology Engineering",
+    "eligibility": "10+2 with PCB/PCM + JEE for IITs",
+    "courses": ["B.Tech Biotechnology", "M.Tech Biotechnology", "PhD Biotechnology"],
+    "careers": ["Biotech Research Scientist", "Genetic Engineer", "Pharmaceutical Biotechnologist", "Agriculture Biotechnologist"]
+  },
+  {
+    "id": 9,
+    "title": "Ceramics Engineering",
+    "eligibility": "10+2 with PCM + JEE for IITs",
+    "courses": ["B.Tech Ceramics Engineering", "M.Tech Ceramics Engineering"],
+    "careers": ["Ceramic Engineer", "Material Scientist", "Industrial Process Engineer", "Researcher in Materials"]
+  },
+  {
+    "id": 10,
+    "title": "Chemical Engineering",
+    "eligibility": "10+2 with PCM + Entrance Exam",
+    "courses": ["B.Tech Chemical Engineering", "M.Tech Chemical Engineering", "PhD Chemical Engineering"],
+    "careers": ["Process Engineer", "Petrochemical Engineer", "Pharmaceutical Engineer", "R&D Scientist"]
+  },
+  {
+    "id": 11,
+    "title": "Civil Engineering",
+    "eligibility": "10+2 with PCM",
+    "courses": ["B.Tech Civil Engineering", "M.Tech Civil Engineering", "PhD Civil Engineering"],
+    "careers": ["Civil Engineer", "Structural Engineer", "Construction Project Manager", "Urban Development Engineer"]
+  },
+  {
+    "id": 12,
+    "title": "Computer Science Engineering",
+    "eligibility": "10+2 with PCM + JEE (for IITs)",
+    "courses": ["B.Tech Computer Science", "M.Tech Computer Science", "PhD Computer Science"],
+    "careers": ["Software Engineer", "System Architect", "Data Scientist", "Cybersecurity Specialist"]
+  },
+  {
+    "id": 13,
+    "title": "Electrical and Electronics Engineering",
+    "eligibility": "10+2 with PCM",
+    "courses": ["B.Tech Electrical & Electronics", "M.Tech Electrical & Electronics", "PhD Electrical Engineering"],
+    "careers": ["Electrical Engineer", "Power Systems Engineer", "Robotics Engineer", "Electronics Design Engineer"]
+  },
+  {
+    "id": 14,
+    "title": "Electronics and Communication Engineering",
+    "eligibility": "10+2 with PCM + JEE",
+    "courses": ["B.Tech ECE", "M.Tech ECE", "PhD ECE"],
+    "careers": ["Telecom Engineer", "Embedded Systems Engineer", "Signal Processing Expert", "Network Engineer"]
+  },
+  {
+    "id": 15,
+    "title": "Industrial Engineering",
+    "eligibility": "10+2 with PCM",
+    "courses": ["B.Tech Industrial Engineering", "M.Tech Industrial Engineering", "PhD Industrial Engineering"],
+    "careers": ["Operations Manager", "Quality Engineer", "Process Improvement Specialist", "Supply Chain Analyst"]
+  },
+  {
+    "id": 16,
+    "title": "Information, Communication and Entertainment",
+    "eligibility": "10+2 (Arts/Science/Commerce depending on specialization)",
+    "courses": ["BA Mass Communication", "BA Journalism", "MA Communication Studies"],
+    "careers": ["Journalist", "Media Analyst", "Public Relations Officer", "Film & TV Producer"]
+  },
+  {
+    "id": 17,
+    "title": "Instrumentation Engineering",
+    "eligibility": "10+2 with PCM + JEE",
+    "courses": ["B.Tech Instrumentation Engineering", "M.Tech Instrumentation Engineering", "PhD Instrumentation Engineering"],
+    "careers": ["Instrumentation Engineer", "Automation Engineer", "Control Systems Engineer", "Industrial R&D Engineer"]
+  },
+  {
+    "id": 18,
+    "title": "Manufacturing Science & Engineering",
+    "eligibility": "10+2 with PCM + Entrance Exam",
+    "courses": ["B.Tech Manufacturing Engineering", "M.Tech Manufacturing Engineering", "PhD Manufacturing Science"],
+    "careers": ["Production Engineer", "Automation Engineer", "Plant Operations Manager", "Manufacturing Systems Analyst"]
+  },
+  {
+    "id": 19,
+    "title": "Marine Engineering",
+    "eligibility": "10+2 with PCM + Entrance Exam",
+    "courses": ["B.Tech Marine Engineering", "M.Tech Marine Engineering", "PhD Marine Engineering"],
+    "careers": ["Marine Engineer", "Naval Engineer", "Ship Design Engineer", "Offshore Engineer"]
+  },
+  {
+    "id": 20,
+    "title": "Mechanical Engineering",
+    "eligibility": "10+2 with PCM + JEE (for IITs)",
+    "courses": ["B.Tech Mechanical Engineering", "M.Tech Mechanical Engineering", "PhD Mechanical Engineering"],
+    "careers": ["Mechanical Engineer", "Design Engineer", "Automotive Engineer", "Robotics Engineer"]
+  },
+  {
+    "id": 21,
+    "title": "Medical Electronics Engineering",
+    "eligibility": "10+2 with PCM/B + JEE (for IITs)",
+    "courses": ["B.Tech Medical Electronics", "M.Tech Medical Electronics", "PhD Medical Electronics"],
+    "careers": ["Biomedical Equipment Engineer", "Medical Imaging Specialist", "Healthcare Technology Consultant", "Prosthetics Developer"]
+  },
+  {
+    "id": 22,
+    "title": "Metallurgy",
+    "eligibility": "10+2 with PCM",
+    "courses": ["B.Tech Metallurgical Engineering", "M.Tech Metallurgy & Materials Science", "PhD Metallurgy"],
+    "careers": ["Metallurgist", "Materials Engineer", "Quality Control Engineer", "Research Scientist in Alloys"]
+  },
+  {
+    "id": 23,
+    "title": "Meteorology",
+    "eligibility": "10+2 with Physics & Chemistry",
+    "courses": ["B.Sc Meteorology", "M.Sc Meteorology", "PhD Meteorology"],
+    "careers": ["Meteorologist", "Weather Scientist", "Climate Analyst", "Environmental Consultant"]
+  },
+  {
+    "id": 24,
+    "title": "Mining Engineering",
+    "eligibility": "10+2 with PCM + JEE (for IITs)",
+    "courses": ["B.Tech Mining Engineering", "M.Tech Mining Engineering", "PhD Mining Engineering"],
+    "careers": ["Mining Engineer", "Geotechnical Engineer", "Mineral Processing Engineer", "Safety Engineer"]
+  },
+  {
+    "id": 25,
+    "title": "Naval Architecture Engineering",
+    "eligibility": "10+2 with PCM & English",
+    "courses": ["B.Tech Naval Architecture", "M.Tech Naval Architecture & Ocean Engineering", "PhD Naval Engineering"],
+    "careers": ["Naval Architect", "Ship Designer", "Marine Engineer", "Offshore Structures Engineer"]
+  },
+  {
+    "id": 26,
+    "title": "Physical Sciences",
+    "eligibility": "10+2 with PCM",
+    "courses": ["B.Sc Physical Sciences", "M.Sc Physics/Chemistry", "PhD Physical Sciences"],
+    "careers": ["Physicist", "Research Scientist", "Laboratory Analyst", "Educator in Sciences"]
+  },
+  {
+    "id": 27,
+    "title": "Polymer Engineering",
+    "eligibility": "10+2 with PCM + JEE",
+    "courses": ["B.Tech Polymer Technology", "M.Tech Polymer Science", "PhD Polymer Engineering"],
+    "careers": ["Polymer Engineer", "Plastics Technologist", "Materials Scientist", "R&D Engineer"]
+  },
+  {
+    "id": 28,
+    "title": "Robotics",
+    "eligibility": "10+2 with PCM",
+    "courses": ["B.Tech Robotics", "M.Tech Robotics/Automation", "PhD Robotics"],
+    "careers": ["Robotics Engineer", "Automation Engineer", "AI & Robotics Researcher", "Industrial Robotics Specialist"]
+  },
+  {
+    "id": 29,
+    "title": "Textile Engineering",
+    "eligibility": "10+2 with PCM or 10th (for Diploma)",
+    "courses": ["Diploma in Textile Technology", "B.Tech Textile Engineering", "M.Tech Textile Engineering"],
+    "careers": ["Textile Engineer", "Fashion Technologist", "Fabric Designer", "Quality Assurance Engineer"]
+  },
+  {
+    "id": 30,
+    "title": "Agricultural Science",
+    "eligibility": "10+2 with PCB/PCM or Agriculture Stream",
+    "courses": ["B.Sc Agriculture", "M.Sc Agriculture", "PhD Agriculture"],
+    "careers": ["Agriculture Scientist", "Farm Manager", "Agri-Business Manager", "Food Technologist"]
+  },
+  {
+    "id": 31,
+    "title": "Biological Science",
+    "eligibility": "10+2 with PCB",
+    "courses": ["B.Sc Biological Sciences", "M.Sc Biological Sciences", "PhD Biological Sciences"],
+    "careers": ["Biologist", "Microbiologist", "Research Scientist", "Environmental Consultant"]
+  },
+  {
+    "id": 32,
+    "title": "Biotechnology",
+    "eligibility": "10+2 with PCB/PCM",
+    "courses": ["B.Sc Biotechnology", "M.Sc Biotechnology", "M.Tech Biotechnology", "PhD Biotechnology"],
+    "careers": ["Biotechnologist", "Genetic Engineer", "Pharmaceutical Scientist", "Plant Biotechnologist"]
+  },
+  {
+    "id": 33,
+    "title": "Computer Applications",
+    "eligibility": "10+2 in any stream (preferably Maths)",
+    "courses": ["Diploma in Computer Applications", "BCA", "MCA"],
+    "careers": ["Software Developer", "Web Developer", "IT Consultant", "Database Administrator"]
+  },
+  {
+    "id": 34,
+    "title": "Computer Science",
+    "eligibility": "10+2 with PCM",
+    "courses": ["B.Sc Computer Science", "B.Tech Computer Science", "M.Sc Computer Science", "MCA", "PhD Computer Science"],
+    "careers": ["Software Engineer", "AI Specialist", "Data Scientist", "Cybersecurity Analyst"]
+  },
+  {
+    "id": 35,
+    "title": "Cyber Security",
+    "eligibility": "10+2 with PCM, B.Tech in CS/IT for PG",
+    "courses": ["B.Tech Cyber Security", "M.Tech Cyber Security / Information Security", "PhD Cyber Security"],
+    "careers": ["Cybersecurity Analyst", "Ethical Hacker", "Information Security Officer", "Forensic Expert"]
+  },
+  {
+    "id": 36,
+    "title": "Earth Science / Geography",
+    "eligibility": "10+2 with Science / Humanities (depending on course)",
+    "courses": ["BA Geography", "B.Sc Geology", "M.Sc Geoinformatics", "M.Tech Geological Technology", "PhD Earth Sciences"],
+    "careers": ["Geologist", "Cartographer", "Environmental Scientist", "Remote Sensing Specialist"]
+  },
+  {
+    "id": 37,
+    "title": "Environmental Sciences",
+    "eligibility": "10+2 with PCB/PCM",
+    "courses": ["B.Sc Environmental Science", "M.Sc Environmental Science", "PhD Environmental Science"],
+    "careers": ["Environmental Scientist", "Conservationist", "Climate Change Analyst", "Sustainability Consultant"]
+  },
+  {
+    "id": 38,
+    "title": "Fisheries",
+    "eligibility": "10+2 with Biology",
+    "courses": ["B.F.Sc (Bachelor of Fisheries Science)", "M.F.Sc Fisheries Science", "PhD Fisheries"],
+    "careers": ["Fisheries Scientist", "Aquaculture Expert", "Marine Biologist", "Fishery Development Officer"]
+  },
+  {
+    "id": 39,
+    "title": "Floriculture / Horticulture",
+    "eligibility": "10+2 with PCB/PCM or Agriculture",
+    "courses": ["Diploma in Horticulture", "B.Sc Horticulture", "M.Sc Horticulture", "PhD Horticulture"],
+    "careers": ["Horticulturist", "Floriculturist", "Plant Breeder", "Landscape Designer"]
+  },
+  {
+    "id": 40,
+    "title": "Food Technology",
+    "eligibility": "10+2 with PCM/PCB",
+    "courses": ["B.Sc Food Technology", "B.Tech Food Technology", "M.Sc Food Technology", "PhD Food Technology"],
+    "careers": ["Food Technologist", "Quality Assurance Officer", "Food Safety Inspector", "R&D Scientist"]
+  },
+  {
+    "id": 41,
+    "title": "Forestry",
+    "eligibility": "10+2 with PCM/PCB",
+    "courses": ["B.Sc Forestry", "M.Sc Forestry", "PG Diploma in Forest Management", "PhD Forestry"],
+    "careers": ["Forest Officer", "Wildlife Conservationist", "Environmental Consultant", "Forest Product Manager"]
+  },
+  {
+    "id": 42,
+    "title": "Oceanography",
+    "eligibility": "10+2 with PCM/PCB",
+    "courses": ["B.Sc Oceanography", "M.Sc Oceanography", "M.Tech Ocean Technology", "PhD Oceanography"],
+    "careers": ["Oceanographer", "Marine Biologist", "Climate Scientist", "Coastal Zone Manager"]
+  },
+  {
+    "id": 43,
+    "title": "Statistical Science",
+    "eligibility": "10+2 with Mathematics",
+    "courses": ["B.Sc Statistics", "M.Sc Statistics", "M.Tech Quality & Reliability", "PhD Statistics"],
+    "careers": ["Statistician", "Data Analyst", "Actuarial Scientist", "Quantitative Researcher"]
+  },
+  {
+    "id": 44,
+    "title": "Veterinary Sciences",
+    "eligibility": "10+2 with PCB + Entrance (VCI/State Level)",
+    "courses": ["B.V.Sc & AH", "M.V.Sc", "PhD Veterinary Sciences"],
+    "careers": ["Veterinarian", "Animal Scientist", "Livestock Inspector", "Veterinary Pathologist"]
+  },
+  {
+    "id": 45,
+    "title": "Wildlife Biology",
+    "eligibility": "10+2 with PCB",
+    "courses": ["B.Sc Wildlife Biology", "M.Sc Wildlife Biology", "PhD Wildlife Biology"],
+    "careers": ["Wildlife Biologist", "Conservation Scientist", "Ecologist", "Research Scientist"]
+  },
+  {
+    "id": 46,
+    "title": "Zoology",
+    "eligibility": "10+2 with PCB",
+    "courses": ["B.Sc Zoology", "M.Sc Zoology", "M.Phil Zoology", "PhD Zoology"],
+    "careers": ["Zoologist", "Wildlife Researcher", "Ecologist", "Teacher/Professor"]
+  },
+  {
+    "id": 47,
+    "title": "Ayurveda (BAMS)",
+    "eligibility": "10+2 with PCB + NEET",
+    "courses": ["BAMS", "MD Ayurveda", "PhD Ayurveda"],
+    "careers": ["Ayurvedic Doctor", "Pharmaceutical Researcher", "Herbal Medicine Specialist", "Wellness Consultant"]
+  },
+  {
+    "id": 48,
+    "title": "Dental (BDS)",
+    "eligibility": "10+2 with PCB + NEET",
+    "courses": ["BDS", "MDS", "PhD Dentistry"],
+    "careers": ["Dentist", "Oral Surgeon", "Orthodontist", "Cosmetic Dentist"]
+  },
+  {
+    "id": 49,
+    "title": "Homeopathy",
+    "eligibility": "10+2 with PCB",
+    "courses": ["BHMS", "MD Homeopathy", "PhD Homeopathy"],
+    "careers": ["Homeopathic Doctor", "Clinical Researcher", "Public Health Specialist", "Alternative Medicine Practitioner"]
+  },
+  {
+    "id": 50,
+    "title": "Naturopathy",
+    "eligibility": "10+2 with Science",
+    "courses": ["BNYS (Bachelor of Naturopathy & Yogic Sciences)", "MD Naturopathy & Yoga", "PhD Naturopathy"],
+    "careers": ["Naturopathy Doctor", "Yoga Therapist", "Wellness Coach", "Holistic Health Consultant"]
+  },
+  {
+    "id": 51,
+    "title": "Pharmacy",
+    "eligibility": "10+2 with PCB/PCM",
+    "courses": ["D.Pharm", "B.Pharm", "M.Pharm", "PhD Pharmacy"],
+    "careers": ["Pharmacist", "Clinical Research Associate", "Pharmaceutical Scientist", "Drug Inspector"]
+  },
+  {
+    "id": 52,
+    "title": "Siddha",
+    "eligibility": "10+2 with PCB",
+    "courses": ["BSMS (Bachelor of Siddha Medicine & Surgery)", "MD Siddha", "PhD Siddha"],
+    "careers": ["Siddha Doctor", "Research Scientist in Traditional Medicine", "Pharmaceutical Consultant", "Wellness Expert"]
+  },
+  {
+    "id": 53,
+    "title": "Unani",
+    "eligibility": "10+2 with PCB",
+    "courses": ["BUMS (Bachelor of Unani Medicine & Surgery)", "MD Unani", "PhD Unani"],
+    "careers": ["Unani Doctor", "Researcher in Herbal Medicine", "Healthcare Practitioner", "Public Health Officer"]
+  },
+  {
+    "id": 54,
+    "title": "Anthropology",
+    "eligibility": "10+2 (any stream, preferably with Social Sciences)",
+    "courses": ["BA Anthropology", "MA Anthropology", "PhD Anthropology"],
+    "careers": ["Anthropologist", "Archaeologist", "Forensic Scientist", "Museum Curator"]
+  },
+  {
+    "id": 55,
+    "title": "Archaeology",
+    "eligibility": "10+2 (Arts/Science)",
+    "courses": ["BA Archaeology", "MA Archaeology", "PhD Archaeology"],
+    "careers": ["Archaeologist", "Museum Professional", "Heritage Conservationist", "Research Scholar"]
+  },
+  {
+    "id": 56,
+    "title": "Art Restoration",
+    "eligibility": "10+2 (Arts/Science) + Diploma/UG in Fine Arts or related field",
+    "courses": ["Diploma in Art Restoration", "MA Conservation & Restoration", "PhD Heritage Studies"],
+    "careers": ["Art Restorer", "Conservation Specialist", "Museum Conservator", "Cultural Heritage Expert"]
+  },
+  {
+    "id": 57,
+    "title": "Curation",
+    "eligibility": "10+2 (Arts/Science) + UG in Fine Arts/History/Museum Studies",
+    "courses": ["BA Museology/History", "MA Curation/Museum Studies", "PhD Curation"],
+    "careers": ["Curator", "Museum Director", "Art Historian", "Cultural Program Manager"]
+  },
+  {
+    "id": 58,
+    "title": "Educational/Vocational School Counselling",
+    "eligibility": "10+2 + BA Psychology/Education",
+    "courses": ["BA Psychology/Education", "MA Psychology/Education", "Diploma in Counselling", "PhD Educational Psychology"],
+    "careers": ["School Counsellor", "Career Advisor", "Educational Psychologist", "Rehabilitation Counsellor"]
+  },
+  {
+    "id": 59,
+    "title": "Monuments and Sculpture Restoration",
+    "eligibility": "10+2 (Arts/Science) + UG in History/Archaeology",
+    "courses": ["Diploma in Heritage Conservation", "MA Archaeology & Restoration", "PhD Heritage Studies"],
+    "careers": ["Conservation Scientist", "Sculpture Restorer", "Archaeologist", "Museum Professional"]
+  },
+  {
+    "id": 60,
+    "title": "Museology",
+    "eligibility": "10+2 (Arts/Science) + UG in History/Anthropology/Archaeology",
+    "courses": ["BA Museology/History", "MA Museology", "PhD Museology"],
+    "careers": ["Museum Curator", "Exhibition Designer", "Conservation Specialist", "Cultural Heritage Manager"]
+  },
+  {
+    "id": 61,
+    "title": "Physiotherapy",
+    "eligibility": "10+2 with PCB",
+    "courses": ["BPT (Bachelor of Physiotherapy)", "MPT (Master of Physiotherapy)", "PhD Physiotherapy"],
+    "careers": ["Physiotherapist", "Rehabilitation Specialist", "Sports Therapist", "Orthopaedic Consultant"]
+  },
+  {
+    "id": 62,
+    "title": "Rehabilitation Psychology",
+    "eligibility": "10+2 + BA Psychology",
+    "courses": ["BA Psychology", "MA Rehabilitation Psychology", "PhD Psychology"],
+    "careers": ["Rehabilitation Psychologist", "Counsellor", "Clinical Psychologist", "NGO Specialist"]
+  },
+  {
+    "id": 63,
+    "title": "Rehabilitation Therapy",
+    "eligibility": "10+2 with PCB",
+    "courses": ["B.Sc Rehabilitation Therapy", "M.Sc Rehabilitation Therapy", "PhD Rehabilitation Sciences"],
+    "careers": ["Rehabilitation Therapist", "Occupational Therapist", "Speech Therapist", "Special Needs Trainer"]
+  },
+  {
+    "id": 64,
+    "title": "Social Work",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["BA Social Work", "MSW (Master of Social Work)", "PhD Social Work"],
+    "careers": ["Social Worker", "Community Development Officer", "Policy Analyst", "NGO Manager"]
+  },
+  {
+    "id": 65,
+    "title": "Special Educator",
+    "eligibility": "10+2 + UG in Education/Psychology",
+    "courses": ["Diploma in Special Education", "B.Ed Special Education", "M.Ed Special Education"],
+    "careers": ["Special Educator", "Inclusive Classroom Teacher", "Education Consultant", "Therapy Centre Specialist"]
+  },
+  {
+    "id": 66,
+    "title": "Speech Language and Hearing",
+    "eligibility": "10+2 with PCB",
+    "courses": ["BASLP (Bachelor in Audiology & Speech-Language Pathology)", "MASLP", "PhD Speech & Hearing"],
+    "careers": ["Speech Therapist", "Audiologist", "Rehabilitation Specialist", "Communication Disorders Expert"]
+  },
+  {
+    "id": 67,
+    "title": "Law",
+    "eligibility": "10+2 (any stream) + Entrance Exam (CLAT/LSAT/AILET)",
+    "courses": ["BA LLB", "BBA LLB", "LLM", "PhD Law"],
+    "careers": ["Lawyer", "Judge", "Corporate Legal Advisor", "Human Rights Activist"]
+  },
+  {
+    "id": 68,
+    "title": "Advertising",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Advertising", "BA Advertising & PR", "MA Advertising", "MBA Marketing"],
+    "careers": ["Advertising Executive", "Creative Director", "Media Planner", "Brand Manager"]
+  },
+  {
+    "id": 69,
+    "title": "Journalism",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["BA Journalism", "MA Journalism", "Diploma in Journalism", "PhD Journalism"],
+    "careers": ["Journalist", "News Reporter", "Editor", "Media Analyst"]
+  },
+  {
+    "id": 70,
+    "title": "Mass Communication",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["BA Mass Communication", "MA Mass Communication", "Diploma in Mass Media", "PhD Mass Communication"],
+    "careers": ["Media Professional", "TV/Radio Broadcaster", "Content Producer", "Public Relations Officer"]
+  },
+  {
+    "id": 71,
+    "title": "Public Relations",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Public Relations", "BA Public Relations", "MA Public Relations", "PhD Public Relations"],
+    "careers": ["PR Officer", "Corporate Communications Manager", "Media Relations Specialist", "Brand Strategist"]
+  },
+  {
+    "id": 72,
+    "title": "Art Direction",
+    "eligibility": "10+2 (any stream, preferably Arts/Design background)",
+    "courses": ["Diploma in Art Direction", "BA Art Direction", "MA Art Direction"],
+    "careers": ["Art Director", "Film/TV Set Designer", "Advertising Creative Head", "Production Designer"]
+  },
+  {
+    "id": 73,
+    "title": "Choreography",
+    "eligibility": "10+2 (any stream) + Aptitude/Performance Test",
+    "courses": ["Diploma in Dance/Choreography", "BA Choreography", "MA Performing Arts (Dance)"],
+    "careers": ["Choreographer", "Dance Instructor", "Stage Director", "Performing Arts Trainer"]
+  },
+  {
+    "id": 74,
+    "title": "Direction",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Film Direction", "BA Film Studies", "MA Direction/Screenplay Writing"],
+    "careers": ["Film Director", "Assistant Director", "Screenwriter", "Creative Producer"]
+  },
+  {
+    "id": 75,
+    "title": "Film/Drama Production",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Film Production", "BA Film & Drama", "MA Film Production"],
+    "careers": ["Film Producer", "Production Manager", "Drama Producer", "Studio Executive"]
+  },
+  {
+    "id": 76,
+    "title": "Fine Arts",
+    "eligibility": "10+2 (any stream, preferably Arts)",
+    "courses": ["BFA (Bachelor of Fine Arts)", "MFA (Master of Fine Arts)", "PhD Fine Arts"],
+    "careers": ["Fine Artist", "Art Teacher", "Graphic Designer", "Art Historian"]
+  },
+  {
+    "id": 77,
+    "title": "Performing Arts",
+    "eligibility": "10+2 (any stream) + Performance Audition",
+    "courses": ["BA Performing Arts", "MA Performing Arts", "Diploma in Theatre/Drama", "PhD Performing Arts"],
+    "careers": ["Actor", "Musician", "Dancer", "Drama Teacher"]
+  },
+  {
+    "id": 78,
+    "title": "Vocal and Instrumental Music",
+    "eligibility": "10+2 (any stream) + Music Aptitude Test",
+    "courses": ["BA Music (Vocal/Instrumental)", "MA Music", "PhD Music"],
+    "careers": ["Singer", "Instrumentalist", "Music Teacher", "Composer"]
+  },
+  {
+    "id": 79,
+    "title": "Animation",
+    "eligibility": "10+2 (any stream, preferably Arts/CS background)",
+    "courses": ["Diploma in Animation", "B.Sc Animation", "M.Sc Animation", "M.Des Animation"],
+    "careers": ["Animator", "Game Designer", "Multimedia Artist", "VFX Specialist"]
+  },
+  {
+    "id": 80,
+    "title": "Cinematography",
+    "eligibility": "10+2 (any stream) + Aptitude/Portfolio",
+    "courses": ["Diploma in Cinematography", "B.Sc Cinematography", "M.Sc Cinematography"],
+    "careers": ["Cinematographer", "Camera Operator", "Lighting Designer", "Film/TV Production Specialist"]
+  },
+  {
+    "id": 81,
+    "title": "Communication Design",
+    "eligibility": "10+2 (any stream, preferably Arts/Design background)",
+    "courses": ["B.Des Communication Design", "M.Des Communication Design", "PhD Design"],
+    "careers": ["Communication Designer", "UX/UI Designer", "Creative Director", "Visual Storyteller"]
+  },
+  {
+    "id": 82,
+    "title": "Design",
+    "eligibility": "10+2 (any stream) + Design Aptitude Test (like NID, UCEED)",
+    "courses": ["B.Des", "M.Des", "PhD Design"],
+    "careers": ["Designer", "Industrial Designer", "Fashion Designer", "Product Designer"]
+  },
+  {
+    "id": 83,
+    "title": "Graphic Designing",
+    "eligibility": "10+2 (any stream, preferably Arts/CS background)",
+    "courses": ["Diploma in Graphic Design", "B.Des Graphic Design", "M.Des Graphic Design"],
+    "careers": ["Graphic Designer", "Brand Identity Designer", "Creative Artist", "Advertising Designer"]
+  },
+  {
+    "id": 84,
+    "title": "Photography",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Photography", "BA Photography", "MA Photography"],
+    "careers": ["Photographer", "Photojournalist", "Commercial Photographer", "Visual Artist"]
+  },
+  {
+    "id": 85,
+    "title": "Actuarial Sciences",
+    "eligibility": "10+2 with Mathematics/Statistics",
+    "courses": ["B.Sc Actuarial Science", "M.Sc Actuarial Science", "Professional Actuarial Exams"],
+    "careers": ["Actuary", "Risk Analyst", "Insurance Underwriter", "Financial Consultant"]
+  },
+  {
+    "id": 86,
+    "title": "Bank Management",
+    "eligibility": "10+2 (any stream, preferably Commerce)",
+    "courses": ["BBA Banking", "MBA Banking & Finance", "PG Diploma in Bank Management"],
+    "careers": ["Bank Manager", "Loan Officer", "Financial Analyst", "Investment Banker"]
+  },
+  {
+    "id": 87,
+    "title": "Business Administration",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["BBA", "MBA", "PhD Business Administration"],
+    "careers": ["Business Manager", "Entrepreneur", "Management Consultant", "Corporate Executive"]
+  },
+  {
+    "id": 88,
+    "title": "Business Management",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["BMS (Bachelor of Management Studies)", "MBA", "PhD Management"],
+    "careers": ["Business Analyst", "Operations Manager", "HR Manager", "Strategy Consultant"]
+  },
+  {
+    "id": 89,
+    "title": "Costs and Works Accounts",
+    "eligibility": "10+2 (any stream, preferably Commerce)",
+    "courses": ["Foundation in CMA", "Intermediate CMA", "Final CMA"],
+    "careers": ["Cost Accountant", "Financial Auditor", "Corporate Accountant", "Tax Consultant"]
+  },
+  {
+    "id": 90,
+    "title": "Chartered Accountancy",
+    "eligibility": "10+2 (any stream, preferably Commerce) + CA Foundation",
+    "courses": ["CA Foundation", "CA Intermediate", "CA Final"],
+    "careers": ["Chartered Accountant", "Tax Advisor", "Auditor", "Financial Consultant"]
+  },
+  {
+    "id": 91,
+    "title": "Chartered Financial Analysis",
+    "eligibility": "Graduation in any stream (Commerce preferred) + CFA Institute Exam",
+    "courses": ["CFA Level I", "CFA Level II", "CFA Level III"],
+    "careers": ["Financial Analyst", "Investment Banker", "Portfolio Manager", "Equity Research Analyst"]
+  },
+  {
+    "id": 92,
+    "title": "Event Management",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Event Management", "BBA Event Management", "MBA Event Management"],
+    "careers": ["Event Manager", "Wedding Planner", "Corporate Event Planner", "Exhibition Manager"]
+  },
+  {
+    "id": 93,
+    "title": "Hospital Management",
+    "eligibility": "10+2 (any stream, preferably Science/Commerce)",
+    "courses": ["BBA Hospital Management", "MBA Hospital Management", "MHA (Master of Hospital Administration)"],
+    "careers": ["Hospital Administrator", "Healthcare Consultant", "Medical Records Manager", "Public Health Manager"]
+  },
+  {
+    "id": 94,
+    "title": "Hotel Management",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Hotel Management", "BHM (Bachelor of Hotel Management)", "MHM (Master of Hotel Management)"],
+    "careers": ["Hotel Manager", "Chef", "Front Office Manager", "Hospitality Consultant"]
+  },
+  {
+    "id": 95,
+    "title": "Human Resource Management",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["BBA HR", "MBA HR", "PhD HRM"],
+    "careers": ["HR Manager", "Recruitment Specialist", "Training & Development Manager", "Compensation Analyst"]
+  },
+  {
+    "id": 96,
+    "title": "Insurance",
+    "eligibility": "10+2 (any stream, Commerce preferred)",
+    "courses": ["Diploma in Insurance", "BBA Insurance", "MBA Insurance & Risk Management"],
+    "careers": ["Insurance Agent", "Risk Manager", "Claims Adjuster", "Insurance Underwriter"]
+  },
+  {
+    "id": 97,
+    "title": "Logistics & Supply Chain Management",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Supply Chain Management", "BBA Logistics", "MBA Supply Chain Management"],
+    "careers": ["Logistics Manager", "Supply Chain Analyst", "Operations Manager", "Procurement Specialist"]
+  },
+  {
+    "id": 98,
+    "title": "Management",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["BBA", "MBA", "PhD Management"],
+    "careers": ["Business Manager", "Operations Consultant", "Corporate Executive", "Entrepreneur"]
+  },
+  {
+    "id": 99,
+    "title": "Bachelor of Arts",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["BA (various subjects like English, History, Political Science, Economics)", "MA (in specialization)", "PhD"],
+    "careers": ["Teacher/Professor", "Civil Services", "Writer/Journalist", "Policy Analyst"]
+  },
+  {
+    "id": 100,
+    "title": "Diploma in Elementary Education (D.El.Ed.) / Bachelor of Education (B.Ed.)",
+    "eligibility": "10+2 for D.El.Ed., Graduation for B.Ed.",
+    "courses": ["D.El.Ed.", "B.Ed.", "M.Ed.", "PhD Education"],
+    "careers": ["School Teacher", "Education Consultant", "Curriculum Developer", "Education Administrator"]
+  },
+  {
+    "id": 101,
+    "title": "Corporate Intelligence",
+    "eligibility": "10+2 (any stream) + Graduation for advanced studies",
+    "courses": ["Diploma in Corporate Intelligence", "MBA Corporate Intelligence", "PhD Business Intelligence"],
+    "careers": ["Corporate Analyst", "Risk Analyst", "Business Intelligence Specialist", "Security Consultant"]
+  },
+  {
+    "id": 102,
+    "title": "Detective",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Criminology", "Certificate in Private Investigation", "BA Criminology"],
+    "careers": ["Private Detective", "Forensic Investigator", "Crime Analyst", "Corporate Investigator"]
+  },
+  {
+    "id": 103,
+    "title": "Food Science and Nutrition",
+    "eligibility": "10+2 with PCB/PCM/Home Science",
+    "courses": ["B.Sc Food Science & Nutrition", "M.Sc Food & Nutrition", "PhD Nutrition"],
+    "careers": ["Nutritionist", "Dietitian", "Food Analyst", "Public Health Specialist"]
+  },
+  {
+    "id": 104,
+    "title": "Foreign Languages",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Foreign Languages", "BA Foreign Languages", "MA Foreign Languages", "PhD Linguistics"],
+    "careers": ["Translator", "Interpreter", "Foreign Language Teacher", "Diplomatic Services"]
+  },
+  {
+    "id": 105,
+    "title": "Home Science",
+    "eligibility": "10+2 with Science/Home Science",
+    "courses": ["B.Sc Home Science", "M.Sc Home Science", "PhD Home Science"],
+    "careers": ["Home Scientist", "Nutritionist", "Community Worker", "Teacher"]
+  },
+  {
+    "id": 106,
+    "title": "Interior Designing",
+    "eligibility": "10+2 (any stream, preferably Arts/Design)",
+    "courses": ["Diploma in Interior Design", "B.Sc Interior Design", "M.Sc Interior Design"],
+    "careers": ["Interior Designer", "Space Planner", "Architectural Consultant", "Furniture Designer"]
+  },
+  {
+    "id": 107,
+    "title": "Liberal Studies",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["BA Liberal Studies", "MA Liberal Studies", "PhD Liberal Studies"],
+    "careers": ["Policy Analyst", "Civil Services", "Researcher", "Writer"]
+  },
+  {
+    "id": 108,
+    "title": "Library Sciences",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Library Science", "B.Lib.Sc", "M.Lib.Sc", "PhD Library Science"],
+    "careers": ["Librarian", "Information Manager", "Archivist", "Documentation Specialist"]
+  },
+  {
+    "id": 109,
+    "title": "Montessori Teaching",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Montessori Teaching", "Certificate in Early Childhood Education"],
+    "careers": ["Montessori Teacher", "Early Childhood Educator", "Kindergarten Teacher", "Education Trainer"]
+  },
+  {
+    "id": 110,
+    "title": "Nutrition and Dietetics",
+    "eligibility": "10+2 with PCB/Home Science",
+    "courses": ["B.Sc Nutrition & Dietetics", "M.Sc Nutrition & Dietetics", "PhD Dietetics"],
+    "careers": ["Dietitian", "Nutrition Consultant", "Sports Nutritionist", "Clinical Dietitian"]
+  },
+  {
+    "id": 111,
+    "title": "Physical Education",
+    "eligibility": "10+2 (any stream, with sports background preferred)",
+    "courses": ["B.P.Ed (Bachelor of Physical Education)", "M.P.Ed", "PhD Physical Education"],
+    "careers": ["Physical Education Teacher", "Sports Coach", "Fitness Trainer", "Athletic Trainer"]
+  },
+  {
+    "id": 112,
+    "title": "Sports and Sports Management",
+    "eligibility": "10+2 (any stream, preferably with sports involvement)",
+    "courses": ["Diploma in Sports Management", "BBA Sports Management", "MBA Sports Management"],
+    "careers": ["Sports Manager", "Team Coach", "Event Manager (Sports)", "Athlete Manager"]
+  },
+  {
+    "id": 113,
+    "title": "Tourism & Travels",
+    "eligibility": "10+2 (any stream)",
+    "courses": ["Diploma in Travel & Tourism", "BBA Tourism Management", "MBA Tourism & Hospitality"],
+    "careers": ["Travel Consultant", "Tourism Manager", "Airline Executive", "Hospitality Manager"]
+  }
+]
+
+
+
+
+
+
