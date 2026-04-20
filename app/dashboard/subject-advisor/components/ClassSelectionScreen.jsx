@@ -8,18 +8,15 @@ const CLASS_CARDS = [
   {
     id: "10th",
     label: "I'm in Class 10th",
-    subtitle: "Choose the right stream for Class 11 & 12",
+    subtitle: "Discover your ideal stream for Class 11 & 12",
     description:
-      "Science, Commerce, or Arts? Discover which stream aligns best with your personality, interests, and future ambitions.",
+      "Science PCM, PCB, Commerce, or Arts? Our AI analyzes your personality, interests, and aptitude to recommend the perfect stream.",
     icon: BookOpen,
     gradient:   "linear-gradient(135deg, oklch(0.637 0.237 275), oklch(0.65 0.25 290))",
     glow:       "oklch(0.637 0.237 275 / 0.45)",
     glowLight:  "oklch(0.637 0.237 275 / 0.10)",
     borderHover:"oklch(0.637 0.237 275 / 0.45)",
-    tagColor:   "oklch(0.78 0.18 275)",
-    tagBg:      "oklch(0.637 0.237 275 / 0.12)",
-    tagBorder:  "oklch(0.637 0.237 275 / 0.28)",
-    tags: ["Science PCM", "Science PCB", "Commerce", "Arts"],
+    subtitleColor: "oklch(0.78 0.18 275)",
   },
   {
     id: "12th",
@@ -32,10 +29,7 @@ const CLASS_CARDS = [
     glow:       "oklch(0.65 0.25 290 / 0.45)",
     glowLight:  "oklch(0.65 0.25 290 / 0.10)",
     borderHover:"oklch(0.65 0.25 290 / 0.45)",
-    tagColor:   "oklch(0.80 0.18 290)",
-    tagBg:      "oklch(0.65 0.25 290 / 0.12)",
-    tagBorder:  "oklch(0.65 0.25 290 / 0.28)",
-    tags: ["Engineering", "Medicine", "Business", "Design"],
+    subtitleColor: "oklch(0.80 0.18 290)",
   },
 ]
 
@@ -87,7 +81,7 @@ export default function ClassSelectionScreen({ onSelect }) {
 
         <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
           Answer 10 carefully crafted questions tailored to your grade level. Our AI counselor will
-          decode your unique strengths and recommend the best academic stream or career field.
+          decode your unique strengths and recommend the best academic stream (Class 10) or career field (Class 12).
         </p>
 
         {/* Process steps row */}
@@ -164,29 +158,12 @@ export default function ClassSelectionScreen({ onSelect }) {
                 <h2 className="text-2xl md:text-3xl font-bold mb-1.5 text-foreground group-hover:text-primary transition-colors duration-300">
                   {card.label}
                 </h2>
-                <p className="text-sm font-semibold mb-4" style={{ color: card.tagColor }}>
+                <p className="text-sm font-semibold mb-4" style={{ color: card.subtitleColor }}>
                   {card.subtitle}
                 </p>
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
                   {card.description}
                 </p>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {card.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs px-3 py-1 rounded-full font-medium"
-                      style={{
-                        background: card.tagBg,
-                        border: `1px solid ${card.tagBorder}`,
-                        color: card.tagColor,
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
 
                 {/* CTA */}
                 <motion.div

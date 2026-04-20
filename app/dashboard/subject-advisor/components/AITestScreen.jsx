@@ -101,8 +101,10 @@ export default function AITestScreen({ classLevel, questions, onComplete }) {
               AI is Analyzing You...
             </h3>
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              Our AI-powered counselor is evaluating your personality, interests, and aptitude
-              patterns to generate personalized recommendations.
+              {classLevel === "10th"
+                ? "Our AI-powered counselor is evaluating your personality, interests, and aptitude patterns to recommend your ideal academic stream."
+                : "Our AI-powered counselor is evaluating your personality, interests, and aptitude patterns to generate personalized career recommendations."
+              }
             </p>
             <div className="flex items-center justify-center gap-3">
               <Loader2 className="h-5 w-5 animate-spin text-primary" />
