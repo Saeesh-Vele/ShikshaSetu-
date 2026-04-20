@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuth, useUser, SignOutButton } from "@/components/FirebaseAuthProvider";
+import { useAuth, useUser, useProfile, SignOutButton } from "@/components/FirebaseAuthProvider";
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -21,6 +21,7 @@ import {
 export default function DashboardLayout({ children }) {
   const { isLoaded, userId } = useAuth();
   const { user } = useUser();
+  const { profile } = useProfile();
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -54,8 +55,9 @@ export default function DashboardLayout({ children }) {
 
   if (!user) return null;
 
-  const displayName = user?.fullName || user?.firstName || "Student";
-  const displayEmail = user?.primaryEmailAddress?.emailAddress || user?.emailAddresses?.[0]?.emailAddress || "";
+  // Prefer onboarded name from Firestore; fall back to Firebase auth display name
+  const displayName = profile?.name || user?.fullName || user?.firstName || "Student";
+  const displayEmail = profile?.email || user?.primaryEmailAddress?.emailAddress || user?.emailAddresses?.[0]?.emailAddress || "";
 
   const getInitials = (name) => {
     if (!name) return "U";
