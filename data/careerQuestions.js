@@ -1,139 +1,92 @@
-export const predefinedQuestions = [
+// Fixed career assessment questions
+// These are the same questions used in the subject-advisor quiz flow.
+// Kept for backward compatibility with any imports.
+
+export const class10Questions = [
   {
-    id: 1,
-    question: "Which subjects do you find most interesting?",
-    type: "multi",
-    options: [
-      "Mathematics",
-      "Physics",
-      "Chemistry",
-      "Biology",
-      "Economics",
-      "History",
-      "Geography",
-      "English Literature",
-      "Psychology",
-      "Computer Science"
-    ]
+    question: "When you have free time, what do you naturally choose to do?",
+    options: ["Solve puzzles or logical problems", "Think about business ideas or money", "Create art, write, or design", "Explore science or how things work"]
   },
   {
-    id: 2,
-    question: "What type of career are you most interested in?",
-    type: "single",
-    options: [
-      "Engineering & Technology",
-      "Medical & Healthcare",
-      "Business & Management",
-      "Arts & Creative Fields",
-      "Research & Academia",
-      "Government & Civil Services",
-      "Law & Legal Services",
-      "Teaching & Education"
-    ]
+    question: "Which subject feels most intuitive to you?",
+    options: ["Mathematics", "Business / Economics", "Languages / Humanities", "Science"]
   },
   {
-    id: 3,
-    question: "What are your key strengths?",
-    type: "multi",
-    options: [
-      "Analytical Thinking",
-      "Creative Problem Solving",
-      "Communication Skills",
-      "Leadership Abilities",
-      "Technical Aptitude",
-      "Research Skills",
-      "Teamwork",
-      "Attention to Detail"
-    ]
+    question: "What type of problems excite you the most?",
+    options: ["Logical and analytical", "Financial or strategic", "Creative and expressive", "Experimental and scientific"]
   },
   {
-    id: 4,
-    question: "How do you prefer to learn?",
-    type: "single",
-    options: [
-      "Hands-on & Practical",
-      "Theoretical & Conceptual",
-      "Visual & Graphical",
-      "Discussion & Debate"
-    ]
+    question: "What kind of content do you usually consume?",
+    options: ["Tech, coding, puzzles", "Business, finance, startups", "Art, storytelling, media", "Science, experiments, discovery"]
   },
   {
-    id: 5,
-    question: "Which activities genuinely capture your interest?",
-    type: "multi",
-    options: [
-      "Analyzing data and solving puzzles",
-      "Creating art/music/content",
-      "Helping others and community work",
-      "Designing/building systems",
-      "Research and exploration",
-      "Managing projects/events"
-    ]
+    question: "Which activity would you willingly spend hours on?",
+    options: ["Solving complex problems", "Planning or managing money", "Creating something artistic", "Experimenting or researching"]
   },
   {
-    id: 6,
-    question: "Your strongest ability:",
-    type: "single",
-    options: [
-      "Problem-solving",
-      "Communication",
-      "Creativity",
-      "Leadership",
-      "Empathy",
-      "Technical skills",
-      "Planning"
-    ]
+    question: "How do you approach solving problems?",
+    options: ["Step-by-step logic", "Cost-benefit analysis", "Creative thinking", "Trial and experimentation"]
   },
   {
-    id: 7,
-    question: "Problem solving approach:",
-    type: "single",
-    options: [
-      "Logical analysis",
-      "Creative thinking",
-      "Collaboration",
-      "Experimentation",
-      "Research-based"
-    ]
+    question: "In group projects, your role is usually:",
+    options: ["Technical/problem-solving", "Planning/management", "Creative/design", "Research/analysis"]
   },
   {
-    id: 8,
-    question: "Learning style:",
-    type: "multi",
-    options: [
-      "Visual aids",
-      "Listening",
-      "Hands-on practice",
-      "Reading/writing",
-      "Teaching others",
-      "Real-world application",
-      "Reflection"
-    ]
+    question: "Which environment suits you best?",
+    options: ["Structured technical setup", "Business/office setting", "Creative workspace", "Research/lab environment"]
   },
   {
-    id: 9,
-    question: "Career motivation:",
-    type: "single",
-    options: [
-      "Social impact",
-      "Financial stability",
-      "Continuous learning",
-      "Work-life balance",
-      "Creativity freedom",
-      "Recognition",
-      "Challenging work"
-    ]
+    question: "What gives you the most satisfaction?",
+    options: ["Solving a difficult problem", "Making a smart decision", "Creating something unique", "Discovering something new"]
   },
   {
-    id: 10,
-    question: "Work preference:",
-    type: "single",
-    options: [
-      "Independent",
-      "Team-based",
-      "Leadership roles",
-      "Structured environment",
-      "Flexible/creative environment"
-    ]
+    question: "What motivates you the most?",
+    options: ["Building or inventing", "Earning or managing money", "Expressing ideas creatively", "Exploring and discovering"]
   }
 ];
+
+export const class12Questions = [
+  {
+    question: "Which type of work interests you most?",
+    options: ["Building systems or technology", "Helping people with health", "Managing business operations", "Creating designs or content"]
+  },
+  {
+    question: "Which subject are you strongest in?",
+    options: ["Math / Physics", "Biology", "Business / Economics", "Arts / Design"]
+  },
+  {
+    question: "What kind of challenges do you enjoy?",
+    options: ["Technical problem solving", "Understanding health and biology", "Strategic decision-making", "Creative problem solving"]
+  },
+  {
+    question: "Which activity would you spend extra time mastering?",
+    options: ["Coding or engineering", "Medical or health topics", "Business strategies", "Design or creative tools"]
+  },
+  {
+    question: "How do you prefer to learn?",
+    options: ["Logical and structured", "Practical and observation-based", "Strategic and analytical", "Visual and creative"]
+  },
+  {
+    question: "What kind of work environment suits you?",
+    options: ["Tech or engineering firm", "Hospital or lab", "Corporate/business setting", "Creative studio"]
+  },
+  {
+    question: "What motivates you the most?",
+    options: ["Innovation and technology", "Helping people", "Financial growth", "Creative expression"]
+  },
+  {
+    question: "Which skill defines you best?",
+    options: ["Logical thinking", "Empathy and care", "Leadership and strategy", "Creativity"]
+  },
+  {
+    question: "What kind of impact do you want to make?",
+    options: ["Build useful technology", "Improve people's health", "Create successful businesses", "Inspire through creativity"]
+  },
+  {
+    question: "Which future excites you the most?",
+    options: ["Tech innovation", "Healthcare profession", "Entrepreneurship", "Creative career"]
+  }
+];
+
+// Legacy export for backward compatibility
+export const predefinedQuestions = class10Questions;

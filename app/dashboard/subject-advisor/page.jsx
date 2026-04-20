@@ -24,7 +24,7 @@ export default function SubjectAdvisorPage() {
   const [result, setResult] = useState(null)
   const [loadError, setLoadError] = useState(null)
 
-  // ─── On class selected → fetch questions ────────────────────────────────────
+  // ─── On class selected → fetch fixed questions (instant) ─────────────────────
   const handleClassSelect = useCallback(async (selectedClass) => {
     setClassLevel(selectedClass)
     setStage(STAGES.LOADING_QUESTIONS)
@@ -146,10 +146,10 @@ export default function SubjectAdvisorPage() {
                   </div>
                 </motion.div>
                 <h3 className="text-xl font-bold mb-2 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                  Generating Your Questions...
+                  Loading Your Questions...
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  Gemini AI is crafting 10 personalised questions for Class {classLevel} students
+                  Preparing 10 career assessment questions for Class {classLevel} students
                 </p>
                 <div className="flex justify-center gap-2 mt-6">
                   {[0, 1, 2].map((i) => (

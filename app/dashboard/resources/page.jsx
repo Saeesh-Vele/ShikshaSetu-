@@ -7,23 +7,9 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  Search,
-  BookOpen,
-  Download,
-  Play,
-  FileText,
-  Star,
-  Clock,
-  Users,
-  ArrowLeft,
-  GraduationCap,
-  Filter,
-  Eye,
-  Heart,
-  Share2,
-} from "lucide-react"
+import { Heart, CheckCircle, Bell, ArrowLeft, Download, Eye, Share2, Star, Clock, Filter, Search, BookOpen, Play, FileText, GraduationCap, Users } from "lucide-react"
 import Link from "next/link"
+import { SectionWrapper, PageHeader } from "@/components/ui/section-wrapper"
 
 // Use plain JS objects, not TypeScript interfaces
 const resources = [
@@ -260,24 +246,23 @@ export default function ResourceLibraryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <SectionWrapper>
       {/* Favorites Toolbar */}
-      <div className="flex justify-end pt-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <Button variant="outline" size="sm">
-          <Heart className="h-4 w-4 mr-2" />
+      <div className="flex justify-end pt-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <Button variant="outline" size="sm" className="glass">
+          <Heart className="h-4 w-4 mr-2 text-red-500" />
           Favorites ({favorites.length})
         </Button>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="font-serif font-bold text-3xl md:text-4xl mb-4">Resource Library</h1>
-          <p className="text-lg text-muted-foreground">
-            Access free e-books, study materials, skill development courses, and educational resources to support your
-            learning journey.
-          </p>
-        </div>
+      <PageHeader 
+        badgeText="Resource Library" 
+        badgeIcon={BookOpen} 
+        title="Educational Resources" 
+        description="Access free e-books, study materials, skill development courses, and educational resources to support your learning journey." 
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 w-full">
 
         {/* Search and Filters */}
         <div className="mb-8 space-y-4">
@@ -288,10 +273,10 @@ export default function ResourceLibraryPage() {
                 placeholder="Search resources by title, description, or tags..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 glass input-glow"
               />
             </div>
-            <Button variant="outline" onClick={() => setShowFilters(!showFilters)} className="md:w-auto">
+            <Button variant="outline" onClick={() => setShowFilters(!showFilters)} className="md:w-auto glass">
               <Filter className="h-4 w-4 mr-2" />
               Filters
             </Button>
@@ -394,7 +379,7 @@ export default function ResourceLibraryPage() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredResources.map((resource) => (
-                <Card key={resource.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <Card key={resource.id} className="overflow-hidden glass-card-hover border-transparent">
                   <div className="relative">
                     <img
                       src={resource.thumbnail || "/placeholder.svg"}
@@ -490,7 +475,7 @@ export default function ResourceLibraryPage() {
               {filteredResources
                 .filter((r) => r.type === "E-book")
                 .map((resource) => (
-                  <Card key={resource.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <Card key={resource.id} className="overflow-hidden glass-card-hover border-transparent">
                     <div className="p-4">
                       <h3 className="font-semibold">{resource.title}</h3>
                       <p className="text-sm text-muted-foreground mt-2">{resource.description}</p>
@@ -513,9 +498,9 @@ export default function ResourceLibraryPage() {
 
         {/* Featured Resources Section */}
         <div className="mt-16">
-          <h2 className="font-serif font-bold text-2xl mb-6">Featured Collections</h2>
+          <h2 className="text-2xl font-bold mb-6">Featured Collections</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-0">
+            <Card className="glass-card-hover border-transparent">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <BookOpen className="h-5 w-5 text-primary" />
@@ -531,7 +516,7 @@ export default function ResourceLibraryPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-secondary/10 to-primary/10 border-0">
+            <Card className="glass-card-hover border-transparent">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Users className="h-5 w-5 text-primary" />
@@ -547,7 +532,7 @@ export default function ResourceLibraryPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-accent/10 to-secondary/10 border-0">
+            <Card className="glass-card-hover border-transparent">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <GraduationCap className="h-5 w-5 text-primary" />
@@ -565,6 +550,6 @@ export default function ResourceLibraryPage() {
           </div>
         </div>
       </div>
-    </div>
+    </SectionWrapper>
   )
 }

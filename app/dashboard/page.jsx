@@ -4,8 +4,8 @@ import { useUser } from "@/components/FirebaseAuthProvider"
 import Link from "next/link"
 import {
   BookOpen, TrendingUp, Library, DollarSign,
-  GraduationCap, ArrowRight, Sparkles, Clock,
-  Target, Zap, ChevronRight,
+  GraduationCap, ArrowRight, Sparkles,
+  Zap, ChevronRight,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -18,10 +18,10 @@ const quickLinks = [
     description: "AI-powered stream & career path recommendations",
     tag: "AI Powered",
     from: "oklch(0.637 0.237 275)",
-    to:   "oklch(0.65  0.25  290)",
-    tagBg:     "oklch(0.637 0.237 275 / 0.12)",
+    to: "oklch(0.65  0.25  290)",
+    tagBg: "oklch(0.637 0.237 275 / 0.12)",
     tagBorder: "oklch(0.637 0.237 275 / 0.30)",
-    tagColor:  "oklch(0.78  0.18  275)",
+    tagColor: "oklch(0.78  0.18  275)",
   },
   {
     href: "/dashboard/college-explorer",
@@ -30,10 +30,10 @@ const quickLinks = [
     description: "Browse 1,200+ colleges with admission & placement data",
     tag: "1,200+ Colleges",
     from: "oklch(0.65 0.25 290)",
-    to:   "oklch(0.70 0.22 300)",
-    tagBg:     "oklch(0.65 0.25 290 / 0.12)",
+    to: "oklch(0.70 0.22 300)",
+    tagBg: "oklch(0.65 0.25 290 / 0.12)",
     tagBorder: "oklch(0.65 0.25 290 / 0.30)",
-    tagColor:  "oklch(0.80 0.18 290)",
+    tagColor: "oklch(0.80 0.18 290)",
   },
   {
     href: "/dashboard/career-outcomes",
@@ -42,10 +42,10 @@ const quickLinks = [
     description: "Salary data, growth projections & entry requirements",
     tag: "500+ Paths",
     from: "oklch(0.72 0.18 260)",
-    to:   "oklch(0.637 0.237 275)",
-    tagBg:     "oklch(0.72 0.18 260 / 0.12)",
+    to: "oklch(0.637 0.237 275)",
+    tagBg: "oklch(0.72 0.18 260 / 0.12)",
     tagBorder: "oklch(0.72 0.18 260 / 0.30)",
-    tagColor:  "oklch(0.82 0.14 260)",
+    tagColor: "oklch(0.82 0.14 260)",
   },
   {
     href: "/dashboard/resources",
@@ -54,10 +54,10 @@ const quickLinks = [
     description: "Study guides, entrance exam prep & curated materials",
     tag: "Free Access",
     from: "oklch(0.637 0.237 275)",
-    to:   "oklch(0.72 0.18 260)",
-    tagBg:     "oklch(0.637 0.237 275 / 0.12)",
+    to: "oklch(0.72 0.18 260)",
+    tagBg: "oklch(0.637 0.237 275 / 0.12)",
     tagBorder: "oklch(0.637 0.237 275 / 0.30)",
-    tagColor:  "oklch(0.78 0.18 275)",
+    tagColor: "oklch(0.78 0.18 275)",
   },
   {
     href: "/dashboard/scholarships",
@@ -66,19 +66,14 @@ const quickLinks = [
     description: "Find scholarships you qualify for with step-by-step guidance",
     tag: "Govt & Private",
     from: "oklch(0.65 0.25 290)",
-    to:   "oklch(0.637 0.237 275)",
-    tagBg:     "oklch(0.65 0.25 290 / 0.12)",
+    to: "oklch(0.637 0.237 275)",
+    tagBg: "oklch(0.65 0.25 290 / 0.12)",
     tagBorder: "oklch(0.65 0.25 290 / 0.30)",
-    tagColor:  "oklch(0.80 0.18 290)",
+    tagColor: "oklch(0.80 0.18 290)",
   },
 ]
 
-const stats = [
-  { icon: Target,    label: "Assessments Done", value: "0",  unit: ""    },
-  { icon: Clock,     label: "Study Hours",       value: "0",  unit: "hrs" },
-  { icon: Zap,       label: "Resources Viewed",  value: "0",  unit: ""    },
-  { icon: Sparkles,  label: "AI Queries",        value: "0",  unit: ""    },
-]
+
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function DashboardPage() {
@@ -123,40 +118,7 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        {/* ── Stat cards ── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {stats.map(({ icon: Icon, label, value, unit }) => (
-            <div
-              key={label}
-              className="relative p-5 rounded-2xl overflow-hidden transition-all duration-200 hover:-translate-y-0.5 group"
-              style={{
-                background: "oklch(0.10 0.015 275 / 0.80)",
-                backdropFilter: "blur(20px)",
-                border: "1px solid oklch(0.637 0.237 275 / 0.18)",
-                boxShadow: "0 4px 20px oklch(0 0 0 / 0.35)",
-              }}
-            >
-              {/* shimmer top line */}
-              <div className="absolute inset-x-0 top-0 h-px" style={{
-                background: "linear-gradient(90deg, transparent, oklch(0.637 0.237 275 / 0.35), transparent)",
-              }} />
-              <div className="h-9 w-9 rounded-xl flex items-center justify-center mb-4" style={{
-                background: "linear-gradient(135deg, oklch(0.637 0.237 275 / 0.22), oklch(0.65 0.25 290 / 0.22))",
-                border: "1px solid oklch(0.637 0.237 275 / 0.28)",
-              }}>
-                <Icon className="h-4 w-4 text-primary" />
-              </div>
-              <div className="text-3xl font-bold" style={{
-                background: "linear-gradient(135deg, oklch(0.90 0.08 275), oklch(0.78 0.18 275))",
-                WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent",
-              }}>
-                {value}
-                {unit && <span className="text-base font-medium text-muted-foreground ml-1" style={{ WebkitTextFillColor: "initial" }}>{unit}</span>}
-              </div>
-              <div className="text-xs text-muted-foreground mt-1">{label}</div>
-            </div>
-          ))}
-        </div>
+
 
         {/* ── CTA Hero Banner ── */}
         <div className="relative rounded-2xl overflow-hidden" style={{
@@ -185,7 +147,7 @@ export default function DashboardPage() {
                 Start Your AI-Powered Assessment
               </h2>
               <p className="text-white/75 text-sm leading-relaxed max-w-xl">
-                Answer 10 personalised questions and let our Gemini-powered AI decode your strengths,
+                Answer 10 personalised questions and let our AI decode your strengths,
                 interests, and ideal academic path — in under 5 minutes.
               </p>
             </div>

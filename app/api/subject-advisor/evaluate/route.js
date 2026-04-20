@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 // ─── SAFE FETCH WITH ABORT CONTROLLER ─────────────────────────────────────────
-async function safeFetch(url, options, timeoutMs = 15000) {
+async function safeFetch(url, options, timeoutMs = 20000) {
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), timeoutMs);
@@ -52,19 +52,19 @@ function buildFallback(classLevel, answers) {
     let weaknesses = ["May need to develop creative expression", "Communication skills can be honed"];
     let graph_data = { Analytical: 75, Creative: 45, Social: 40, Practical: 65 };
 
-    if (/commerce|business|finance|account/i.test(answerStr)) {
+    if (/commerce|business|finance|account|money|earning|cost|strategic|financial/i.test(answerStr)) {
       recommended_path = "Commerce — Business, Finance & Economics";
       reason = "Your entrepreneurial mindset and interest in how economies work point strongly toward Commerce, opening doors to CA, MBA, banking, and finance careers.";
       strengths = ["Business Acumen", "Financial Thinking", "Leadership"];
       interest_areas = ["Business", "Finance", "Economics"];
       graph_data = { Analytical: 60, Creative: 50, Social: 70, Practical: 80 };
-    } else if (/art|creat|histor|social|law|civil|cultur|humanit/i.test(answerStr)) {
+    } else if (/art|creat|design|express|artistic|storytelling|media|humanit|language/i.test(answerStr)) {
       recommended_path = "Arts & Humanities — Social Sciences & Creative Fields";
       reason = "Your empathetic nature and interest in culture, society, and creative expression suggest Arts/Humanities is your ideal stream.";
       strengths = ["Empathy", "Creative Expression", "Critical Thinking"];
       interest_areas = ["Social Sciences", "Literature", "Creative Arts"];
       graph_data = { Analytical: 45, Creative: 80, Social: 85, Practical: 40 };
-    } else if (/medicine|doctor|biology|health|neet/i.test(answerStr)) {
+    } else if (/science|experiment|discover|research|biology|health|lab/i.test(answerStr)) {
       recommended_path = "Science (PCB) — Medical & Life Sciences";
       reason = "Your caring personality and interest in life sciences align perfectly with a career in medicine, biotechnology, or healthcare research.";
       strengths = ["Attention to Detail", "Empathy", "Scientific Rigor"];
@@ -93,28 +93,21 @@ function buildFallback(classLevel, answers) {
   let entrance_exams = ["JEE Main", "JEE Advanced", "BITSAT"];
   let graph_data = { Analytical: 80, Creative: 45, Social: 40, Practical: 70 };
 
-  if (/business|startup|entrepreneur|finance|invest|cafe|manage/i.test(answerStr)) {
+  if (/business|startup|entrepreneur|finance|invest|manage|corporate|financial|leadership|strategy/i.test(answerStr)) {
     recommended_path = "Business, Finance & Management";
     reason = "Your entrepreneurial thinking and comfort with numbers and people makes Business and Finance an ideal path.";
     strengths = ["Leadership", "Strategic Thinking", "Financial Literacy"];
     interest_areas = ["Business", "Finance", "Entrepreneurship"];
     entrance_exams = ["CAT", "GMAT", "NMAT", "IPMAT"];
     graph_data = { Analytical: 65, Creative: 60, Social: 80, Practical: 85 };
-  } else if (/medicine|doctor|health|hospital|cure|patient|neet/i.test(answerStr)) {
+  } else if (/medicine|doctor|health|hospital|biology|empathy|care|helping people|healthcare/i.test(answerStr)) {
     recommended_path = "Medicine & Healthcare";
     reason = "Your empathy and interest in human well-being points toward a deeply rewarding career in medicine or healthcare research.";
     strengths = ["Empathy", "Detail Orientation", "Scientific Knowledge"];
     interest_areas = ["Healthcare", "Biology", "Research"];
     entrance_exams = ["NEET UG", "AIIMS PG", "JIPMER"];
     graph_data = { Analytical: 70, Creative: 40, Social: 80, Practical: 65 };
-  } else if (/upsc|civil|policy|law|government|ias|judge|justice/i.test(answerStr)) {
-    recommended_path = "Civil Services & Public Policy";
-    reason = "Your passion for social change and governance ambitions suggest a powerful fit for Civil Services or Law.";
-    strengths = ["Critical Thinking", "Communication", "Leadership"];
-    interest_areas = ["Governance", "Law", "Social Impact"];
-    entrance_exams = ["UPSC CSE", "CLAT", "State PSC"];
-    graph_data = { Analytical: 65, Creative: 55, Social: 90, Practical: 70 };
-  } else if (/design|art|creative|film|content|media|nift/i.test(answerStr)) {
+  } else if (/design|art|creative|content|expression|visual|studio|inspire/i.test(answerStr)) {
     recommended_path = "Design, Media & Creative Arts";
     reason = "Your creative instincts and visual thinking point strongly toward Design, Media, or Creative Arts as a career path.";
     strengths = ["Creativity", "Visual Intelligence", "Storytelling"];
@@ -135,133 +128,119 @@ function buildFallback(classLevel, answers) {
   };
 }
 
-// ─── MAIN HANDLER ──────────────────────────────────────────────────────────────
-export async function POST(request) {
-  let answers = [];
-  let classLevel = "12th";
-  let responseData = null; // Defined here for scope
-  const MODELS = ["gemini-2.0-flash", "gemini-1.5-flash"];
+// ─── BUILD GROQ CAREER ANALYSIS PROMPT ────────────────────────────────────────
+function buildGroqPrompt(classLevel, answers) {
+  const formattedAnswers = (answers || [])
+    .map((a, i) => `Q${i + 1}: ${a.question}\nAnswer: ${a.selected}`)
+    .join("\n\n");
 
-  try {
-    const body = await request.json();
-    answers = body?.answers || [];
-    classLevel = body?.classLevel || "12th";
+  return `You are an expert career counselor and psychometric analyst.
 
-    const apiKey = process.env.GEMINI_API_KEY;
+A student has answered a fixed set of career assessment questions.
 
-    if (!apiKey) {
-      return NextResponse.json({ result: buildFallback(classLevel, answers) });
-    }
+Your job is to:
+1. Analyze patterns in their answers
+2. Identify dominant traits:
+   - Logical / Analytical
+   - Business / Financial
+   - Creative / Artistic
+   - Scientific / Research
+3. Determine top 2 strongest career directions
+4. Suggest:
+   - Suitable career paths
+   - Recommended stream (for class 10)
+   - Recommended fields (for class 12)
 
-    const contextFor10th = `The student is currently in Class 10 and is deciding which stream to choose for Class 11 & 12 in India. 
-Streams available: Science (PCM — Physics, Chemistry, Mathematics), Science (PCB — Physics, Chemistry, Biology), Commerce (Accountancy, Business Studies, Economics), Arts/Humanities (History, Geography, Political Science, Psychology).
-Your recommendation must be ONE of these four streams.
-Also provide relevant entrance exams for that stream (e.g. JEE for PCM, NEET for PCB, CA Foundation for Commerce, etc.)`;
+---
 
-    const contextFor12th = `The student is in Class 12 in India and is deciding their higher education and career path.
-Your recommendation must be a specific career field (e.g., "Software Engineering & AI", "Medicine & Healthcare", "Business Management & Finance", "Civil Services & Law", "Design & Creative Arts", "Research & Academia", etc.)
-Also provide top 3 relevant entrance exams (JEE, NEET, CAT, UPSC, CLAT, NIFT, NID, GATE, etc.)`;
+IMPORTANT RULES:
+- Do NOT guess randomly
+- Base analysis ONLY on answers
+- Be specific, not generic
+- Keep output structured
 
-    const prompt = `Act as an elite career counselor and academic strategist with 25+ years of experience in the Indian education sector.
+---
 
-${classLevel === "10th" ? contextFor10th : contextFor12th}
+Student is in Class: ${classLevel}
 
-Your task is to analyze the student's psychological profile, academic preferences, and aspirations to provide a premium, deep-dive recommendation.
+Student Answers:
+${formattedAnswers}
 
-STUDENT CLASS: ${classLevel}
-STUDENT ANSWERS:
-${JSON.stringify(answers, null, 2)}
+---
 
-Requirements for your response:
-1. "reason": Provide a sophisticated, human-like, yet high-end explanation (3-4 sentences). Avoid generic phrases like "you like math". Instead, connect their specific interest in logic or practical scenarios to a professional growth trajectory.
-2. "strengths": Identify niche, high-value skills hinted at by their choices.
-3. "weaknesses": Suggest constructive "Areas for Growth" that feel helpful and professional.
-4. "graph_data": Carefully weigh the scores based on their specific answers.
+Now return your analysis as a valid JSON object with this EXACT structure (no markdown, no code fences, ONLY valid JSON):
 
-Return ONLY a valid JSON object matching this structure (no markdown, no fences):
 {
-  "recommended_path": "...",
+  "recommended_path": "The single best recommended stream/career path",
   "confidence_score": <integer 65-97>,
-  "strengths": ["...", "...", "..."],
-  "interest_areas": ["...", "...", "..."],
-  "weaknesses": ["...", "..."],
-  "reason": "...",
+  "strengths": ["Strength 1", "Strength 2", "Strength 3"],
+  "interest_areas": ["Area 1", "Area 2", "Area 3"],
+  "weaknesses": ["Growth area 1", "Growth area 2"],
+  "reason": "A detailed 3-4 sentence professional explanation of why this path fits the student. Reference specific answers they gave. Be warm yet professional.",
   "graph_data": {
     "Analytical": <integer 0-100>,
     "Creative": <integer 0-100>,
     "Social": <integer 0-100>,
     "Practical": <integer 0-100>
   },
-  "entrance_exams": ["...", "...", "..."]
+  "entrance_exams": ["Exam 1", "Exam 2", "Exam 3"]
 }`;
+}
+
+// ─── MAIN HANDLER ──────────────────────────────────────────────────────────────
+export async function POST(request) {
+  let answers = [];
+  let classLevel = "12th";
+
+  try {
+    const body = await request.json();
+    answers = body?.answers || [];
+    classLevel = body?.classLevel || "12th";
 
     const groqApiKey = process.env.GROQ_API_KEY;
 
-    for (const model of MODELS) {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-
-      const res = await safeFetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.75,
-            maxOutputTokens: 1500,
-          },
-        }),
-      });
-
-      if (res && res.ok) {
-        try {
-          const data = await res.json();
-          const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (text) {
-            responseData = text;
-            break;
-          }
-        } catch {}
-      }
-    }
-
-    // ─── FAILOVER TO GROQ IF GEMINI FAILS ─────────────────────────────────────
-    if (!responseData && groqApiKey) {
-      console.log("[subject-advisor/evaluate] Gemini failed/quota — trying Groq failover...");
-      try {
-        const groqUrl = "https://api.groq.com/openai/v1/chat/completions";
-        const groqResponse = await fetch(groqUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${groqApiKey}`,
-          },
-          body: JSON.stringify({
-            model: "llama-3.1-8b-instant",
-            messages: [{ role: "user", content: prompt }],
-            temperature: 0.7,
-            max_tokens: 1500,
-            response_format: { type: "json_object" },
-          }),
-        });
-
-        if (groqResponse.ok) {
-          const groqData = await groqResponse.json();
-          const content = groqData.choices?.[0]?.message?.content;
-          if (content) {
-            console.log("[subject-advisor/evaluate] Success with Groq failover");
-            responseData = content;
-          }
-        }
-      } catch (err) {
-        console.error("[subject-advisor/evaluate] Groq failover error:", err);
-      }
-    }
-
-    if (!responseData) {
+    if (!groqApiKey) {
+      console.warn("[subject-advisor/evaluate] GROQ_API_KEY not configured — using fallback");
       return NextResponse.json({ result: buildFallback(classLevel, answers) });
     }
 
-    const parsed = safeParse(responseData);
+    const prompt = buildGroqPrompt(classLevel, answers);
+
+    // ─── CALL GROQ LLM ─────────────────────────────────────────────────
+    console.log("[subject-advisor/evaluate] Sending answers to Groq for analysis...");
+
+    const groqResponse = await safeFetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${groqApiKey}`,
+      },
+      body: JSON.stringify({
+        model: "llama-3.1-8b-instant",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.7,
+        max_tokens: 1500,
+        response_format: { type: "json_object" },
+      }),
+    }, 20000);
+
+    if (!groqResponse || !groqResponse.ok) {
+      const errText = groqResponse ? await groqResponse.text().catch(() => "unreadable") : "Network failure";
+      console.error("[subject-advisor/evaluate] Groq API failed:", errText);
+      return NextResponse.json({ result: buildFallback(classLevel, answers) });
+    }
+
+    const groqData = await groqResponse.json();
+    const responseText = groqData.choices?.[0]?.message?.content;
+
+    if (!responseText) {
+      console.error("[subject-advisor/evaluate] Empty response from Groq");
+      return NextResponse.json({ result: buildFallback(classLevel, answers) });
+    }
+
+    console.log("[subject-advisor/evaluate] Groq raw response received, parsing...");
+
+    const parsed = safeParse(responseText);
 
     if (
       parsed &&
@@ -269,7 +248,7 @@ Return ONLY a valid JSON object matching this structure (no markdown, no fences)
       parsed.confidence_score &&
       parsed.graph_data
     ) {
-      // Ensure all required fields exist
+      // Normalize and validate all required fields
       const result = {
         recommended_path: parsed.recommended_path,
         confidence_score: Math.min(97, Math.max(60, parseInt(parsed.confidence_score) || 75)),
@@ -285,9 +264,12 @@ Return ONLY a valid JSON object matching this structure (no markdown, no fences)
         },
         entrance_exams: parsed.entrance_exams || [],
       };
+
+      console.log("[subject-advisor/evaluate] Successfully parsed Groq analysis:", result.recommended_path);
       return NextResponse.json({ result });
     }
 
+    console.warn("[subject-advisor/evaluate] Parsed result missing expected fields, using fallback");
     return NextResponse.json({ result: buildFallback(classLevel, answers) });
   } catch (error) {
     console.error("subject-advisor evaluate error:", error);

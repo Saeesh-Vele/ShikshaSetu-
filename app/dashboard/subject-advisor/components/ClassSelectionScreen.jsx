@@ -86,7 +86,7 @@ export default function ClassSelectionScreen({ onSelect }) {
         </h1>
 
         <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-          Answer 10 intelligent questions tailored to your grade level. Our Gemini-powered AI will
+          Answer 10 carefully crafted questions tailored to your grade level. Our AI counselor will
           decode your unique strengths and recommend the best academic stream or career field.
         </p>
 
@@ -217,7 +217,7 @@ export default function ClassSelectionScreen({ onSelect }) {
         {[
           { label: "Questions",  value: "10"      },
           { label: "Duration",   value: "~5 min"  },
-          { label: "Powered by", value: "Gemini"  },
+          { label: "Powered by", value: "Groq AI" },
           { label: "Accuracy",   value: "95%+"    },
         ].map((s) => (
           <div

@@ -1,280 +1,105 @@
 import { NextResponse } from "next/server";
 
-// ─────────────────────────────────────────────────
-// Static fallback questions (used if Gemini fails)
-// ─────────────────────────────────────────────────
-const FALLBACK_QUESTIONS = [
+// ─── FIXED CAREER ASSESSMENT QUESTIONS ────────────────────────────────────────
+// These are used by any legacy endpoints that still call /api/ai-questions
+const FIXED_QUESTIONS = [
   {
-    question: "Which subjects do you find most interesting?",
-    type: "multi",
-    options: [
-      "Mathematics",
-      "Physics",
-      "Chemistry",
-      "Biology",
-      "Computer Science",
-      "Economics",
-      "Psychology",
-      "English Literature",
-      "History",
-      "Geography",
-    ],
-  },
-  {
-    question: "What type of career are you most interested in?",
+    question: "When you have free time, what do you naturally choose to do?",
     type: "single",
     options: [
-      "Engineering & Technology",
-      "Medical & Healthcare",
-      "Business & Management",
-      "Arts & Creative Fields",
-      "Research & Academia",
-      "Government & Civil Services",
-      "Law & Legal Services",
-      "Teaching & Education",
+      "Solve puzzles or logical problems",
+      "Think about business ideas or money",
+      "Create art, write, or design",
+      "Explore science or how things work",
     ],
   },
   {
-    question: "What are your key strengths?",
-    type: "multi",
-    options: [
-      "Analytical Thinking",
-      "Creative Problem Solving",
-      "Communication Skills",
-      "Leadership Abilities",
-      "Technical Aptitude",
-      "Research Skills",
-      "Teamwork",
-      "Attention to Detail",
-    ],
+    question: "Which subject feels most intuitive to you?",
+    type: "single",
+    options: ["Mathematics", "Business / Economics", "Languages / Humanities", "Science"],
   },
   {
-    question: "How do you prefer to learn?",
+    question: "What type of problems excite you the most?",
     type: "single",
     options: [
-      "Hands-on & Practical",
-      "Theoretical & Conceptual",
-      "Visual & Graphical",
-      "Discussion & Debate",
+      "Logical and analytical",
+      "Financial or strategic",
+      "Creative and expressive",
+      "Experimental and scientific",
     ],
   },
   {
-    question: "Which activities do you enjoy in your free time?",
-    type: "multi",
-    options: [
-      "Reading books & articles",
-      "Building or tinkering with things",
-      "Playing sports or outdoor activities",
-      "Drawing, painting, or designing",
-      "Coding or working on tech projects",
-      "Volunteering or community service",
-    ],
-  },
-  {
-    question: "What kind of work environment do you prefer?",
+    question: "What kind of content do you usually consume?",
     type: "single",
     options: [
-      "Office with structured routines",
-      "Lab or research setting",
-      "Creative studio or co-working space",
-      "Outdoors or fieldwork",
-      "Remote / Work from anywhere",
+      "Tech, coding, puzzles",
+      "Business, finance, startups",
+      "Art, storytelling, media",
+      "Science, experiments, discovery",
     ],
   },
   {
-    question: "Which personality traits best describe you?",
-    type: "multi",
+    question: "Which activity would you willingly spend hours on?",
+    type: "single",
     options: [
-      "Curious & inquisitive",
-      "Organized & disciplined",
-      "Empathetic & caring",
-      "Ambitious & competitive",
-      "Imaginative & artistic",
-      "Logical & methodical",
+      "Solving complex problems",
+      "Planning or managing money",
+      "Creating something artistic",
+      "Experimenting or researching",
     ],
   },
   {
     question: "How do you approach solving problems?",
     type: "single",
     options: [
-      "I analyze data and look for patterns",
-      "I brainstorm creative ideas",
-      "I talk to others and collaborate",
-      "I research and study existing solutions",
-      "I experiment with trial and error",
+      "Step-by-step logic",
+      "Cost-benefit analysis",
+      "Creative thinking",
+      "Trial and experimentation",
     ],
   },
   {
-    question: "What motivates you the most in your studies?",
+    question: "In group projects, your role is usually:",
     type: "single",
     options: [
-      "Getting top grades and recognition",
-      "Understanding how things work",
-      "Making a positive impact on society",
-      "Financial success and stability",
-      "Creative expression and self-fulfillment",
+      "Technical/problem-solving",
+      "Planning/management",
+      "Creative/design",
+      "Research/analysis",
     ],
   },
   {
-    question: "Which of these future goals resonate with you?",
-    type: "multi",
+    question: "Which environment suits you best?",
+    type: "single",
     options: [
-      "Start my own business",
-      "Work in a top company",
-      "Pursue higher education / PhD",
-      "Join government / civil services",
-      "Become an expert in a niche field",
-      "Work internationally",
+      "Structured technical setup",
+      "Business/office setting",
+      "Creative workspace",
+      "Research/lab environment",
+    ],
+  },
+  {
+    question: "What gives you the most satisfaction?",
+    type: "single",
+    options: [
+      "Solving a difficult problem",
+      "Making a smart decision",
+      "Creating something unique",
+      "Discovering something new",
+    ],
+  },
+  {
+    question: "What motivates you the most?",
+    type: "single",
+    options: [
+      "Building or inventing",
+      "Earning or managing money",
+      "Expressing ideas creatively",
+      "Exploring and discovering",
     ],
   },
 ];
 
 export async function GET() {
-  try {
-    const apiKey = process.env.GEMINI_API_KEY;
-    const groqApiKey = process.env.GROQ_API_KEY;
-
-    if (!apiKey && !groqApiKey) {
-      console.warn("No AI API keys set — returning fallback questions");
-      return NextResponse.json({ questions: FALLBACK_QUESTIONS, source: "fallback" });
-    }
-
-    const prompt = `Act as an elite career counselor with 25+ years of experience.
-Generate exactly 10 high-impact career assessment questions for a comprehensive student profile evaluation.
-
-Rules for your response:
-1. Mix of multi-select and single-select questions.
-2. Questions must reveal: Hidden Talents, Practical Aspirations, Cognitive Preferences, and Personality Drivers.
-3. Return ONLY a valid JSON object with a "questions" key containing the array.
-4. Return ONLY the JSON, no markdown, no fences.`;
-
-    const MODELS = ["gemini-2.0-flash", "gemini-1.5-flash"];
-    let response = null;
-    let lastError = null;
-
-    for (const model of MODELS) {
-      const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-      
-      try {
-        response = await fetch(geminiUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: {
-              temperature: 0.8,
-              topK: 40,
-              topP: 0.95,
-              maxOutputTokens: 4096,
-            },
-          }),
-        });
-
-        if (response.ok) break;
-        
-        lastError = await response.text();
-        console.warn(`Gemini ${model} failed:`, lastError);
-      } catch (err) {
-        lastError = err.message;
-        console.error(`Fetch error for ${model}:`, err);
-      }
-    }
-
-    // ─── FAILOVER TO GROQ IF GEMINI FAILS ─────────────────────────────────────
-    if ((!response || !response.ok) && groqApiKey) {
-      console.log("Gemini failed or quota exceeded — trying Groq failover...");
-      try {
-        const groqUrl = "https://api.groq.com/openai/v1/chat/completions";
-        const groqResponse = await fetch(groqUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${groqApiKey}`,
-          },
-          body: JSON.stringify({
-            model: "llama-3.1-8b-instant",
-            messages: [{ role: "user", content: prompt }],
-            temperature: 0.8,
-            max_tokens: 4096,
-            response_format: { type: "json_object" },
-          }),
-        });
-
-        if (groqResponse.ok) {
-          const groqData = await groqResponse.json();
-          const content = groqData.choices?.[0]?.message?.content;
-          if (content) {
-            console.log("Success with Groq failover");
-            let parsedGroq;
-            try {
-              // Groq with json_object might return { "questions": [...] } or just [...]
-              const tempParsed = JSON.parse(content);
-              parsedGroq = tempParsed.questions || tempParsed;
-              
-              if (Array.isArray(parsedGroq)) {
-                return NextResponse.json({ questions: parsedGroq.slice(0, 10), source: "groq" });
-              }
-            } catch (pErr) {
-              console.error("Groq JSON parse error:", pErr);
-            }
-          }
-        } else {
-          console.warn("Groq failover failed:", await groqResponse.text());
-        }
-      } catch (gErr) {
-        console.error("Groq fetch error:", gErr);
-      }
-    }
-
-    if (!response || !response.ok) {
-      console.error("All Gemini models failed (ai-questions):", lastError);
-      return NextResponse.json({ questions: FALLBACK_QUESTIONS, source: "fallback" });
-    }
-
-    const geminiData = await response.json();
-    const responseText = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!responseText) {
-      console.error("Empty Gemini response (ai-questions):", JSON.stringify(geminiData));
-      return NextResponse.json({ questions: FALLBACK_QUESTIONS, source: "fallback" });
-    }
-
-    // Clean and parse
-    let cleaned = responseText
-      .replace(/```json\n?/g, "")
-      .replace(/```\n?/g, "")
-      .trim();
-
-    const arrayStart = cleaned.indexOf("[");
-    const arrayEnd = cleaned.lastIndexOf("]");
-    if (arrayStart !== -1 && arrayEnd !== -1 && arrayEnd > arrayStart) {
-      cleaned = cleaned.substring(arrayStart, arrayEnd + 1);
-    }
-
-    const parsed = JSON.parse(cleaned);
-
-    // Validate structure
-    if (
-      !Array.isArray(parsed) ||
-      parsed.length < 5 ||
-      !parsed.every(
-        (q) =>
-          typeof q.question === "string" &&
-          (q.type === "single" || q.type === "multi") &&
-          Array.isArray(q.options) &&
-          q.options.length >= 3
-      )
-    ) {
-      console.error("Invalid question structure from Gemini — using fallback");
-      return NextResponse.json({ questions: FALLBACK_QUESTIONS, source: "fallback" });
-    }
-
-    // Ensure exactly 10 questions
-    const finalQuestions = parsed.slice(0, 10);
-
-    return NextResponse.json({ questions: finalQuestions, source: "ai" });
-  } catch (error) {
-    console.error("ai-questions API error:", error);
-    return NextResponse.json({ questions: FALLBACK_QUESTIONS, source: "fallback" });
-  }
+  return NextResponse.json({ questions: FIXED_QUESTIONS, source: "fixed" });
 }

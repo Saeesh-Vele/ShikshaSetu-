@@ -101,12 +101,12 @@ export default function AITestScreen({ classLevel, questions, onComplete }) {
               AI is Analyzing You...
             </h3>
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              Our Gemini-powered counselor is evaluating your personality, interests, and aptitude
+              Our AI-powered counselor is evaluating your personality, interests, and aptitude
               patterns to generate personalized recommendations.
             </p>
             <div className="flex items-center justify-center gap-3">
               <Loader2 className="h-5 w-5 animate-spin text-primary" />
-              <span className="text-sm text-muted-foreground">Processing with Gemini AI...</span>
+              <span className="text-sm text-muted-foreground">Processing with AI...</span>
             </div>
 
             {/* Animated dots */}

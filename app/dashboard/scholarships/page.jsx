@@ -27,8 +27,10 @@ import {
   CheckCircle,
   AlertCircle,
   FileText,
+  Sparkles
 } from "lucide-react"
 import Link from "next/link"
+import { SectionWrapper, PageHeader } from "@/components/ui/section-wrapper"
 
 // Use plain JS objects, not TypeScript interfaces
 const scholarships = [
@@ -272,9 +274,9 @@ export default function ScholarshipPortalPage() {
 
   if (selectedScholarship) {
     return (
-      <div className="min-h-screen bg-background">
+      <SectionWrapper>
         {/* Navigation */}
-        <div className="flex px-4 py-4 max-w-7xl mx-auto">
+        <div className="flex px-4 py-4 max-w-7xl mx-auto w-full">
           <Button
             variant="ghost"
             onClick={() => setSelectedScholarship(null)}
@@ -285,7 +287,7 @@ export default function ScholarshipPortalPage() {
           </Button>
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 w-full">
           {/* Scholarship Header */}
           <div className="mb-8">
             <div className="flex items-center space-x-4 mb-4">
@@ -307,7 +309,7 @@ export default function ScholarshipPortalPage() {
 
           {/* Key Information */}
           <div className="grid md:grid-cols-4 gap-6 mb-8">
-            <Card>
+            <Card className="glass-card border-transparent">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">Scholarship Amount</CardTitle>
               </CardHeader>
@@ -322,7 +324,7 @@ export default function ScholarshipPortalPage() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="glass-card border-transparent">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">Application Deadline</CardTitle>
               </CardHeader>
@@ -342,7 +344,7 @@ export default function ScholarshipPortalPage() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="glass-card border-transparent">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">Success Rate</CardTitle>
               </CardHeader>
@@ -355,7 +357,7 @@ export default function ScholarshipPortalPage() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="glass-card border-transparent">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">Awards Available</CardTitle>
               </CardHeader>
@@ -379,7 +381,7 @@ export default function ScholarshipPortalPage() {
             </TabsList>
 
             <TabsContent value="eligibility" className="mt-6">
-              <Card>
+              <Card className="glass-card border-transparent">
                 <CardHeader>
                   <CardTitle>Eligibility Criteria</CardTitle>
                   <CardDescription>Check if you meet all the requirements</CardDescription>
@@ -418,7 +420,7 @@ export default function ScholarshipPortalPage() {
             </TabsContent>
 
             <TabsContent value="requirements" className="mt-6">
-              <Card>
+              <Card className="glass-card border-transparent">
                 <CardHeader>
                   <CardTitle>Required Documents</CardTitle>
                   <CardDescription>Prepare these documents for your application</CardDescription>
@@ -437,7 +439,7 @@ export default function ScholarshipPortalPage() {
             </TabsContent>
 
             <TabsContent value="process" className="mt-6">
-              <Card>
+              <Card className="glass-card border-transparent">
                 <CardHeader>
                   <CardTitle>Application Process</CardTitle>
                   <CardDescription>Follow these steps to apply</CardDescription>
@@ -459,7 +461,7 @@ export default function ScholarshipPortalPage() {
 
             <TabsContent value="details" className="mt-6">
               <div className="grid md:grid-cols-2 gap-6">
-                <Card>
+                <Card className="glass-card border-transparent">
                   <CardHeader>
                     <CardTitle>Education Levels</CardTitle>
                   </CardHeader>
@@ -474,7 +476,7 @@ export default function ScholarshipPortalPage() {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="glass-card border-transparent">
                   <CardHeader>
                     <CardTitle>Fields of Study</CardTitle>
                   </CardHeader>
@@ -489,7 +491,7 @@ export default function ScholarshipPortalPage() {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="glass-card border-transparent">
                   <CardHeader>
                     <CardTitle>Location</CardTitle>
                   </CardHeader>
@@ -501,7 +503,7 @@ export default function ScholarshipPortalPage() {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="glass-card border-transparent">
                   <CardHeader>
                     <CardTitle>Official Website</CardTitle>
                   </CardHeader>
@@ -537,32 +539,32 @@ export default function ScholarshipPortalPage() {
             </Button>
           </div>
         </div>
-      </div>
+      </SectionWrapper>
     )
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <SectionWrapper>
       {/* Action Toolbar */}
-      <div className="flex justify-end pt-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-x-4">
-        <Button variant="outline" size="sm">
-          <Heart className="h-4 w-4 mr-2" />
+      <div className="flex justify-end pt-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-x-4 w-full">
+        <Button variant="outline" size="sm" className="glass">
+          <Heart className="h-4 w-4 mr-2 text-red-500" />
           Saved ({favorites.length})
         </Button>
-        <Button variant="outline" size="sm">
-          <CheckCircle className="h-4 w-4 mr-2" />
+        <Button variant="outline" size="sm" className="glass">
+          <CheckCircle className="h-4 w-4 mr-2 text-green-500" />
           Applied ({applied.length})
         </Button>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="font-serif font-bold text-3xl md:text-4xl mb-4">Scholarship Portal</h1>
-          <p className="text-lg text-muted-foreground">
-            Discover scholarships and financial aid opportunities to support your educational journey.
-          </p>
-        </div>
+      <PageHeader 
+        badgeText="Scholarships" 
+        badgeIcon={Award} 
+        title="Scholarship Portal" 
+        description="Discover scholarships and financial aid opportunities to support your educational journey." 
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 w-full">
 
         {/* Search and Filters */}
         <div className="mb-8 space-y-4">
@@ -573,10 +575,10 @@ export default function ScholarshipPortalPage() {
                 placeholder="Search scholarships by name, provider, or description..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 glass input-glow"
               />
             </div>
-            <Button variant="outline" onClick={() => setShowFilters(!showFilters)} className="md:w-auto">
+            <Button variant="outline" onClick={() => setShowFilters(!showFilters)} className="md:w-auto glass">
               <Filter className="h-4 w-4 mr-2" />
               Filters
             </Button>
@@ -683,7 +685,7 @@ export default function ScholarshipPortalPage() {
           {filteredScholarships.map((scholarship) => (
             <Card
               key={scholarship.id}
-              className="cursor-pointer hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20"
+              className="cursor-pointer glass-card-hover border-transparent"
               onClick={() => setSelectedScholarship(scholarship)}
             >
               <CardHeader>
@@ -784,9 +786,9 @@ export default function ScholarshipPortalPage() {
 
         {/* Tips Section */}
         <div className="mt-16">
-          <h2 className="font-serif font-bold text-2xl mb-6">Application Tips</h2>
+          <h2 className="text-2xl font-bold mb-6">Application Tips</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-0">
+            <Card className="glass-card-hover border-transparent">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Clock className="h-5 w-5 text-primary" />
@@ -831,6 +833,6 @@ export default function ScholarshipPortalPage() {
           </div>
         </div>
       </div>
-    </div>
+    </SectionWrapper>
   )
 }
