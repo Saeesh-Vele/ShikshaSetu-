@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth, useUser, useProfile, SignOutButton } from "@/components/FirebaseAuthProvider";
+import { isLoggingOut } from "@/lib/auth";
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -25,18 +26,18 @@ export default function DashboardLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   useEffect(() => {
     if (!isLoaded) return;
     if (!userId) {
-      router.push("/sign-in");
+      if (isLoggingOut) {
+        // purely logout flow
+        router.push("/");
+      } else {
+        // protected route guard
+        router.push("/sign-in");
+      }
     }
   }, [isLoaded, userId, router]);
-
-  const handleLogout = () => {
-    localStorage.removeItem("profileData");
-    router.push("/");
-  };
 
   if (!isLoaded) {
     return (
@@ -188,7 +189,6 @@ export default function DashboardLayout({ children }) {
                 variant="ghost"
                 size="sm"
                 className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
-                onClick={handleLogout}
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 Sign Out
@@ -268,7 +268,7 @@ export default function DashboardLayout({ children }) {
                     <Button variant="outline" className="w-full">Profile</Button>
                   </Link>
                   <SignOutButton>
-                    <Button variant="ghost" className="flex-1 text-destructive hover:text-destructive hover:bg-destructive/10" onClick={handleLogout}>
+                    <Button variant="ghost" className="flex-1 text-destructive hover:text-destructive hover:bg-destructive/10">
                       <LogOut className="h-4 w-4 mr-2" />
                       Sign Out
                     </Button>

@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser, useProfile } from "@/components/FirebaseAuthProvider";
+import { isLoggingOut } from "@/lib/auth";
 import { getUserProfile, updateUserProfile } from "@/lib/firestore";
 import ProfileCard from "./components/ProfileCard";
 import EditableField from "./components/EditableField";
@@ -64,7 +65,14 @@ export default function ProfilePage() {
   // ── Load profile ──
   useEffect(() => {
     if (!isLoaded) return;
-    if (!userId) { router.replace("/sign-in"); return; }
+    if (!userId) {
+      if (isLoggingOut) {
+        router.replace("/");
+      } else {
+        router.replace("/sign-in");
+      }
+      return;
+    }
 
     getUserProfile(userId)
       .then(p => {

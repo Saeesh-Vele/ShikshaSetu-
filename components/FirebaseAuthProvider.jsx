@@ -108,8 +108,11 @@ export function useProfile() {
 // ── Render helpers ─────────────────────────────────────────────────────────
 
 export function SignOutButton({ children }) {
+  const router = require("next/navigation").useRouter();
   const handleSignOut = async () => {
+    localStorage.removeItem("profileData");
     await logout();
+    router.replace("/");
   };
   return (
     <div onClick={handleSignOut} style={{ cursor: "pointer" }}>
