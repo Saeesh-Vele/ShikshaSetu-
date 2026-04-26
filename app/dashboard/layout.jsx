@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuth, useUser, useProfile, SignOutButton } from "@/components/FirebaseAuthProvider";
-import { isLoggingOut } from "@/lib/auth";
+import { useAuth, useUser, useProfile, SignOutButton } from '@/components/providers/FirebaseAuthProvider';
+import { isLoggingOut } from '@/lib/firebase/auth';
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {

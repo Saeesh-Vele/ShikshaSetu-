@@ -5,52 +5,18 @@ import { MessageCircle, X, Loader2, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import { usePathname } from "next/navigation";
+import { useChat } from "../hooks/useChat";
 
 export default function CareerChatbot() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      role: "bot",
-      text: "👋 Hello! I’m your career counselor. Ask me about courses, colleges, or career opportunities after 10th/12th. I’ll guide you step by step.",
-    },
-  ]);
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { messages, input, setInput, loading, sendMessage } = useChat();
 
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
-
-  const sendMessage = async (msg) => {
-    const userMessage = msg || input;
-    if (!userMessage.trim()) return;
-
-    const newMessages = [...messages, { role: "user", text: userMessage }];
-    setMessages(newMessages);
-    setInput("");
-    setLoading(true);
-
-    try {
-      const res = await fetch("/api/chatbot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage }),
-      });
-
-      const data = await res.json();
-      setMessages([...newMessages, { role: "bot", text: data.reply }]);
-    } catch (err) {
-      setMessages([
-        ...newMessages,
-        { role: "bot", text: "⚠ Unable to connect to the counselor service." },
-      ]);
-    }
-
-    setLoading(false);
-  };
 
   // Hide chatbot on auth pages
   if (pathname && (pathname.includes("sign-in") || pathname.includes("sign-up"))) {
@@ -134,7 +100,7 @@ export default function CareerChatbot() {
             </div>
 
             {/* Quick Suggestions */}
-            <div className="flex flex-wrap gap-2 p-3 bg-card border-t border-border">
+            <div className="flex overflow-x-auto gap-2 p-3 bg-card border-t border-border [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {[
                 "Career options after 12th",
                 "Top colleges for engineering",
@@ -144,7 +110,7 @@ export default function CareerChatbot() {
                 <button
                   key={idx}
                   onClick={() => sendMessage(q)}
-                  className="text-xs px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary-hover transition-colors border border-border"
+                  className="text-xs px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary-hover transition-colors border border-border whitespace-nowrap shrink-0"
                 >
                   {q}
                 </button>

@@ -3,8 +3,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth, useUser, useProfile } from "@/components/FirebaseAuthProvider";
-import { createUserProfile, userProfileExists } from "@/lib/firestore";
+import { useAuth, useUser, useProfile } from '@/components/providers/FirebaseAuthProvider';
+import { createUserProfile, userProfileExists } from '@/lib/firebase/firestore';
 import StepIndicator from "./components/StepIndicator";
 import InputField from "./components/InputField";
 import SelectField from "./components/SelectField";

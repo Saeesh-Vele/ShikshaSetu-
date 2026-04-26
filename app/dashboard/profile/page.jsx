@@ -3,9 +3,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth, useUser, useProfile } from "@/components/FirebaseAuthProvider";
-import { isLoggingOut } from "@/lib/auth";
-import { getUserProfile, updateUserProfile } from "@/lib/firestore";
+import { useAuth, useUser, useProfile } from '@/components/providers/FirebaseAuthProvider';
+import { isLoggingOut } from '@/lib/firebase/auth';
+import { getUserProfile, updateUserProfile } from '@/lib/firebase/firestore';
 import ProfileCard from "./components/ProfileCard";
 import EditableField from "./components/EditableField";
 import {

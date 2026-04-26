@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signup, loginWithGoogle } from "@/lib/auth";
-import { userProfileExists } from "@/lib/firestore";
+import { signup, loginWithGoogle } from '@/lib/firebase/auth';
+import { userProfileExists } from '@/lib/firebase/firestore';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";

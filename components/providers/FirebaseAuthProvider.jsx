@@ -2,9 +2,9 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
-import { onAuthStateChanged } from "../lib/auth";
-import { logout } from "../lib/auth";
-import { getUserProfile } from "../lib/firestore";
+import { onAuthStateChanged } from '@/lib/firebase/auth';
+import { logout } from '@/lib/firebase/auth';
+import { getUserProfile } from '@/lib/firebase/firestore';
 
 const FirebaseAuthContext = createContext({
   isLoaded: false,

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import courses from "@/app/data/courses.json";
-import CourseFlowchart from "../../components/CourseFlowchart";
+import CourseFlowchart from '@/features/career/components/CourseFlowchart';
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import {GraduationCap, ArrowLeft, Heart} from "lucide-react"

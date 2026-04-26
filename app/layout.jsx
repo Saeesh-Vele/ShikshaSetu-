@@ -1,9 +1,9 @@
 import { Inter } from "next/font/google"
 import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
-import CareerChatbot from "./components/CareerChatbot"
+import CareerChatbot from '@/features/ai-assistant/components/CareerChatbot'
 import { Suspense } from "react"
-import { FirebaseAuthProvider } from "@/components/FirebaseAuthProvider"
+import { FirebaseAuthProvider } from '@/components/providers/FirebaseAuthProvider'
 import "./globals.css"
 
 const inter = Inter({

@@ -1,36 +1,22 @@
-import Groq from "groq-sdk";
-
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+import { NextResponse } from "next/server";
+import { runChatbotPipeline } from "@/services/ai/pipelines/chatbotPipeline";
 
 export async function POST(req) {
   try {
     const { message } = await req.json();
 
-    const completion = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
-      messages: [
-        {
-          role: "system",
-          content: "You are an expert career advisor helping Indian students choose streams and careers.",
-        },
-        {
-          role: "user",
-          content: message,
-        },
-      ],
-      temperature: 0.7,
-    });
+    if (!message || typeof message !== 'string') {
+      return NextResponse.json({ error: "Invalid message" }, { status: 400 });
+    }
 
-    const reply = completion.choices[0]?.message?.content || "No response";
+    const reply = await runChatbotPipeline(message);
 
-    return Response.json({ reply });
+    return NextResponse.json({ reply });
 
   } catch (error) {
     console.error("Chatbot API Error:", error);
-    return new Response(
-      JSON.stringify({ error: "Failed to fetch response" }),
+    return NextResponse.json(
+      { error: "Failed to fetch response" },
       { status: 500 }
     );
   }

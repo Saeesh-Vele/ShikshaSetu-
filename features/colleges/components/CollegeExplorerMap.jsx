@@ -5,7 +5,8 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-
 import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { calculateHaversineDistance } from "../../utils/distanceCalculator";
+import { calculateHaversineDistance } from '@/features/colleges/utils/distanceCalculator';
+import { useRouteInfo } from '../hooks/useRouteInfo';
 
 /* ─────────────────────────── SVG Marker Icons ─────────────────────────── */
 const createCollegeIcon = (isSelected = false) => {
@@ -123,46 +124,12 @@ export default function CollegeExplorerMap({
     ? [Number(targetCollege.lat), Number(targetCollege.lon)]
     : null;
 
-  const [routeInfo, setRouteInfo] = React.useState(null);
-
   const homeLat = homeCoords?.[0];
   const homeLon = homeCoords?.[1];
   const targetLat = targetCoords?.[0];
   const targetLon = targetCoords?.[1];
 
-  React.useEffect(() => {
-    if (homeLat != null && homeLon != null && targetLat != null && targetLon != null) {
-      let isMounted = true;
-      const fetchRoute = async () => {
-        try {
-          // Fetch driving route from OSRM
-          const res = await fetch(`https://router.project-osrm.org/route/v1/driving/${homeLon},${homeLat};${targetLon},${targetLat}?overview=full&geometries=geojson`);
-          const data = await res.json();
-          if (isMounted && data.routes && data.routes.length > 0) {
-            const route = data.routes[0];
-            // GeoJSON coordinates are [lon, lat], Leaflet expects [lat, lon]
-            const coordinates = route.geometry.coordinates.map(c => [c[1], c[0]]);
-            setRouteInfo({ path: coordinates, distance: route.distance / 1000, duration: route.duration / 60 });
-          } else if (isMounted) {
-            // Fallback to straight line
-            setRouteInfo({ path: [[homeLat, homeLon], [targetLat, targetLon]], distance: calculateHaversineDistance(homeLat, homeLon, targetLat, targetLon) });
-          }
-        } catch (e) {
-          if (isMounted) {
-             setRouteInfo({ path: [[homeLat, homeLon], [targetLat, targetLon]], distance: calculateHaversineDistance(homeLat, homeLon, targetLat, targetLon) });
-          }
-        }
-      };
-
-      const timeoutId = setTimeout(fetchRoute, 400); // debounce to limit API calls
-      return () => {
-        isMounted = false;
-        clearTimeout(timeoutId);
-      };
-    } else {
-      setRouteInfo(null);
-    }
-  }, [homeLat, homeLon, targetLat, targetLon]);
+  const routeInfo = useRouteInfo(homeLat, homeLon, targetLat, targetLon);
 
   // Route path between home and selected college
   const routePath = routeInfo?.path || null;

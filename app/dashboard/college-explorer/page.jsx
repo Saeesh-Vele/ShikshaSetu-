@@ -8,12 +8,13 @@ import {
   SlidersHorizontal, Navigation, Layers, X,
   BookOpen, Trophy, Building2, Sparkles,
 } from "lucide-react";
-import { calculateHaversineDistance } from "../../../utils/distanceCalculator";
-import HomeLocationPanel from "../../components/HomeLocationPanel";
-import CollegeCard from "../../components/CollegeCard";
+import { calculateHaversineDistance } from '@/features/colleges/utils/distanceCalculator';
+import HomeLocationPanel from '@/features/onboarding/components/HomeLocationPanel';
+import CollegeCard from '@/features/colleges/components/CollegeCard';
+import { useColleges } from '@/features/colleges/hooks/useColleges';
 
 const CollegeExplorerMap = dynamic(
-  () => import("../../components/CollegeExplorerMap"),
+  () => import('@/features/colleges/components/CollegeExplorerMap'),
   { ssr: false }
 );
 
@@ -43,11 +44,8 @@ const HERO_STATS = [
 
 export default function CollegeExplorerPage() {
   const [location, setLocation]               = useState(null);
-  const [colleges, setColleges]               = useState([]);
   const [searchQuery, setSearchQuery]         = useState("");
   const [distanceFilter, setDistanceFilter]   = useState(10);
-  const [selectedColleges, setSelectedColleges] = useState([]);
-  const [favoriteColleges, setFavoriteColleges] = useState([]);
   const [panToCollege, setPanToCollege]       = useState(null);
   const [autocompleteResults, setAutocompleteResults] = useState([]);
   const [homeLocation, setHomeLocation]       = useState(null);
@@ -64,64 +62,24 @@ export default function CollegeExplorerPage() {
     );
   }, []);
 
-  // Fetch colleges
-  useEffect(() => {
-    if (!location) return;
-    const [lat, lon] = location;
-    fetch(`/api/Colleges?lat=${lat}&lon=${lon}&radius=10000`)
-      .then((r) => r.json())
-      .then(setColleges)
-      .catch(console.error);
-  }, [location]);
-
-  // Haversine
-  const computeDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371, toRad = (v) => (v * Math.PI) / 180;
-    const dLat = toRad(lat2 - lat1), dLon = toRad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  };
-
-  // Filter colleges
-  let filteredColleges = colleges
-    .map((c) => ({
-      ...c,
-      distance: location ? computeDistance(location[0], location[1], c.lat, c.lon) : null,
-      homeDistance: homeLocation?.lat != null
-        ? calculateHaversineDistance(homeLocation.lat, homeLocation.lon, c.lat, c.lon)
-        : undefined,
-    }))
-    .filter((c) => !c.distance || c.distance <= distanceFilter);
-
-  if (searchQuery && panToCollege) {
-    const found = colleges.find((c) => c.name === searchQuery);
-    if (found && !filteredColleges.some((c) => c.id === found.id))
-      filteredColleges.push(found);
-  }
+  const {
+    rawColleges,
+    filteredColleges,
+    selectedColleges,
+    favoriteColleges,
+    toggleSelectCollege,
+    toggleFavorite,
+  } = useColleges(location, homeLocation, distanceFilter, searchQuery);
 
   // Autocomplete
   useEffect(() => {
     if (!searchQuery.trim()) { setAutocompleteResults([]); return; }
     setAutocompleteResults(
-      colleges.filter((c) => c.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 6)
+      rawColleges.filter((c) => c.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 6)
     );
-  }, [searchQuery, colleges]);
+  }, [searchQuery, rawColleges]);
 
-  const toggleSelectCollege = (c) =>
-    setSelectedColleges((p) =>
-      p.find((x) => x.id === c.id) ? p.filter((x) => x.id !== c.id) : [...p, c]
-    );
 
-  const toggleFavorite = (college) => {
-    setFavoriteColleges((p) =>
-      p.some((c) => c.id === college.id) ? p.filter((c) => c.id !== college.id) : [...p, college]
-    );
-    setColleges((p) =>
-      p.map((c) => (c.id === college.id ? { ...c, favorite: !c.favorite } : c))
-    );
-  };
 
   const handleSelectSuggestion = (college) => {
     setSearchQuery(college.name);

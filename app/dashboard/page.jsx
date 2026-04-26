@@ -1,6 +1,6 @@
 "use client"
 
-import { useUser } from "@/components/FirebaseAuthProvider"
+import { useUser } from '@/components/providers/FirebaseAuthProvider'
 import Link from "next/link"
 import {
   BookOpen, TrendingUp, Library, DollarSign,
