@@ -1,5 +1,6 @@
 import { generateGroqCompletion } from "../llmClient";
 import { safeParse } from "../utils";
+import { AI_CONFIG } from "@/config/ai.config";
 
 // ─── TASK 1: ERROR CLASSIFICATION SYSTEM ────────────────────────
 
@@ -63,7 +64,7 @@ Return EXACTLY this JSON structure:
 Valid types: "LOGIC", "RELEVANCE". Use empty array if no issues.`;
 
   try {
-    const responseText = await generateGroqCompletion([{ role: "user", content: prompt }], "llama-3.1-8b-instant", 0.1);
+    const responseText = await generateGroqCompletion([{ role: "user", content: prompt }], AI_CONFIG.groq.models.fast, 0.1);
     const parsed = safeParse(responseText);
     
     if (parsed && typeof parsed.isValid === 'boolean') {

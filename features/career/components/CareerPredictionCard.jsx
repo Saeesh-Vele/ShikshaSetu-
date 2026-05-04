@@ -1,5 +1,6 @@
 "use client"
 
+import { memo } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -21,7 +22,7 @@ import {
 // ─────────────────────────────────────────────────
 // Career Prediction Result Card (ENHANCED)
 // ─────────────────────────────────────────────────
-export default function CareerPredictionCard({ result, onReset }) {
+function CareerPredictionCard({ result, onReset }) {
   if (!result) return null
 
   const {
@@ -262,3 +263,5 @@ export default function CareerPredictionCard({ result, onReset }) {
     </div>
   )
 }
+
+export default memo(CareerPredictionCard);

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Brain, Loader2, ArrowLeft, ArrowRight, Sparkles, CheckCircle2, RotateCcw } from "lucide-react"
+import { authFetch } from "@/lib/firebase/authFetch"
 
 // ─── CATEGORY PILL COLORS ──────────────────────────────────────────────────────
 const CATEGORY_STYLES = {
@@ -52,7 +53,7 @@ export default function AITestScreen({ classLevel, questions, onComplete }) {
         category: q.category,
       }))
 
-      const res = await fetch("/api/subject-advisor/evaluate", {
+      const res = await authFetch("/api/subject-advisor/evaluate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ answers: formattedAnswers, classLevel }),

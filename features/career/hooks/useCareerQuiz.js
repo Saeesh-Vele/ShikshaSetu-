@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { submitCareerAssessment } from "../services/careerApi";
-import { predefinedQuestions } from "../data/careerQuestions";
+import { predefinedQuestions } from "@/data/career-questions";
 
 export const activeQuestions = predefinedQuestions.map((q) => ({
   id: `q_${q.id}`,

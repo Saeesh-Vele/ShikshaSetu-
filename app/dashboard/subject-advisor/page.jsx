@@ -4,6 +4,7 @@ import { useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { GraduationCap, ArrowLeft, Loader2 } from "lucide-react"
 import Link from "next/link"
+import { authFetch } from "@/lib/firebase/authFetch"
 
 import ClassSelectionScreen from "./components/ClassSelectionScreen"
 import AITestScreen from "./components/AITestScreen"
@@ -31,7 +32,7 @@ export default function SubjectAdvisorPage() {
     setLoadError(null)
 
     try {
-      const res = await fetch("/api/subject-advisor/generate-questions", {
+      const res = await authFetch("/api/subject-advisor/generate-questions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ classLevel: selectedClass }),

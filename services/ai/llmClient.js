@@ -1,4 +1,5 @@
 import Groq from "groq-sdk";
+import { AI_CONFIG } from "@/config/ai.config";
 
 export const getGroqClient = () => {
   if (!process.env.GROQ_API_KEY) {
@@ -7,7 +8,11 @@ export const getGroqClient = () => {
   return new Groq({ apiKey: process.env.GROQ_API_KEY });
 };
 
-export const generateGroqCompletion = async (messages, model = "llama-3.3-70b-versatile", temperature = 0.7) => {
+export const generateGroqCompletion = async (
+  messages,
+  model = AI_CONFIG.groq.models.versatile,
+  temperature = AI_CONFIG.groq.defaults.temperature
+) => {
   const client = getGroqClient();
   try {
     const completion = await client.chat.completions.create({

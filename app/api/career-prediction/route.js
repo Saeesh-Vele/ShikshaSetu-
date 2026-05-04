@@ -1,33 +1,27 @@
 import { NextResponse } from "next/server";
-import { runCareerPredictionPipeline } from "@/services/ai/pipelines/careerPredictionPipeline";
+import { withMiddleware } from "@/utils/apiMiddleware";
+import { predictionLimiter } from "@/utils/rateLimiter";
+import { handleCareerPrediction } from "@/controllers/aiController";
+import { logger } from "@/utils/logger";
 
-export async function POST(request) {
+async function handler(request) {
   try {
     const body = await request.json();
-    const answers = body?.answers;
-
-    if (!answers || !Array.isArray(answers)) {
-      return NextResponse.json(
-        { error: "Invalid request. Answers array is required." },
-        { status: 400 }
-      );
-    }
-
-    const prediction = await runCareerPredictionPipeline(answers);
-    
-    return NextResponse.json({ 
-      result: prediction.data, 
-      metadata: {
-        confidence: prediction.confidence,
-        attempts: prediction.attempts,
-        errorHistory: prediction.errorHistory
-      }
-    });
+    const result = await handleCareerPrediction(body, request._userId);
+    return NextResponse.json(result);
   } catch (error) {
-    console.error("[career-prediction-route] Error:", error);
+    logger.error("api:career-prediction", "Request failed", {
+      requestId: request._requestId,
+      error: error.message,
+    });
     return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
-      { status: 500 }
+      { success: false, error: error.message || "Internal Server Error" },
+      { status: error.statusCode || 500 }
     );
   }
 }
+
+export const POST = withMiddleware(handler, {
+  rateLimiter: predictionLimiter,
+  requireAuth: false,
+});

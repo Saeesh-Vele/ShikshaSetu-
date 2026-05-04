@@ -1,23 +1,27 @@
 import { NextResponse } from "next/server";
-import { runChatbotPipeline } from "@/services/ai/pipelines/chatbotPipeline";
+import { withMiddleware } from "@/utils/apiMiddleware";
+import { chatbotLimiter } from "@/utils/rateLimiter";
+import { handleChatbot } from "@/controllers/aiController";
+import { logger } from "@/utils/logger";
 
-export async function POST(req) {
+async function handler(req) {
   try {
-    const { message } = await req.json();
-
-    if (!message || typeof message !== 'string') {
-      return NextResponse.json({ error: "Invalid message" }, { status: 400 });
-    }
-
-    const reply = await runChatbotPipeline(message);
-
-    return NextResponse.json({ reply });
-
+    const body = await req.json();
+    const result = await handleChatbot(body, req._userId);
+    return NextResponse.json(result);
   } catch (error) {
-    console.error("Chatbot API Error:", error);
+    logger.error("api:chatbot", "Request failed", {
+      requestId: req._requestId,
+      error: error.message,
+    });
     return NextResponse.json(
-      { error: "Failed to fetch response" },
-      { status: 500 }
+      { success: false, error: error.message || "Failed to fetch response" },
+      { status: error.statusCode || 500 }
     );
   }
 }
+
+export const POST = withMiddleware(handler, {
+  rateLimiter: chatbotLimiter,
+  requireAuth: false,
+});

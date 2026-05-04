@@ -1,10 +1,16 @@
 import { Inter } from "next/font/google"
 import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
-import CareerChatbot from '@/features/ai-assistant/components/CareerChatbot'
+import dynamic from "next/dynamic"
 import { Suspense } from "react"
 import { FirebaseAuthProvider } from '@/components/providers/FirebaseAuthProvider'
 import "./globals.css"
+
+// Lazy-load the chatbot — it's on every page but only used when opened
+const CareerChatbot = dynamic(
+  () => import('@/features/ai-assistant/components/CareerChatbot'),
+  { ssr: false }
+)
 
 const inter = Inter({
   subsets: ["latin"],

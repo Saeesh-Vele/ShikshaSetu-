@@ -1,4 +1,12 @@
 import { NextResponse } from "next/server";
+import { AI_CONFIG } from "@/config/ai.config";
+import { logger } from "@/utils/logger";
+import { withMiddleware } from "@/utils/apiMiddleware";
+import { guidanceLimiter } from "@/utils/rateLimiter";
+import { validateCareerGuidanceInput } from "@/utils/validator";
+import { saveQuizResult } from "@/services/db/firestoreService";
+
+const TAG = "api:career-guidance";
 
 // Helper for exponential backoff retry to handle Gemini 503 errors
 async function fetchWithRetry(url, options, maxRetries = 3) {
@@ -15,7 +23,7 @@ async function fetchWithRetry(url, options, maxRetries = 3) {
       return response;
     } catch (error) {
       lastError = error;
-      console.warn(`Attempt ${attempt + 1} failed: ${error.message}. Retrying...`);
+      logger.warn(TAG, `Attempt ${attempt + 1} failed: ${error.message}. Retrying...`);
       if (attempt < maxRetries - 1) {
         const backoffTime = Math.pow(2, attempt) * 1000 + Math.random() * 500;
         await new Promise(resolve => setTimeout(resolve, backoffTime));
@@ -25,23 +33,18 @@ async function fetchWithRetry(url, options, maxRetries = 3) {
   throw lastError;
 }
 
-export async function POST(request) {
+async function handler(request) {
   try {
-    const { answers } = await request.json();
-
-    if (!answers || typeof answers !== "object") {
-      return NextResponse.json(
-        { error: "Invalid request. Answers are required." },
-        { status: 400 }
-      );
-    }
+    const body = await request.json();
+    validateCareerGuidanceInput(body);
+    const { answers } = body;
 
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      console.error("GEMINI_API_KEY is not configured in .env.local");
+      logger.error(TAG, "GEMINI_API_KEY is not configured");
       return NextResponse.json(
-        { error: "AI service is not configured. Please contact support." },
+        { success: false, error: "AI service is not configured. Please contact support." },
         { status: 500 }
       );
     }
@@ -80,7 +83,8 @@ IMPORTANT:
 - counselorInsight should feel like advice from a real counselor, warm yet professional
 - Return ONLY valid JSON, nothing else`;
 
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    const { gemini } = AI_CONFIG;
+    const geminiUrl = `${gemini.baseUrl}/${gemini.models.flashLatest}:generateContent?key=${apiKey}`;
 
     let geminiResponse;
     try {
@@ -96,15 +100,15 @@ IMPORTANT:
             },
           ],
           generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1024,
+            temperature: gemini.defaults.temperature,
+            topK: gemini.defaults.topK,
+            topP: gemini.defaults.topP,
+            maxOutputTokens: gemini.defaults.maxOutputTokens,
           },
         }),
-      }, 3); // 3 retries
+      }, 3);
     } catch (apiErr) {
-      console.error("Gemini API continually failed:", apiErr);
+      logger.error(TAG, "Gemini API continually failed", apiErr.message);
       // Fallback response so the app doesn't crash completely
       return NextResponse.json({
         result: {
@@ -124,9 +128,9 @@ IMPORTANT:
     const responseText = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (!responseText) {
-      console.error("Empty response from Gemini:", JSON.stringify(geminiData));
+      logger.error(TAG, "Empty response from Gemini", JSON.stringify(geminiData));
       return NextResponse.json(
-        { error: "AI returned an empty response. Please try again." },
+        { success: false, error: "AI returned an empty response. Please try again." },
         { status: 502 }
       );
     }
@@ -134,26 +138,37 @@ IMPORTANT:
     // Parse the JSON response from Gemini
     let analysisResult;
     try {
-      // Remove any markdown code fences if present
       const cleanedText = responseText
         .replace(/```json\n?/g, "")
         .replace(/```\n?/g, "")
         .trim();
       analysisResult = JSON.parse(cleanedText);
     } catch (parseError) {
-      console.error("Failed to parse Gemini response:", responseText);
+      logger.error(TAG, "Failed to parse Gemini response", responseText);
       return NextResponse.json(
-        { error: "AI response was malformed. Please try again." },
+        { success: false, error: "AI response was malformed. Please try again." },
         { status: 502 }
       );
     }
 
+    // Persist result
+    if (request._userId) {
+      saveQuizResult(request._userId, "career-guidance", analysisResult, {
+        answersCount: Object.keys(answers).length,
+      }).catch((err) => logger.warn(TAG, "Failed to persist guidance result", err.message));
+    }
+
     return NextResponse.json({ result: analysisResult });
   } catch (error) {
-    console.error("Career guidance API error:", error);
+    logger.error(TAG, "Unhandled error", { requestId: request._requestId, error: error.message });
     return NextResponse.json(
-      { error: "An unexpected error occurred. Please try again." },
-      { status: 500 }
+      { success: false, error: error.message || "An unexpected error occurred. Please try again." },
+      { status: error.statusCode || 500 }
     );
   }
 }
+
+export const POST = withMiddleware(handler, {
+  rateLimiter: guidanceLimiter,
+  requireAuth: false,
+});

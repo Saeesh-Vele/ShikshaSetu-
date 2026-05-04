@@ -1,3 +1,5 @@
+import { authFetch } from "@/lib/firebase/authFetch";
+
 export const submitCareerAssessment = async (formattedAnswers) => {
   const endpoint = "/api/career-prediction";
   
@@ -5,7 +7,7 @@ export const submitCareerAssessment = async (formattedAnswers) => {
     answers: formattedAnswers
   };
 
-  const response = await fetch(endpoint, {
+  const response = await authFetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

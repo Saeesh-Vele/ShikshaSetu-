@@ -1,6 +1,7 @@
 import { safeFetch, safeParse } from "../utils";
 import { generateGroqCompletion } from "../llmClient";
 import { evaluateOutput } from "./evaluator";
+import { AI_CONFIG } from "@/config/ai.config";
 
 // ─── RELIABILITY LAYER ──────────────────────────────────────────
 async function withRetry(operation, maxRetries = 2) {
@@ -16,13 +17,14 @@ async function withRetry(operation, maxRetries = 2) {
   throw lastError;
 }
 
-async function callGemini(prompt, model = "gemini-2.0-flash") {
+async function callGemini(prompt, model = AI_CONFIG.gemini.models.flash) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error("GEMINI_API_KEY missing");
-  const response = await safeFetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+  const { gemini } = AI_CONFIG;
+  const response = await safeFetch(`${gemini.baseUrl}/${model}:generateContent?key=${apiKey}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.7, maxOutputTokens: 1024 } }),
+    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: gemini.defaults.temperature, maxOutputTokens: gemini.defaults.maxOutputTokens } }),
   });
   if (!response || !response.ok) throw new Error("Gemini API failed");
   const data = await response.json();
@@ -37,7 +39,7 @@ function normalizeInput(answers) {
 
 async function extractProfile(normalizedInput) {
   const prompt = `Analyze this student's input: "${normalizedInput}". Extract profile to strict JSON: {"coreInterests": [], "impliedStrengths": [], "preferredWorkStyle": "string"}`;
-  const responseText = await withRetry(() => generateGroqCompletion([{ role: "user", content: prompt }], "llama-3.1-8b-instant", 0.1));
+  const responseText = await withRetry(() => generateGroqCompletion([{ role: "user", content: prompt }], AI_CONFIG.groq.models.fast, 0.1));
   return safeParse(responseText) || { coreInterests: [], impliedStrengths: [], preferredWorkStyle: "unknown" };
 }
 
@@ -68,7 +70,7 @@ Domain: "${hybridMapping.primaryCluster}"
 
 Return EXACTLY this JSON structure:
 {"careerField": "Domain", "topCareers": ["Career 1", "Career 2", "Career 3"], "subjects": ["Sub 1", "Sub 2"], "strengths": ${JSON.stringify(profile.impliedStrengths || ["Adaptability"])}, "insights": "summary"}`;
-  const responseText = await withRetry(() => generateGroqCompletion([{ role: "user", content: prompt }], "llama-3.1-8b-instant", 0.1));
+  const responseText = await withRetry(() => generateGroqCompletion([{ role: "user", content: prompt }], AI_CONFIG.groq.models.fast, 0.1));
   const parsed = safeParse(responseText);
   if (parsed && parsed.careerField && Array.isArray(parsed.topCareers)) {
     parsed.insights = reasoningText; 
@@ -86,7 +88,7 @@ Current Output: ${JSON.stringify(output)}
 
 Do NOT rewrite the content or reasoning. Only fix the structural issues (e.g., missing fields, bad types, removing placeholders).
 Return EXACTLY valid JSON matching the schema.`;
-  const responseText = await withRetry(() => generateGroqCompletion([{ role: "user", content: prompt }], "llama-3.1-8b-instant", 0.1));
+  const responseText = await withRetry(() => generateGroqCompletion([{ role: "user", content: prompt }], AI_CONFIG.groq.models.fast, 0.1));
   return safeParse(responseText) || output;
 }
 
