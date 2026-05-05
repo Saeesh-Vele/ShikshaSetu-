@@ -5,7 +5,7 @@
 // Note: In production with multiple instances, use Redis-backed rate limiting.
 // This provides per-instance protection against abuse.
 
-import { logger } from "@/utils/logger";
+import { logger } from "../logger";
 
 const TAG = "middleware:rate-limiter";
 

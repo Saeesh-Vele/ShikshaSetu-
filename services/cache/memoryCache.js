@@ -16,7 +16,7 @@
 //   - Fallback to L1-only if Firestore is unavailable (offline resilience)
 //   - Feature-flagged: can disable L2 entirely via FF_USE_FIRESTORE_CACHE=false
 
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 import { isEnabled, getFlagValue } from "@/config/features";
 
 const TAG = "cache:scalable";

@@ -9,7 +9,7 @@
 //   import { featureFlags, isEnabled } from "@/config/features";
 //   if (isEnabled("USE_REDIS_CACHE")) { ... }
 
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 
 const TAG = "config:features";
 

@@ -22,7 +22,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase/firebase";
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 
 const TAG = "db:firestore";
 

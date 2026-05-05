@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser, useProfile } from '@/components/providers/FirebaseAuthProvider';
-import { createUserProfile, userProfileExists } from '@/lib/firebase/firestore';
+import { createUserProfile, userProfileExists } from '@/lib/firebase/db/users';
 import StepIndicator from "@/features/onboarding/components/StepIndicator";
 import InputField from "@/features/onboarding/components/InputField";
 import SelectField from "@/features/onboarding/components/SelectField";

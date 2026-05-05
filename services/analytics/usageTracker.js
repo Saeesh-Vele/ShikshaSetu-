@@ -15,7 +15,7 @@
 // On multi-instance deployments, each instance tracks independently;
 // Firestore provides the aggregated view.
 
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 import { isEnabled, getFlagValue } from "@/config/features";
 
 const TAG = "analytics:usage";

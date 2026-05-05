@@ -11,7 +11,7 @@
 //
 // No external dependencies — pure in-memory with structured log export.
 
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 import { isEnabled, getFlagValue } from "@/config/features";
 
 const TAG = "observability:metrics";

@@ -4,12 +4,12 @@
 //           usage guardrails, and observability metrics.
 //
 // Usage in routes:
-//   import { withMiddleware } from "@/utils/apiMiddleware";
+//   import { withMiddleware } from "@/server/middleware/apiMiddleware";
 //   export const POST = withMiddleware(handler, { rateLimiter, requireAuth: false });
 
 import { NextResponse } from "next/server";
 import { getClientIdentifier } from "./rateLimiter";
-import { logger } from "./logger";
+import { logger } from "../logger";
 import { checkUsageLimits } from "@/services/analytics/usageTracker";
 import { recordRequest } from "@/services/observability/metricsCollector";
 import { isEnabled } from "@/config/features";

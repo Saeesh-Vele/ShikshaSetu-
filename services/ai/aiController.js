@@ -21,9 +21,9 @@ import { runCareerPredictionPipeline } from "@/services/ai/pipelines/careerPredi
 import { runChatbotPipeline } from "@/services/ai/pipelines/chatbotPipeline";
 import { saveQuizResult, saveChatMessage } from "@/services/db/firestoreService";
 import { chatCache, evaluateCache, predictionCache, generateCacheKey } from "@/services/cache/memoryCache";
-import { validateEvaluateInput, validateCareerPredictionInput, validateChatbotInput } from "@/utils/validator";
-import { ApiError } from "@/utils/errorHandler";
-import { logger } from "@/utils/logger";
+import { validateEvaluateInput, validateCareerPredictionInput, validateChatbotInput } from "@/server/middleware/validator";
+import { ApiError } from "@/server/middleware/errorHandler";
+import { logger } from "@/server/logger";
 
 // ─── New Infrastructure Imports ──────────────────────────────────────────────
 import { trackUsage, checkUsageLimits } from "@/services/analytics/usageTracker";

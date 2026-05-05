@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { login, signup, loginWithGoogle } from "@/lib/firebase/auth";
-import { userProfileExists } from "@/lib/firebase/firestore";
+import { userProfileExists } from "@/lib/firebase/db/users";
 import "@/app/auth.css";
 
 // ═══════════════════════════════════════════════════════════════════════════════

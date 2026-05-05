@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { AI_CONFIG } from "@/config/ai.config";
-import { logger } from "@/utils/logger";
-import { withMiddleware } from "@/utils/apiMiddleware";
-import { guidanceLimiter } from "@/utils/rateLimiter";
-import { validateCareerGuidanceInput } from "@/utils/validator";
+import { logger } from "@/server/logger";
+import { withMiddleware } from "@/server/middleware/apiMiddleware";
+import { guidanceLimiter } from "@/server/middleware/rateLimiter";
+import { validateCareerGuidanceInput } from "@/server/middleware/validator";
 import { saveQuizResult } from "@/services/db/firestoreService";
 
 const TAG = "api:career-guidance";

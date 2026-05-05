@@ -3,7 +3,7 @@
 // Format: { success: false, error: "message" }
 
 import { NextResponse } from "next/server";
-import { logger } from "./logger";
+import { logger } from "../logger";
 
 /**
  * Wraps an API route handler with standardized error handling.

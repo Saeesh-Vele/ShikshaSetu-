@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { withMiddleware } from "@/utils/apiMiddleware";
-import { chatbotLimiter } from "@/utils/rateLimiter";
+import { withMiddleware } from "@/server/middleware/apiMiddleware";
+import { chatbotLimiter } from "@/server/middleware/rateLimiter";
 import { handleChatbot } from "@/services/ai/aiController";
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 
 async function handler(req) {
   try {

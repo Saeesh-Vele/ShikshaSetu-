@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { withMiddleware } from "@/utils/apiMiddleware";
-import { evaluateLimiter } from "@/utils/rateLimiter";
+import { withMiddleware } from "@/server/middleware/apiMiddleware";
+import { evaluateLimiter } from "@/server/middleware/rateLimiter";
 import { handleEvaluate } from "@/services/ai/aiController";
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 
 async function handler(request) {
   let answers = [];

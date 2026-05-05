@@ -4,7 +4,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { onAuthStateChanged } from '@/lib/firebase/auth';
 import { logout } from '@/lib/firebase/auth';
-import { getUserProfile } from '@/lib/firebase/firestore';
+import { getUserProfile } from '@/lib/firebase/db/users';
 
 const FirebaseAuthContext = createContext({
   isLoaded: false,

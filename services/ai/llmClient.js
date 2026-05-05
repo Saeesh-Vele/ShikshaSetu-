@@ -15,7 +15,7 @@ import { AI_CONFIG } from "@/config/ai.config";
 import { isEnabled, getFlagValue } from "@/config/features";
 import { capTokens } from "@/services/analytics/usageTracker";
 import { recordModelUsage } from "@/services/observability/metricsCollector";
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 
 const TAG = "ai:llm-client";
 

@@ -12,7 +12,7 @@
 
 import { getQuizResults, getChatHistory } from "@/services/db/firestoreService";
 import { isEnabled, getFlagValue } from "@/config/features";
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 
 const TAG = "service:personalization";
 

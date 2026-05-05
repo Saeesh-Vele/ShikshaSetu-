@@ -1,3 +1,5 @@
+/** @typedef {{ name: string, lat: number, lon: number, type: string }} College */
+
 export const fetchColleges = async (lat, lon, radius = 10000) => {
   const response = await fetch(`/api/colleges?lat=${lat}&lon=${lon}&radius=${radius}`);
   if (!response.ok) {

@@ -1,3 +1,6 @@
+/** @typedef {import('@/types/career').CareerGuidanceResult} CareerGuidanceResult */
+/** @typedef {import('@/types/ai').CareerPredictionResult} CareerPredictionResult */
+
 import { authFetch } from "@/lib/firebase/authFetch";
 
 export const submitCareerAssessment = async (formattedAnswers) => {

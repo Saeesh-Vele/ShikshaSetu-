@@ -8,7 +8,7 @@ import { AI_CONFIG } from "@/config/ai.config";
 import { safeFetch, safeParse } from "../utils";
 import { sanitizeStreams, clampConfidence, getConfidenceLevel } from "./scoringEngine";
 import { sanitizeTraits } from "./traitAnalyzer";
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 
 const TAG = "pipeline:evaluate";
 

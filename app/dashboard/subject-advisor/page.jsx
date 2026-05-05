@@ -1,76 +1,25 @@
 "use client"
 
-import { useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { GraduationCap, ArrowLeft, Loader2 } from "lucide-react"
-import Link from "next/link"
-import { authFetch } from "@/lib/firebase/authFetch"
+import { ArrowLeft, Loader2 } from "lucide-react"
 
+import { useSubjectAdvisor } from "@/features/subject-advisor/hooks/useSubjectAdvisor"
 import ClassSelectionScreen from "@/features/subject-advisor/components/ClassSelectionScreen"
 import AITestScreen from "@/features/subject-advisor/components/AITestScreen"
 import ResultDashboard from "@/features/subject-advisor/components/ResultDashboard"
 
-// ─── STAGE ENUM ────────────────────────────────────────────────────────────────
-const STAGES = {
-  CLASS_SELECTION: "class_selection",
-  LOADING_QUESTIONS: "loading_questions",
-  AI_TEST: "ai_test",
-  RESULTS: "results",
-}
-
 export default function SubjectAdvisorPage() {
-  const [stage, setStage] = useState(STAGES.CLASS_SELECTION)
-  const [classLevel, setClassLevel] = useState(null) // "10th" | "12th"
-  const [questions, setQuestions] = useState([])
-  const [result, setResult] = useState(null)
-  const [loadError, setLoadError] = useState(null)
-
-  // ─── On class selected → fetch fixed questions (instant) ─────────────────────
-  const handleClassSelect = useCallback(async (selectedClass) => {
-    setClassLevel(selectedClass)
-    setStage(STAGES.LOADING_QUESTIONS)
-    setLoadError(null)
-
-    try {
-      const res = await authFetch("/api/subject-advisor/generate-questions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ classLevel: selectedClass }),
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to load questions")
-      }
-
-      if (!data.questions || data.questions.length === 0) {
-        throw new Error("No questions returned. Please try again.")
-      }
-
-      setQuestions(data.questions)
-      setStage(STAGES.AI_TEST)
-    } catch (err) {
-      console.error("Question fetch error:", err)
-      setLoadError(err.message || "Failed to load questions")
-      setStage(STAGES.CLASS_SELECTION)
-    }
-  }, [])
-
-  // ─── On quiz complete → show results ────────────────────────────────────────
-  const handleTestComplete = useCallback((aiResult) => {
-    setResult(aiResult)
-    setStage(STAGES.RESULTS)
-  }, [])
-
-  // ─── Reset entire flow ───────────────────────────────────────────────────────
-  const handleReset = useCallback(() => {
-    setStage(STAGES.CLASS_SELECTION)
-    setClassLevel(null)
-    setQuestions([])
-    setResult(null)
-    setLoadError(null)
-  }, [])
+  const {
+    stage,
+    classLevel,
+    questions,
+    result,
+    loadError,
+    handleClassSelect,
+    handleTestComplete,
+    handleReset,
+    STAGES,
+  } = useSubjectAdvisor()
 
   return (
     <div className="min-h-screen bg-background">

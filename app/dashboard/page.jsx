@@ -8,6 +8,7 @@ import {
   Zap, ChevronRight,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import FeatureFlag from "@/components/FeatureFlag"
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const quickLinks = [
@@ -119,8 +120,8 @@ export default function DashboardPage() {
         </div>
 
 
-
-        {/* ── CTA Hero Banner ── */}
+        {/* ── CTA Hero Banner (gated by ENABLE_SUBJECT_ADVISOR flag) ── */}
+        <FeatureFlag name="ENABLE_SUBJECT_ADVISOR">
         <div className="relative rounded-2xl overflow-hidden" style={{
           background: "linear-gradient(135deg, oklch(0.637 0.237 275) 0%, oklch(0.65 0.25 290) 60%, oklch(0.70 0.22 300) 100%)",
           boxShadow: "0 12px 40px oklch(0.637 0.237 275 / 0.40), 0 4px 12px oklch(0 0 0 / 0.3)",
@@ -163,6 +164,7 @@ export default function DashboardPage() {
             </Link>
           </div>
         </div>
+        </FeatureFlag>
 
         {/* ── Tools grid ── */}
         <div>

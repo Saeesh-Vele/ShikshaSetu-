@@ -17,7 +17,7 @@
 //   - Failed jobs are retried with exponential backoff (max 3 attempts)
 //   - Dead-lettered jobs are logged but not lost
 
-import { logger } from "@/utils/logger";
+import { logger } from "@/server/logger";
 import { isEnabled, getFlagValue } from "@/config/features";
 
 const TAG = "queue:jobs";

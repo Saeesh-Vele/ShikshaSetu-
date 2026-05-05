@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Brain, Loader2, ArrowLeft, ArrowRight, Sparkles, CheckCircle2, RotateCcw } from "lucide-react"
-import { authFetch } from "@/lib/firebase/authFetch"
+import { submitEvaluation } from "@/features/subject-advisor/services/subjectAdvisorApi"
 
 // ─── CATEGORY PILL COLORS ──────────────────────────────────────────────────────
 const CATEGORY_STYLES = {
@@ -53,15 +53,7 @@ export default function AITestScreen({ classLevel, questions, onComplete }) {
         category: q.category,
       }))
 
-      const res = await authFetch("/api/subject-advisor/evaluate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answers: formattedAnswers, classLevel }),
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) throw new Error(data.error || "Evaluation failed")
+      const data = await submitEvaluation({ answers: formattedAnswers, classLevel })
 
       onComplete(data.result)
     } catch (err) {

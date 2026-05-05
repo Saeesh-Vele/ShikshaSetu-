@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth, useUser, useProfile, SignOutButton } from '@/components/providers/FirebaseAuthProvider';
 import { isLoggingOut } from '@/lib/firebase/auth';
 import { Button } from "@/components/ui/button"
+import { isEnabled } from "@/config/features"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   GraduationCap,
@@ -67,12 +68,12 @@ export default function DashboardLayout({ children }) {
 
   const navItems = [
     { href: "/dashboard",                  label: "Overview",        icon: LayoutDashboard },
-    { href: "/dashboard/subject-advisor",  label: "Subject Advisor", icon: BookOpen },
-    { href: "/dashboard/college-explorer", label: "College Explorer",icon: GraduationCap },
-    { href: "/dashboard/career-outcomes",  label: "Career Outcomes", icon: TrendingUp },
+    { href: "/dashboard/subject-advisor",  label: "Subject Advisor", icon: BookOpen,       featureFlag: "ENABLE_SUBJECT_ADVISOR" },
+    { href: "/dashboard/college-explorer", label: "College Explorer",icon: GraduationCap,  featureFlag: "ENABLE_COLLEGE_EXPLORER" },
+    { href: "/dashboard/career-outcomes",  label: "Career Outcomes", icon: TrendingUp,     featureFlag: "ENABLE_CAREER_PREDICTION" },
     { href: "/dashboard/resources",        label: "Resources",       icon: Library },
     { href: "/dashboard/scholarships",     label: "Scholarships",    icon: DollarSign },
-  ];
+  ].filter((item) => !item.featureFlag || isEnabled(item.featureFlag));
 
   const NavItem = ({ href, label, icon: Icon, onClick }) => {
     const isActive = pathname === href;
