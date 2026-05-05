@@ -1,6 +1,7 @@
 // ─── API MIDDLEWARE ────────────────────────────────────────────────────────────
 // Composable middleware for Next.js API routes.
-// Provides: rate limiting, auth verification, request ID injection, latency tracking.
+// Provides: rate limiting, auth verification, request ID injection, latency tracking,
+//           usage guardrails, and observability metrics.
 //
 // Usage in routes:
 //   import { withMiddleware } from "@/utils/apiMiddleware";
@@ -9,6 +10,9 @@
 import { NextResponse } from "next/server";
 import { getClientIdentifier } from "./rateLimiter";
 import { logger } from "./logger";
+import { checkUsageLimits } from "@/services/analytics/usageTracker";
+import { recordRequest } from "@/services/observability/metricsCollector";
+import { isEnabled } from "@/config/features";
 
 /**
  * Generates a unique request ID for tracing.
@@ -52,19 +56,24 @@ function extractUserIdFromToken(request) {
  * @param {object} options
  * @param {object} [options.rateLimiter] - Rate limiter instance (from rateLimiter.js)
  * @param {boolean} [options.requireAuth=false] - Reject unauthenticated requests
+ * @param {boolean} [options.enforceUsageLimits=false] - Check daily AI usage limits
  * @returns {Function} Enhanced route handler
  */
-export function withMiddleware(handler, { rateLimiter = null, requireAuth = false } = {}) {
+export function withMiddleware(handler, { rateLimiter = null, requireAuth = false, enforceUsageLimits = false } = {}) {
   return async function (request, routeContext) {
     const requestId = generateRequestId();
     const startTime = Date.now();
     const clientIp = getClientIdentifier(request);
+
+    // Derive endpoint name from URL for metrics
+    const endpointName = new URL(request.url).pathname.replace("/api/", "");
 
     // ─── Rate Limiting ──────────────────────────────────────────
     if (rateLimiter) {
       const { allowed, remaining, resetMs } = rateLimiter.check(clientIp);
       if (!allowed) {
         logger.warn("middleware:rate-limit", "Request rejected", { requestId, clientIp });
+        recordRequest({ endpoint: endpointName, latencyMs: Date.now() - startTime, status: 429, error: true });
         return NextResponse.json(
           { success: false, error: "Too many requests. Please try again later." },
           {
@@ -87,10 +96,24 @@ export function withMiddleware(handler, { rateLimiter = null, requireAuth = fals
 
     if (requireAuth && !userId) {
       logger.warn("middleware:auth", "Unauthenticated request rejected", { requestId, clientIp });
+      recordRequest({ endpoint: endpointName, latencyMs: Date.now() - startTime, status: 401, error: true });
       return NextResponse.json(
         { success: false, error: "Authentication required" },
         { status: 401, headers: { "X-Request-Id": requestId } }
       );
+    }
+
+    // ─── Usage Limits (Phase 3) ─────────────────────────────────
+    if (enforceUsageLimits && userId && isEnabled("ENABLE_DAILY_LIMITS")) {
+      const { allowed, reason } = checkUsageLimits(userId);
+      if (!allowed) {
+        logger.warn("middleware:usage-limit", "Daily limit exceeded", { requestId, userId });
+        recordRequest({ endpoint: endpointName, latencyMs: Date.now() - startTime, status: 429, error: true });
+        return NextResponse.json(
+          { success: false, error: reason },
+          { status: 429, headers: { "X-Request-Id": requestId } }
+        );
+      }
     }
 
     // ─── Inject Context ─────────────────────────────────────────
@@ -113,6 +136,9 @@ export function withMiddleware(handler, { rateLimiter = null, requireAuth = fals
         status: response.status,
       });
 
+      // Record metrics
+      recordRequest({ endpoint: endpointName, latencyMs, status: response.status });
+
       // Inject tracking headers into the response
       response.headers.set("X-Request-Id", requestId);
       response.headers.set("X-Response-Time", `${latencyMs}ms`);
@@ -129,6 +155,9 @@ export function withMiddleware(handler, { rateLimiter = null, requireAuth = fals
         latencyMs,
         error: error.message,
       });
+
+      // Record error metric
+      recordRequest({ endpoint: endpointName, latencyMs, status: error.statusCode || 500, error: true });
 
       return NextResponse.json(
         { success: false, error: error.message || "Internal Server Error" },

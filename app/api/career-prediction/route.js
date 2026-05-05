@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { withMiddleware } from "@/utils/apiMiddleware";
 import { predictionLimiter } from "@/utils/rateLimiter";
-import { handleCareerPrediction } from "@/controllers/aiController";
+import { handleCareerPrediction } from "@/services/ai/aiController";
 import { logger } from "@/utils/logger";
 
 async function handler(request) {

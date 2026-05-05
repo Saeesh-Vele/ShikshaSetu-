@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { useAuth, useUser, useProfile } from '@/components/providers/FirebaseAuthProvider';
 import { isLoggingOut } from '@/lib/firebase/auth';
 import { getUserProfile, updateUserProfile } from '@/lib/firebase/firestore';
-import ProfileCard from "./components/ProfileCard";
-import EditableField from "./components/EditableField";
+import ProfileCard from "@/features/auth/components/ProfileCard";
+import EditableField from "@/features/auth/components/EditableField";
 import {
   User, Phone, MapPin, BookOpen, Percent,
   School, GraduationCap, Pencil, Save, X,

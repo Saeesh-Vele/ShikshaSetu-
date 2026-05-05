@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser, useProfile } from '@/components/providers/FirebaseAuthProvider';
 import { createUserProfile, userProfileExists } from '@/lib/firebase/firestore';
-import StepIndicator from "./components/StepIndicator";
-import InputField from "./components/InputField";
-import SelectField from "./components/SelectField";
+import StepIndicator from "@/features/onboarding/components/StepIndicator";
+import InputField from "@/features/onboarding/components/InputField";
+import SelectField from "@/features/onboarding/components/SelectField";
 import { GraduationCap, ArrowRight, ArrowLeft, CheckCircle2 } from "lucide-react";
 
 const C = {

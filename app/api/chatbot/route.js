@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { withMiddleware } from "@/utils/apiMiddleware";
 import { chatbotLimiter } from "@/utils/rateLimiter";
-import { handleChatbot } from "@/controllers/aiController";
+import { handleChatbot } from "@/services/ai/aiController";
 import { logger } from "@/utils/logger";
 
 async function handler(req) {

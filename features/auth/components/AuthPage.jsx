@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { login, signup, loginWithGoogle } from "@/lib/firebase/auth";
 import { userProfileExists } from "@/lib/firebase/firestore";
-import "@/styles/auth.css";
+import "@/app/auth.css";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // AuthPage — Sliding-panel login / signup with ShikshaSetu branding

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { withMiddleware } from "@/utils/apiMiddleware";
 import { evaluateLimiter } from "@/utils/rateLimiter";
-import { handleEvaluate } from "@/controllers/aiController";
+import { handleEvaluate } from "@/services/ai/aiController";
 import { logger } from "@/utils/logger";
 
 async function handler(request) {

@@ -6,9 +6,9 @@ import { GraduationCap, ArrowLeft, Loader2 } from "lucide-react"
 import Link from "next/link"
 import { authFetch } from "@/lib/firebase/authFetch"
 
-import ClassSelectionScreen from "./components/ClassSelectionScreen"
-import AITestScreen from "./components/AITestScreen"
-import ResultDashboard from "./components/ResultDashboard"
+import ClassSelectionScreen from "@/features/subject-advisor/components/ClassSelectionScreen"
+import AITestScreen from "@/features/subject-advisor/components/AITestScreen"
+import ResultDashboard from "@/features/subject-advisor/components/ResultDashboard"
 
 // ─── STAGE ENUM ────────────────────────────────────────────────────────────────
 const STAGES = {

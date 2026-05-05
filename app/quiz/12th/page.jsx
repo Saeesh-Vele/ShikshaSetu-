@@ -1,8 +1,8 @@
 "use client"
 import { useState } from "react";
 import Link from "next/link";
-import quizQuestions from "@/data/quiz-questions.json";
-import recommendedCourses from "@/data/recommended-courses.json";
+import quizQuestions from "@/features/career/data/quiz-questions.json";
+import recommendedCourses from "@/features/career/data/recommended-courses.json";
 
 export default function TwelfthQuizPage() {
   const [step, setStep] = useState(1); // 1: Subject, 2: Quiz, 3: Results
