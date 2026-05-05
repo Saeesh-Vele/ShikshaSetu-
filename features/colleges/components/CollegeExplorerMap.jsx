@@ -129,7 +129,7 @@ export default function CollegeExplorerMap({
   const targetLat = targetCoords?.[0];
   const targetLon = targetCoords?.[1];
 
-  const routeInfo = useRouteInfo(homeLat, homeLon, targetLat, targetLon);
+  const { routeInfo } = useRouteInfo(homeLat, homeLon, targetLat, targetLon);
 
   // Route path between home and selected college
   const routePath = routeInfo?.path || null;

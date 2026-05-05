@@ -4,10 +4,13 @@ import { calculateHaversineDistance } from "../utils/distanceCalculator";
 
 export function useRouteInfo(homeLat, homeLon, targetLat, targetLon) {
   const [routeInfo, setRouteInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (homeLat != null && homeLon != null && targetLat != null && targetLon != null) {
       let isMounted = true;
+      setLoading(true);
+
       const fetchRoute = async () => {
         try {
           const data = await fetchRouteData(homeLon, homeLat, targetLon, targetLat);
@@ -23,6 +26,8 @@ export function useRouteInfo(homeLat, homeLon, targetLat, targetLon) {
           if (isMounted) {
              setRouteInfo({ path: [[homeLat, homeLon], [targetLat, targetLon]], distance: calculateHaversineDistance(homeLat, homeLon, targetLat, targetLon) });
           }
+        } finally {
+          if (isMounted) setLoading(false);
         }
       };
 
@@ -33,8 +38,9 @@ export function useRouteInfo(homeLat, homeLon, targetLat, targetLon) {
       };
     } else {
       setRouteInfo(null);
+      setLoading(false);
     }
   }, [homeLat, homeLon, targetLat, targetLon]);
 
-  return routeInfo;
+  return { routeInfo, loading };
 }

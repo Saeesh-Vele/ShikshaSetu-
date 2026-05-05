@@ -241,7 +241,7 @@ export async function POST(request) {
 
     if (!classLevel || !["10th", "12th"].includes(classLevel)) {
       return NextResponse.json(
-        { error: "classLevel must be '10th' or '12th'" },
+        { error: "classLevel must be '10th' or '12th'", code: "VALIDATION_ERROR", timestamp: new Date().toISOString() },
         { status: 400 }
       );
     }
@@ -252,7 +252,7 @@ export async function POST(request) {
   } catch (error) {
     console.error("subject-advisor generate-questions error:", error);
     return NextResponse.json(
-      { error: "Internal server error", questions: [] },
+      { error: "Internal server error", code: "GENERATE_QUESTIONS_ERROR", timestamp: new Date().toISOString(), questions: [] },
       { status: 500 }
     );
   }

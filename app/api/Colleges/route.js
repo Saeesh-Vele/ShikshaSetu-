@@ -10,17 +10,31 @@ export async function GET() {
   try {
     return NextResponse.json(colleges);
   } catch (error) {
-    return NextResponse.json({ message: "Error fetching colleges" }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || "Failed to fetch colleges", code: "COLLEGES_FETCH_ERROR", timestamp: new Date().toISOString() },
+      { status: 500 }
+    );
   }
 }
 
 export async function POST(request) {
   try {
     const body = await request.json();
+
+    if (!body.name || !body.location) {
+      return NextResponse.json(
+        { error: "name and location are required", code: "VALIDATION_ERROR", timestamp: new Date().toISOString() },
+        { status: 400 }
+      );
+    }
+
     const newCollege = { id: colleges.length + 1, ...body };
     colleges.push(newCollege);
     return NextResponse.json(newCollege, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ message: "Error adding college" }, { status: 400 });
+    return NextResponse.json(
+      { error: error.message || "Failed to add college", code: "COLLEGES_CREATE_ERROR", timestamp: new Date().toISOString() },
+      { status: 400 }
+    );
   }
 }

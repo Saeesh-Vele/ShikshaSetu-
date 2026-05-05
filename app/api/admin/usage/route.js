@@ -33,7 +33,7 @@ export async function GET(request) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: error.message },
+      { error: error.message, code: "USAGE_ERROR", timestamp: new Date().toISOString() },
       { status: 500 }
     );
   }

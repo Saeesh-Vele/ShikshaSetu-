@@ -22,7 +22,7 @@ export async function GET() {
     return NextResponse.json(metrics, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: error.message },
+      { error: error.message, code: "METRICS_ERROR", timestamp: new Date().toISOString() },
       { status: 500 }
     );
   }

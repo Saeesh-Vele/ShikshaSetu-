@@ -101,5 +101,12 @@ const FIXED_QUESTIONS = [
 ];
 
 export async function GET() {
-  return NextResponse.json({ questions: FIXED_QUESTIONS, source: "fixed" });
+  try {
+    return NextResponse.json({ questions: FIXED_QUESTIONS, source: "fixed" });
+  } catch (error) {
+    return NextResponse.json(
+      { error: error.message || "Failed to load questions", code: "AI_QUESTIONS_ERROR", timestamp: new Date().toISOString() },
+      { status: 500 }
+    );
+  }
 }

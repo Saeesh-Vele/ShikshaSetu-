@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { fetchColleges } from "../services/collegeApi";
 import { calculateHaversineDistance } from "../utils/distanceCalculator";
 
@@ -6,13 +6,41 @@ export function useColleges(location, homeLocation, distanceFilter, searchQuery)
   const [colleges, setColleges] = useState([]);
   const [selectedColleges, setSelectedColleges] = useState([]);
   const [favoriteColleges, setFavoriteColleges] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const abortRef = useRef(null);
 
   useEffect(() => {
     if (!location) return;
     const [lat, lon] = location;
+
+    // Abort any in-flight request
+    if (abortRef.current) abortRef.current.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    setLoading(true);
+    setError(null);
+
     fetchColleges(lat, lon)
-      .then(setColleges)
-      .catch(console.error);
+      .then((data) => {
+        if (!controller.signal.aborted) {
+          setColleges(data);
+        }
+      })
+      .catch((err) => {
+        if (!controller.signal.aborted) {
+          console.error("College fetch error:", err);
+          setError(err.message || "Failed to load colleges");
+        }
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
+      });
+
+    return () => controller.abort();
   }, [location]);
 
   const toggleSelectCollege = (c) =>
@@ -61,5 +89,7 @@ export function useColleges(location, homeLocation, distanceFilter, searchQuery)
     favoriteColleges,
     toggleSelectCollege,
     toggleFavorite,
+    loading,
+    error,
   };
 }

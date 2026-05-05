@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { geocodeAddressQuery } from "../services/geocodingApi";
 
 export function useHomeLocation(onLocationSaved) {
@@ -6,6 +6,14 @@ export function useHomeLocation(onLocationSaved) {
   const [status, setStatus] = useState(""); // idle | saving | saved | error
   const [statusType, setStatusType] = useState("idle"); // idle | loading | success | error
   const [hasSavedLocation, setHasSavedLocation] = useState(false);
+  const statusTimerRef = useRef(null);
+
+  // Cleanup status timer on unmount
+  useEffect(() => {
+    return () => {
+      if (statusTimerRef.current) clearTimeout(statusTimerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem("homeLocation");
@@ -24,7 +32,10 @@ export function useHomeLocation(onLocationSaved) {
   const showStatus = (msg, type, duration = 4000) => {
     setStatus(msg);
     setStatusType(type);
-    if (duration > 0) setTimeout(() => { setStatus(""); setStatusType("idle"); }, duration);
+    if (statusTimerRef.current) clearTimeout(statusTimerRef.current);
+    if (duration > 0) {
+      statusTimerRef.current = setTimeout(() => { setStatus(""); setStatusType("idle"); }, duration);
+    }
   };
 
   const geocodeAddress = async (query) => {
