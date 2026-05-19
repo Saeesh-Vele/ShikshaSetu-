@@ -189,7 +189,7 @@ export default function DashboardLayout({ children }) {
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
+                className="w-full justify-start text-muted-foreground hover:text-foreground hover:bg-[var(--primary-subtle)]"
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 Sign Out
@@ -269,7 +269,7 @@ export default function DashboardLayout({ children }) {
                     <Button variant="outline" className="w-full">Profile</Button>
                   </Link>
                   <SignOutButton>
-                    <Button variant="ghost" className="flex-1 text-destructive hover:text-destructive hover:bg-destructive/10">
+                    <Button variant="ghost" className="flex-1 text-muted-foreground hover:text-foreground hover:bg-[var(--primary-subtle)]">
                       <LogOut className="h-4 w-4 mr-2" />
                       Sign Out
                     </Button>
