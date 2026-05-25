@@ -17,7 +17,8 @@ import {
   Menu,
   X,
   LayoutDashboard,
-  ChevronRight,
+  User,
+  Settings,
 } from "lucide-react"
 
 export default function DashboardLayout({ children }) {
@@ -81,39 +82,34 @@ export default function DashboardLayout({ children }) {
       <Link href={href} onClick={onClick}>
         <span
           className={[
-            "group flex items-center gap-3 px-3 py-2.5 rounded-[var(--radius-lg)]",
-            "text-sm font-medium transition-all duration-[var(--duration-fast)]",
-            "relative overflow-hidden",
+            "sidebar-nav-item group flex items-center gap-3 px-3 py-2.5 rounded-lg",
+            "text-[13px] font-medium transition-all duration-200 ease-out",
+            "relative",
             isActive
-              ? [
-                  "text-primary-foreground",
-                  "shadow-[var(--shadow-glow-sm)]",
-                ].join(" ")
-              : [
-                  "text-muted-foreground",
-                  "hover:text-foreground hover:bg-[var(--primary-subtle)]",
-                ].join(" "),
+              ? "sidebar-nav-active text-foreground"
+              : "text-[oklch(0.55_0.01_275)] hover:text-[oklch(0.85_0.01_275)] hover:bg-white/[0.03]",
           ].join(" ")}
-          style={
-            isActive
-              ? { background: "var(--gradient-primary)" }
-              : {}
-          }
         >
-          {/* Active indicator pill on left edge */}
-          {isActive && (
-            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-r-full bg-white/60" />
-          )}
-          <Icon
-            className={[
-              "h-4 w-4 shrink-0 transition-transform duration-[var(--duration-fast)]",
-              isActive ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground group-hover:scale-110",
-            ].join(" ")}
+          {/* Active indicator — thin left accent bar */}
+          <span
+            className="absolute left-0 top-[6px] bottom-[6px] w-[2px] rounded-full transition-all duration-300 ease-out"
+            style={{
+              background: isActive ? "oklch(0.70 0.20 275)" : "transparent",
+              opacity: isActive ? 1 : 0,
+              transform: isActive ? "scaleY(1)" : "scaleY(0.3)",
+            }}
           />
+          <span
+            className={[
+              "flex items-center justify-center h-7 w-7 rounded-md shrink-0 transition-all duration-200",
+              isActive
+                ? "bg-[oklch(0.637_0.237_275_/_0.15)] text-[oklch(0.75_0.20_275)]"
+                : "text-[oklch(0.45_0.01_275)] group-hover:text-[oklch(0.70_0.15_275)] group-hover:bg-white/[0.04]",
+            ].join(" ")}
+          >
+            <Icon className="h-[15px] w-[15px]" />
+          </span>
           <span className="flex-1">{label}</span>
-          {isActive && (
-            <ChevronRight className="h-3 w-3 opacity-60" />
-          )}
         </span>
       </Link>
     );
@@ -124,34 +120,40 @@ export default function DashboardLayout({ children }) {
 
       {/* ── Desktop Sidebar ── */}
       <aside
-        className="hidden md:flex flex-col w-64 sticky top-0 h-screen"
-        style={{
-          background: "var(--gradient-sidebar)",
-          borderRight: "1px solid var(--sidebar-border)",
-        }}
+        className="hidden md:flex flex-col w-[260px] sticky top-0 h-screen sidebar-container"
       >
-        {/* Logo */}
+        {/* Ambient decorative glow */}
         <div
-          className="h-16 flex items-center px-5"
-          style={{ borderBottom: "1px solid var(--sidebar-border)" }}
-        >
-          <Link href="/dashboard" className="flex items-center gap-2.5 group">
-            <div className="h-8 w-8 rounded-[var(--radius-lg)] flex items-center justify-center shadow-[var(--shadow-glow-sm)]"
-              style={{ background: "linear-gradient(135deg, oklch(0.637 0.237 275), oklch(0.65 0.25 290))", boxShadow: "0 0 14px oklch(0.637 0.237 275 / 0.40)" }}
+          className="absolute top-12 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full pointer-events-none"
+          style={{
+            background: "radial-gradient(circle, oklch(0.637 0.237 275 / 0.06) 0%, transparent 70%)",
+            filter: "blur(30px)",
+          }}
+        />
+
+        {/* Logo */}
+        <div className="h-[72px] flex items-center px-5 relative">
+          <Link href="/dashboard" className="flex items-center gap-3 group">
+            <div
+              className="h-9 w-9 rounded-xl flex items-center justify-center relative"
+              style={{
+                background: "linear-gradient(145deg, oklch(0.20 0.06 275), oklch(0.14 0.04 275))",
+                border: "1px solid oklch(0.30 0.08 275 / 0.5)",
+              }}
             >
-              <GraduationCap className="h-4 w-4 text-white" />
+              <GraduationCap className="h-[17px] w-[17px]" style={{ color: "oklch(0.75 0.20 275)" }} />
             </div>
-            <span className="font-bold text-lg text-foreground tracking-tight group-hover:text-primary transition-colors duration-[var(--duration-fast)]">
+            <span className="font-semibold text-[15px] text-foreground tracking-[-0.01em] group-hover:text-[oklch(0.80_0.15_275)] transition-colors duration-200">
               ShikshaSetu
             </span>
           </Link>
         </div>
 
+        {/* Subtle divider */}
+        <div className="mx-5 h-px" style={{ background: "linear-gradient(90deg, transparent, oklch(0.25 0.03 275 / 0.6), transparent)" }} />
+
         {/* Nav */}
-        <div className="flex-1 overflow-y-auto py-4 px-3">
-          <p className="px-3 mb-2 text-xs font-semibold uppercase tracking-[var(--tracking-wider)] text-muted-foreground/50">
-            Navigation
-          </p>
+        <div className="flex-1 overflow-y-auto pt-5 pb-4 px-3">
           <nav className="space-y-0.5">
             {navItems.map((item) => (
               <NavItem key={item.href} {...item} />
@@ -159,41 +161,60 @@ export default function DashboardLayout({ children }) {
           </nav>
         </div>
 
+        {/* Subtle divider */}
+        <div className="mx-5 h-px" style={{ background: "linear-gradient(90deg, transparent, oklch(0.25 0.03 275 / 0.6), transparent)" }} />
+
         {/* User footer */}
-        <div
-          className="p-4"
-          style={{ borderTop: "1px solid var(--sidebar-border)" }}
-        >
-          <div className="flex items-center gap-3 mb-3 px-1">
-            <Avatar className="h-8 w-8 shrink-0 ring-2 ring-primary/30">
-              <AvatarFallback
-                className="text-xs font-semibold text-primary-foreground"
-                style={{ background: "linear-gradient(135deg, oklch(0.637 0.237 275), oklch(0.65 0.25 290))" }}
-              >
-                {getInitials(displayName)}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold truncate text-foreground">{displayName}</p>
-              <p className="text-xs text-muted-foreground truncate">{displayEmail}</p>
+        <div className="p-4">
+          <div
+            className="rounded-xl p-3 mb-2"
+            style={{
+              background: "oklch(0.10 0.02 275 / 0.6)",
+              border: "1px solid oklch(0.20 0.03 275 / 0.4)",
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <Avatar className="h-9 w-9 shrink-0">
+                <AvatarFallback
+                  className="text-xs font-semibold"
+                  style={{
+                    background: "oklch(0.18 0.04 275)",
+                    color: "oklch(0.70 0.18 275)",
+                    border: "1px solid oklch(0.28 0.06 275 / 0.5)",
+                  }}
+                >
+                  {getInitials(displayName)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <p className="text-[13px] font-medium truncate text-foreground leading-tight">{displayName}</p>
+                <p className="text-[11px] truncate mt-0.5" style={{ color: "oklch(0.50 0.01 275)" }}>{displayEmail}</p>
+              </div>
             </div>
           </div>
 
-          <div className="space-y-1">
-            <Link href="/dashboard/profile" className="block">
-              <Button variant="outline" size="sm" className="w-full justify-start">
+          <div className="flex items-center gap-1 px-1">
+            <Link href="/dashboard/profile" className="flex-1">
+              <button
+                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] font-medium transition-all duration-200"
+                style={{ color: "oklch(0.55 0.01 275)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'oklch(1 0 0 / 0.04)'; e.currentTarget.style.color = 'oklch(0.80 0.01 275)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'oklch(0.55 0.01 275)'; }}
+              >
+                <User className="h-3.5 w-3.5" />
                 Profile
-              </Button>
+              </button>
             </Link>
             <SignOutButton>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-full justify-start text-muted-foreground hover:text-foreground hover:bg-[var(--primary-subtle)]"
+              <button
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] font-medium transition-all duration-200"
+                style={{ color: "oklch(0.45 0.01 275)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'oklch(0.60 0.20 30 / 0.1)'; e.currentTarget.style.color = 'oklch(0.65 0.20 30)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'oklch(0.45 0.01 275)'; }}
               >
-                <LogOut className="h-4 w-4 mr-2" />
-                Sign Out
-              </Button>
+                <LogOut className="h-3.5 w-3.5" />
+                Sign out
+              </button>
             </SignOutButton>
           </div>
         </div>
@@ -214,12 +235,15 @@ export default function DashboardLayout({ children }) {
         >
           <Link href="/dashboard" className="flex items-center gap-2">
             <div
-              className="h-7 w-7 rounded-[var(--radius-md)] flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, oklch(0.637 0.237 275), oklch(0.65 0.25 290))" }}
+              className="h-7 w-7 rounded-lg flex items-center justify-center"
+              style={{
+                background: "linear-gradient(145deg, oklch(0.20 0.06 275), oklch(0.14 0.04 275))",
+                border: "1px solid oklch(0.30 0.08 275 / 0.5)",
+              }}
             >
-              <GraduationCap className="h-3.5 w-3.5 text-white" />
+              <GraduationCap className="h-3.5 w-3.5" style={{ color: "oklch(0.75 0.20 275)" }} />
             </div>
-            <span className="font-bold text-base text-foreground">ShikshaSetu</span>
+            <span className="font-semibold text-base text-foreground">ShikshaSetu</span>
           </Link>
           <Button variant="ghost" size="icon-sm" onClick={() => setSidebarOpen(!sidebarOpen)}>
             {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -229,17 +253,10 @@ export default function DashboardLayout({ children }) {
         {/* Mobile sidebar overlay */}
         {sidebarOpen && (
           <div
-            className="md:hidden fixed inset-0 z-20 flex flex-col"
-            style={{
-              background: "var(--gradient-sidebar)",
-              borderRight: "1px solid var(--sidebar-border)",
-            }}
+            className="md:hidden fixed inset-0 z-20 flex flex-col sidebar-container"
           >
             <div className="pt-16 pb-4 h-full flex flex-col px-4 overflow-y-auto">
-              <p className="px-3 mt-4 mb-2 text-xs font-semibold uppercase tracking-[var(--tracking-wider)] text-muted-foreground/50">
-                Navigation
-              </p>
-              <nav className="space-y-0.5 flex-1">
+              <nav className="space-y-0.5 flex-1 mt-4">
                 {navItems.map((item) => (
                   <NavItem
                     key={item.href}
@@ -249,30 +266,53 @@ export default function DashboardLayout({ children }) {
                 ))}
               </nav>
 
-              <div className="mt-auto border-t pt-4" style={{ borderColor: "var(--sidebar-border)" }}>
-                <div className="flex items-center gap-3 mb-4 px-1">
-                  <Avatar className="h-10 w-10 ring-2 ring-primary/30">
-                    <AvatarFallback
-                      className="font-semibold text-primary-foreground"
-                      style={{ background: "linear-gradient(135deg, oklch(0.637 0.237 275), oklch(0.65 0.25 290))" }}
-                    >
-                      {getInitials(displayName)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold truncate">{displayName}</p>
-                    <p className="text-xs text-muted-foreground truncate">{displayEmail}</p>
+              <div className="mx-1 h-px my-3" style={{ background: "linear-gradient(90deg, transparent, oklch(0.25 0.03 275 / 0.6), transparent)" }} />
+
+              <div className="mt-auto pt-2">
+                <div
+                  className="rounded-xl p-3 mb-3"
+                  style={{
+                    background: "oklch(0.10 0.02 275 / 0.6)",
+                    border: "1px solid oklch(0.20 0.03 275 / 0.4)",
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <Avatar className="h-10 w-10">
+                      <AvatarFallback
+                        className="font-semibold"
+                        style={{
+                          background: "oklch(0.18 0.04 275)",
+                          color: "oklch(0.70 0.18 275)",
+                          border: "1px solid oklch(0.28 0.06 275 / 0.5)",
+                        }}
+                      >
+                        {getInitials(displayName)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium truncate">{displayName}</p>
+                      <p className="text-xs truncate mt-0.5" style={{ color: "oklch(0.50 0.01 275)" }}>{displayEmail}</p>
+                    </div>
                   </div>
                 </div>
                 <div className="flex gap-2">
                   <Link href="/dashboard/profile" className="flex-1" onClick={() => setSidebarOpen(false)}>
-                    <Button variant="outline" className="w-full">Profile</Button>
+                    <button
+                      className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200"
+                      style={{ color: "oklch(0.60 0.01 275)", border: "1px solid oklch(0.20 0.03 275 / 0.5)" }}
+                    >
+                      <User className="h-4 w-4" />
+                      Profile
+                    </button>
                   </Link>
                   <SignOutButton>
-                    <Button variant="ghost" className="flex-1 text-muted-foreground hover:text-foreground hover:bg-[var(--primary-subtle)]">
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Sign Out
-                    </Button>
+                    <button
+                      className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200"
+                      style={{ color: "oklch(0.45 0.01 275)" }}
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign out
+                    </button>
                   </SignOutButton>
                 </div>
               </div>

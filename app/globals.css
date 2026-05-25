@@ -641,6 +641,40 @@
     mask-composite: exclude;
     pointer-events: none;
   }
+
+  /* ── Sidebar ── */
+  .sidebar-container {
+    position: relative;
+    background: oklch(0.055 0.012 275);
+    border-right: 1px solid oklch(0.16 0.025 275 / 0.6);
+  }
+
+  /* Very subtle inner shadow at the right edge for depth */
+  .sidebar-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      oklch(0.637 0.237 275 / 0.08) 30%,
+      oklch(0.637 0.237 275 / 0.12) 50%,
+      oklch(0.637 0.237 275 / 0.08) 70%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .sidebar-nav-item {
+    border: 1px solid transparent;
+  }
+  .sidebar-nav-active {
+    background: oklch(0.637 0.237 275 / 0.08);
+    border-color: oklch(0.637 0.237 275 / 0.10);
+  }
 }
 
 /* ============================================================
