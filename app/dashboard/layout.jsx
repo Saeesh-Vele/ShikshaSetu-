@@ -116,11 +116,11 @@ export default function DashboardLayout({ children }) {
   };
 
   return (
-    <div className="min-h-screen flex bg-background">
+    <div className="h-screen flex bg-background overflow-hidden">
 
       {/* ── Desktop Sidebar ── */}
       <aside
-        className="hidden md:flex flex-col w-[260px] sticky top-0 h-screen sidebar-container"
+        className="hidden md:flex flex-col w-[260px] h-screen shrink-0 sidebar-container"
       >
         {/* Ambient decorative glow */}
         <div
@@ -221,7 +221,7 @@ export default function DashboardLayout({ children }) {
       </aside>
 
       {/* ── Main content ── */}
-      <div className="flex-1 flex flex-col min-h-screen max-w-full overflow-x-hidden">
+      <div className="flex-1 flex flex-col h-screen max-w-full overflow-y-auto overflow-x-hidden">
 
         {/* Mobile header */}
         <header
