@@ -753,6 +753,141 @@
 }
 
 /* ============================================================
+   SCHOLARSHIP SECTION — Animations & Interactive styles
+   ============================================================ */
+@keyframes scholarshipSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scholarshipSlideDown {
+  from { opacity: 0; transform: translateY(-12px) scaleY(0.96); }
+  to   { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+@keyframes scholarshipPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.6; }
+}
+
+@keyframes scholarshipCardShine {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Card hover interactions */
+.scholarship-card {
+  will-change: transform, box-shadow;
+}
+.scholarship-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow:
+    0 12px 40px oklch(0 0 0 / 0.4),
+    0 0 0 1px rgba(99, 102, 241, 0.15),
+    0 0 30px rgba(99, 102, 241, 0.08) !important;
+  border-color: rgba(99, 102, 241, 0.2) !important;
+}
+
+/* Slight shimmer on card hover */
+.scholarship-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.02) 45%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.02) 55%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.scholarship-card:hover::after {
+  opacity: 1;
+  animation: scholarshipCardShine 1.5s ease forwards;
+}
+
+/* Search input focus glow */
+.scholarship-search-input:focus {
+  border-color: rgba(99, 102, 241, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15), 0 0 20px rgba(99, 102, 241, 0.1) !important;
+}
+
+/* Stat card subtle hover */
+.scholarship-stat-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.scholarship-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px oklch(0 0 0 / 0.3);
+}
+
+/* Tip card hover */
+.scholarship-tip-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px oklch(0 0 0 / 0.3);
+}
+
+/* Apply button glow on hover */
+.scholarship-apply-btn:hover {
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.4), 0 0 60px rgba(99, 102, 241, 0.15) !important;
+  transform: translateY(-1px);
+}
+
+/* Toolbar buttons hover */
+.scholarship-toolbar-btn:hover {
+  filter: brightness(1.2);
+  transform: translateY(-1px);
+}
+
+/* Filter button active dot glow */
+.scholarship-filter-btn:hover {
+  border-color: rgba(99, 102, 241, 0.25) !important;
+  background: rgba(99, 102, 241, 0.06) !important;
+}
+
+/* Range input custom styling */
+.scholarship-range-input {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: rgba(255,255,255,0.08);
+  border-radius: var(--radius-full);
+  outline: none;
+}
+.scholarship-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #818cf8;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+  transition: transform 0.15s ease;
+}
+.scholarship-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Stats strip responsive */
+@media (max-width: 768px) {
+  .scholarship-stats-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 480px) {
+  .scholarship-stats-strip {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================================
    LEGACY BUTTON HOVER (keeping backwards compat)
    ============================================================ */
 @layer base {
