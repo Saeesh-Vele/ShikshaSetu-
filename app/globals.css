@@ -888,6 +888,89 @@
 }
 
 /* ============================================================
+   RESOURCE SECTION — Animations & Interactive styles
+   ============================================================ */
+
+/* Card hover interactions */
+.resource-card {
+  will-change: transform, box-shadow;
+}
+.resource-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow:
+    0 12px 40px oklch(0 0 0 / 0.4),
+    0 0 0 1px rgba(99, 102, 241, 0.15),
+    0 0 30px rgba(99, 102, 241, 0.08) !important;
+  border-color: rgba(99, 102, 241, 0.2) !important;
+}
+
+/* Slight shimmer on card hover */
+.resource-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.02) 45%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.02) 55%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.resource-card:hover::after {
+  opacity: 1;
+  animation: scholarshipCardShine 1.5s ease forwards;
+}
+
+/* Search input focus glow */
+.resource-search-input:focus {
+  border-color: rgba(99, 102, 241, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15), 0 0 20px rgba(99, 102, 241, 0.1) !important;
+}
+
+/* Stat card subtle hover */
+.resource-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px oklch(0 0 0 / 0.3);
+}
+
+/* Collection card hover */
+.resource-collection-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px oklch(0 0 0 / 0.3);
+}
+
+/* Toolbar button hover */
+.resource-toolbar-btn:hover {
+  filter: brightness(1.2);
+  transform: translateY(-1px);
+}
+
+/* Filter button hover */
+.resource-filter-btn:hover {
+  border-color: rgba(99, 102, 241, 0.25) !important;
+  background: rgba(99, 102, 241, 0.06) !important;
+}
+
+/* Stats strip responsive */
+@media (max-width: 768px) {
+  .resource-stats-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 480px) {
+  .resource-stats-strip {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================================
    LEGACY BUTTON HOVER (keeping backwards compat)
    ============================================================ */
 @layer base {
