@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowRight, GraduationCap, BookOpen, TrendingUp,
   Library, DollarSign, Sparkles, Brain, BarChart2,
   CheckCircle, ChevronRight, Target, Map, Zap,
+  Star, Users, Award,
 } from "lucide-react";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -72,10 +74,10 @@ const STEPS = [
 ];
 
 const STATS = [
-  { value: "10,000+", label: "Students Guided" },
-  { value: "1,200+",  label: "Colleges Listed"  },
-  { value: "500+",    label: "Career Paths"      },
-  { value: "Free",    label: "No Credit Card"    },
+  { value: "10,000+", label: "Students Guided", icon: Users },
+  { value: "1,200+",  label: "Colleges Listed",  icon: GraduationCap },
+  { value: "500+",    label: "Career Paths",      icon: TrendingUp },
+  { value: "Free",    label: "No Credit Card",    icon: Award },
 ];
 
 const TESTIMONIALS = [
@@ -83,16 +85,19 @@ const TESTIMONIALS = [
     quote: "Helped me pick Science with CS when everyone said Commerce. Now I'm at IIT Delhi.",
     name: "Aryan Sharma", role: "IIT Delhi, CSE", i: "A",
     accent: "oklch(0.637 0.237 275)", accentMid: "oklch(0.65 0.25 290)",
+    stars: 5,
   },
   {
     quote: "The scholarship finder saved me ₹2 lakh. I had no idea these opportunities even existed.",
     name: "Priya Iyer", role: "BITS Pilani, EEE", i: "P",
     accent: "oklch(0.65 0.25 290)", accentMid: "oklch(0.70 0.22 300)",
+    stars: 5,
   },
   {
     quote: "Like having a personal counsellor at 2 AM before my JEE exam — calm, accurate, instant.",
     name: "Rahul Nair", role: "NIT Trichy, Mechanical", i: "R",
     accent: "oklch(0.72 0.18 260)", accentMid: "oklch(0.637 0.237 275)",
+    stars: 5,
   },
 ];
 
@@ -108,6 +113,35 @@ const C = {
   mutedLo:  "oklch(0.42 0.03 275)",
 };
 
+// ─── Scroll reveal hook ───────────────────────────────────────────────────────
+function useReveal() {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    // Observe the container and all `.reveal` children
+    const reveals = el.querySelectorAll(".reveal");
+    reveals.forEach((r) => observer.observe(r));
+
+    return () => observer.disconnect();
+  }, []);
+
+  return ref;
+}
+
 // ─── Section label ────────────────────────────────────────────────────────────
 function Kicker({ icon: Icon, children }) {
   return (
@@ -116,6 +150,7 @@ function Kicker({ icon: Icon, children }) {
         width: 4, height: 20, borderRadius: 99,
         background: `linear-gradient(180deg, ${C.primary}, ${C.mid})`,
         flexShrink: 0,
+        boxShadow: `0 0 8px ${C.primary}`,
       }} />
       <span style={{
         display: "inline-flex", alignItems: "center", gap: 6,
@@ -147,28 +182,25 @@ function SectionHeading({ children }) {
 function FeatureCard({ icon: Icon, title, description, accent, accentMid }) {
   return (
     <div
-      className="group flex flex-col gap-5 p-6 rounded-2xl cursor-default relative overflow-hidden"
+      className="feature-card-glow group flex flex-col gap-5 p-6 rounded-2xl cursor-default"
       style={{
         background: C.card,
         backdropFilter: "blur(20px)",
         border: `1px solid ${C.border}`,
         boxShadow: "0 1px 8px oklch(0 0 0 / 0.30)",
-        transition: "transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease",
       }}
       onMouseEnter={e => {
         const el = e.currentTarget;
-        el.style.transform = "translateY(-3px)";
-        el.style.boxShadow = `0 8px 28px oklch(0 0 0 / 0.38), 0 0 0 1px ${accent.replace(")", " / 0.28)")}`;
-        el.style.borderColor = accent.replace(")", " / 0.38)");
+        el.style.boxShadow = `0 12px 40px oklch(0 0 0 / 0.38), 0 0 0 1px ${accent.replace(")", " / 0.25)")}, 0 0 30px ${accent.replace(")", " / 0.08)")}`;
+        el.style.borderColor = accent.replace(")", " / 0.35)");
       }}
       onMouseLeave={e => {
         const el = e.currentTarget;
-        el.style.transform = "translateY(0)";
         el.style.boxShadow = "0 1px 8px oklch(0 0 0 / 0.30)";
         el.style.borderColor = C.border;
       }}
     >
-      {/* Static shimmer top */}
+      {/* Shimmer top line */}
       <div style={{
         position: "absolute", inset: "0 0 auto",
         height: 1,
@@ -181,6 +213,7 @@ function FeatureCard({ icon: Icon, title, description, accent, accentMid }) {
         display: "flex", alignItems: "center", justifyContent: "center",
         background: `linear-gradient(135deg, ${accent.replace(")", " / 0.15)")}, ${accentMid.replace(")", " / 0.10)")})`,
         border: `1px solid ${accent.replace(")", " / 0.22)")}`,
+        boxShadow: `0 0 16px ${accent.replace(")", " / 0.12)")}`,
       }}>
         <Icon size={22} color={accent} strokeWidth={1.7} />
       </div>
@@ -206,7 +239,22 @@ function StepCard({ n, icon: Icon, title, body }) {
       backdropFilter: "blur(20px)",
       border: `1px solid ${C.border}`,
       boxShadow: "0 1px 8px oklch(0 0 0 / 0.28)",
-    }}>
+      transition: "transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease",
+      zIndex: 1,
+    }}
+    onMouseEnter={e => {
+      const el = e.currentTarget;
+      el.style.transform = "translateY(-4px)";
+      el.style.boxShadow = "0 12px 36px oklch(0 0 0 / 0.40), 0 0 0 1px oklch(0.637 0.237 275 / 0.15)";
+      el.style.borderColor = "oklch(0.637 0.237 275 / 0.25)";
+    }}
+    onMouseLeave={e => {
+      const el = e.currentTarget;
+      el.style.transform = "translateY(0)";
+      el.style.boxShadow = "0 1px 8px oklch(0 0 0 / 0.28)";
+      el.style.borderColor = C.border;
+    }}
+    >
       {/* Decorative step number — large watermark */}
       <div style={{
         position: "absolute", right: 20, top: 12,
@@ -236,6 +284,7 @@ function StepCard({ n, icon: Icon, title, body }) {
           display: "flex", alignItems: "center", justifyContent: "center",
           background: "oklch(0.637 0.237 275 / 0.12)",
           border: "1px solid oklch(0.637 0.237 275 / 0.22)",
+          boxShadow: "0 0 10px oklch(0.637 0.237 275 / 0.10)",
         }}>
           <Icon size={16} color={C.primary} strokeWidth={1.8} />
         </div>
@@ -256,17 +305,15 @@ function StepCard({ n, icon: Icon, title, body }) {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function HomePage() {
+  const pageRef = useReveal();
+
   return (
-    <div className="min-h-screen flex flex-col" style={{
+    <div ref={pageRef} className="min-h-screen flex flex-col page-enter" style={{
       background: "var(--background)",
-      backgroundImage: "radial-gradient(ellipse 90% 40% at 50% 0%, oklch(0.637 0.237 275 / 0.055) 0%, transparent 70%)",
     }}>
 
       {/* ══ NAV ══ */}
-      <nav className="sticky top-0 z-50" style={{
-        background: "oklch(0.04 0.01 275 / 0.82)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
+      <nav className="sticky top-0 z-50 nav-glass" style={{
         borderBottom: `1px solid ${C.border}`,
       }}>
         <div className="max-w-6xl mx-auto px-5 sm:px-6 flex justify-between items-center h-14">
@@ -276,7 +323,7 @@ export default function HomePage() {
               height: 30, width: 30, borderRadius: 10,
               display: "flex", alignItems: "center", justifyContent: "center",
               background: `linear-gradient(135deg, ${C.primary}, ${C.mid})`,
-              boxShadow: `0 0 14px oklch(0.637 0.237 275 / 0.38)`,
+              boxShadow: `0 0 14px oklch(0.637 0.237 275 / 0.38), 0 2px 8px oklch(0.637 0.237 275 / 0.25)`,
             }}>
               <GraduationCap size={15} color="white" />
             </div>
@@ -303,10 +350,16 @@ export default function HomePage() {
                 style={{
                   background: `linear-gradient(135deg, ${C.primary}, ${C.mid})`,
                   boxShadow: `0 2px 12px oklch(0.637 0.237 275 / 0.38)`,
-                  transition: "filter 0.15s ease",
+                  transition: "filter 0.15s ease, box-shadow 0.15s ease",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.filter = "brightness(1.12)")}
-                onMouseLeave={e => (e.currentTarget.style.filter = "none")}
+                onMouseEnter={e => {
+                  e.currentTarget.style.filter = "brightness(1.12)";
+                  e.currentTarget.style.boxShadow = `0 4px 20px oklch(0.637 0.237 275 / 0.55)`;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.filter = "none";
+                  e.currentTarget.style.boxShadow = `0 2px 12px oklch(0.637 0.237 275 / 0.38)`;
+                }}
               >
                 Get Started
                 <ArrowRight size={14} />
@@ -318,18 +371,20 @@ export default function HomePage() {
 
       {/* ══ HERO ══ */}
       <section className="relative py-24 md:py-36 px-5 text-center overflow-hidden">
-        {/* Soft centered desk glow */}
-        <div style={{
-          position: "absolute", top: "0%", left: "50%",
-          transform: "translateX(-50%)",
-          width: 760, height: 420, pointerEvents: "none",
-          background: "radial-gradient(ellipse at 50% 0%, oklch(0.637 0.237 275 / 0.13) 0%, transparent 68%)",
-          filter: "blur(4px)",
-        }} />
+        {/* Animated gradient mesh */}
+        <div className="hero-mesh" />
+
+        {/* Floating orbs */}
+        <div className="orb orb-1" />
+        <div className="orb orb-2" />
+        <div className="orb orb-3" />
+
+        {/* Dot grid pattern */}
+        <div className="dot-grid" />
 
         <div className="relative max-w-2xl mx-auto">
           {/* Kicker badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-7" style={{
+          <div className="reveal inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-7 badge-glow-pulse" style={{
             background: "oklch(0.637 0.237 275 / 0.08)",
             border: "1px solid oklch(0.637 0.237 275 / 0.28)",
           }}>
@@ -343,7 +398,7 @@ export default function HomePage() {
           </div>
 
           {/* Heading */}
-          <h1 style={{
+          <h1 className="reveal reveal-delay-1" style={{
             fontSize: "clamp(2.2rem, 6vw, 3.6rem)",
             fontWeight: 800,
             letterSpacing: "-0.04em",
@@ -352,17 +407,13 @@ export default function HomePage() {
             marginBottom: "1.35rem",
           }}>
             Make Smarter Decisions{" "}
-            <span style={{
-              background: `linear-gradient(135deg, ${C.primary} 0%, ${C.mid} 55%, ${C.blue} 100%)`,
-              WebkitBackgroundClip: "text", backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}>
+            <span className="shimmer-text">
               About Your Future
             </span>
           </h1>
 
           {/* Subtext */}
-          <p style={{
+          <p className="reveal reveal-delay-2" style={{
             fontSize: "1rem", lineHeight: 1.75,
             color: C.muted, maxWidth: "32rem", margin: "0 auto 2.4rem",
           }}>
@@ -371,22 +422,24 @@ export default function HomePage() {
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
+          <div className="reveal reveal-delay-3 flex flex-col sm:flex-row gap-3 justify-center mb-12">
             <Link href="/dashboard">
               <button
-                className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white active:scale-[0.97]"
+                className="pulse-ring inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white active:scale-[0.97]"
                 style={{
                   background: `linear-gradient(135deg, ${C.primary}, ${C.mid})`,
                   boxShadow: `0 4px 20px oklch(0.637 0.237 275 / 0.42)`,
-                  transition: "filter 0.15s ease, box-shadow 0.15s ease",
+                  transition: "filter 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease",
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.filter = "brightness(1.1)";
-                  e.currentTarget.style.boxShadow = `0 6px 28px oklch(0.637 0.237 275 / 0.55)`;
+                  e.currentTarget.style.boxShadow = `0 6px 32px oklch(0.637 0.237 275 / 0.60)`;
+                  e.currentTarget.style.transform = "translateY(-1px)";
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.filter = "none";
                   e.currentTarget.style.boxShadow = `0 4px 20px oklch(0.637 0.237 275 / 0.42)`;
+                  e.currentTarget.style.transform = "translateY(0)";
                 }}
               >
                 Start for Free
@@ -399,17 +452,19 @@ export default function HomePage() {
                 style={{
                   border: `1px solid ${C.border}`,
                   color: C.muted,
-                  transition: "border-color 0.15s ease, color 0.15s ease, background 0.15s ease",
+                  transition: "border-color 0.15s ease, color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease",
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.borderColor = "oklch(0.637 0.237 275 / 0.45)";
                   e.currentTarget.style.color = "var(--foreground)";
                   e.currentTarget.style.background = "oklch(0.637 0.237 275 / 0.06)";
+                  e.currentTarget.style.boxShadow = "0 0 20px oklch(0.637 0.237 275 / 0.08)";
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.borderColor = C.border;
                   e.currentTarget.style.color = C.muted;
                   e.currentTarget.style.background = "transparent";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               >
                 Sign In
@@ -418,13 +473,14 @@ export default function HomePage() {
           </div>
 
           {/* Stats strip */}
-          <div className="flex flex-wrap items-center justify-center gap-0">
-            {STATS.map(({ value, label }, i) => (
-              <div key={label} className="flex items-center">
+          <div className="reveal reveal-delay-4 flex flex-wrap items-center justify-center gap-0">
+            {STATS.map(({ value, label, icon: SIcon }, i) => (
+              <div key={label} className="flex items-center stat-pop">
                 {i > 0 && (
                   <div style={{ width: 1, height: 28, background: C.border, margin: "0 20px" }} />
                 )}
-                <div className="text-center">
+                <div className="text-center flex flex-col items-center">
+                  <SIcon size={14} color={C.primary} style={{ marginBottom: 4, opacity: 0.7 }} />
                   <div style={{
                     fontSize: "1.05rem", fontWeight: 800, letterSpacing: "-0.03em",
                     background: `linear-gradient(135deg, oklch(0.92 0.06 275), oklch(0.78 0.20 275))`,
@@ -445,21 +501,26 @@ export default function HomePage() {
 
       {/* ── Divider ── */}
       <div className="max-w-6xl mx-auto px-5 sm:px-6 w-full">
-        <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${C.border}, transparent)` }} />
+        <div className="divider-glow" style={{ height: 1 }} />
       </div>
 
       {/* ══ FEATURES ══ */}
-      <section className="py-20 md:py-24 px-5 sm:px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
+      <section className="py-20 md:py-24 px-5 sm:px-6 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div style={{
+          position: "absolute", top: "20%", left: "50%",
+          transform: "translateX(-50%)",
+          width: 600, height: 400, pointerEvents: "none",
+          background: "radial-gradient(ellipse at 50% 50%, oklch(0.637 0.237 275 / 0.04) 0%, transparent 60%)",
+          filter: "blur(20px)",
+        }} />
+
+        <div className="max-w-6xl mx-auto relative">
+          <div className="reveal mb-12">
             <Kicker icon={Sparkles}>Platform Features</Kicker>
             <SectionHeading>
               Everything You Need,{" "}
-              <span style={{
-                background: `linear-gradient(135deg, ${C.primary}, ${C.mid})`,
-                WebkitBackgroundClip: "text", backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}>
+              <span className="shimmer-text">
                 In One Place
               </span>
             </SectionHeading>
@@ -469,28 +530,28 @@ export default function HomePage() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {FEATURES.map((f) => <FeatureCard key={f.title} {...f} />)}
+            {FEATURES.map((f, i) => (
+              <div key={f.title} className={`reveal reveal-delay-${i < 6 ? i + 1 : 5}`}>
+                <FeatureCard {...f} />
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ── Divider ── */}
       <div className="max-w-6xl mx-auto px-5 sm:px-6 w-full">
-        <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${C.border}, transparent)` }} />
+        <div className="divider-glow" style={{ height: 1 }} />
       </div>
 
       {/* ══ HOW IT WORKS ══ */}
       <section className="py-20 md:py-24 px-5 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
+          <div className="reveal mb-12">
             <Kicker icon={Target}>How It Works</Kicker>
             <SectionHeading>
               From Assessment{" "}
-              <span style={{
-                background: `linear-gradient(135deg, ${C.primary}, ${C.mid})`,
-                WebkitBackgroundClip: "text", backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}>
+              <span className="shimmer-text">
                 to Action
               </span>
             </SectionHeading>
@@ -499,9 +560,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row items-stretch gap-3">
+          <div className="reveal reveal-delay-2 flex flex-col lg:flex-row items-stretch gap-3 steps-connector">
             {STEPS.map((s, i) => (
-              <div key={s.n} className="flex items-center gap-3 flex-1 min-w-0">
+              <div key={s.n} className="flex items-center gap-3 flex-1 min-w-0" style={{ zIndex: 1 }}>
                 <StepCard {...s} />
                 {i < STEPS.length - 1 && (
                   <div className="hidden lg:flex shrink-0">
@@ -516,13 +577,13 @@ export default function HomePage() {
 
       {/* ── Divider ── */}
       <div className="max-w-6xl mx-auto px-5 sm:px-6 w-full">
-        <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${C.border}, transparent)` }} />
+        <div className="divider-glow" style={{ height: 1 }} />
       </div>
 
       {/* ══ TESTIMONIALS ══ */}
       <section className="py-20 md:py-24 px-5 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
+          <div className="reveal mb-12">
             <Kicker icon={Sparkles}>Student Stories</Kicker>
             <SectionHeading>Trusted by Students Across India</SectionHeading>
             <p style={{ fontSize: "0.9rem", color: C.muted, lineHeight: 1.65, marginTop: "0.4rem" }}>
@@ -531,8 +592,8 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-3">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.name} className="relative flex flex-col gap-5 p-7 rounded-2xl overflow-hidden" style={{
+            {TESTIMONIALS.map((t, i) => (
+              <div key={t.name} className={`reveal reveal-delay-${i + 1} testimonial-card relative flex flex-col gap-5 p-7 rounded-2xl overflow-hidden`} style={{
                 background: C.card,
                 backdropFilter: "blur(20px)",
                 border: `1px solid ${C.border}`,
@@ -540,8 +601,8 @@ export default function HomePage() {
               }}>
                 {/* Top accent line */}
                 <div style={{
-                  position: "absolute", inset: "0 0 auto", height: 1,
-                  background: `linear-gradient(90deg, transparent, ${t.accent.replace(")", " / 0.35)")}, transparent)`,
+                  position: "absolute", inset: "0 0 auto", height: 2,
+                  background: `linear-gradient(90deg, transparent, ${t.accent.replace(")", " / 0.45)")}, transparent)`,
                 }} />
                 {/* Decorative quote */}
                 <div style={{
@@ -551,6 +612,13 @@ export default function HomePage() {
                   color: "oklch(0.637 0.237 275 / 0.07)",
                   userSelect: "none", pointerEvents: "none",
                 }}>"</div>
+
+                {/* Stars */}
+                <div className="flex gap-0.5">
+                  {Array.from({ length: t.stars }).map((_, si) => (
+                    <Star key={si} size={13} fill="oklch(0.80 0.20 85)" color="oklch(0.80 0.20 85)" />
+                  ))}
+                </div>
 
                 {/* Quote text */}
                 <p style={{ fontSize: "0.85rem", lineHeight: 1.7, color: "oklch(0.70 0.04 275)", flex: 1, position: "relative" }}>
@@ -581,39 +649,50 @@ export default function HomePage() {
 
       {/* ── Divider ── */}
       <div className="max-w-6xl mx-auto px-5 sm:px-6 w-full">
-        <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${C.border}, transparent)` }} />
+        <div className="divider-glow" style={{ height: 1 }} />
       </div>
 
       {/* ══ CTA ══ */}
-      <section className="py-20 md:py-24 px-5 sm:px-6">
+      <section className="py-20 md:py-24 px-5 sm:px-6 relative overflow-hidden">
         <div className="max-w-6xl mx-auto">
-          <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-8 p-10 md:p-14 rounded-2xl overflow-hidden" style={{
+          <div className="reveal animated-border relative flex flex-col md:flex-row md:items-center justify-between gap-8 p-10 md:p-14 rounded-2xl overflow-hidden" style={{
             background: C.card,
             backdropFilter: "blur(24px)",
-            border: `1px solid ${C.borderHi}`,
-            boxShadow: "0 4px 32px oklch(0 0 0 / 0.35)",
+            boxShadow: "0 4px 32px oklch(0 0 0 / 0.35), 0 0 60px oklch(0.637 0.237 275 / 0.06)",
           }}>
+            {/* Floating particles */}
+            <div className="particle particle-1" />
+            <div className="particle particle-2" />
+            <div className="particle particle-3" />
+            <div className="particle particle-4" />
+            <div className="particle particle-5" />
+
             {/* Left accent stripe */}
             <div style={{
               position: "absolute", left: 0, top: "15%", bottom: "15%",
               width: 3, borderRadius: 99,
               background: `linear-gradient(180deg, ${C.primary}, ${C.mid})`,
-              boxShadow: `0 0 12px ${C.primary}`,
+              boxShadow: `0 0 16px ${C.primary}, 0 0 32px oklch(0.637 0.237 275 / 0.25)`,
+              zIndex: 2,
             }} />
             {/* Shimmer top */}
             <div style={{
               position: "absolute", inset: "0 0 auto", height: 1,
               background: `linear-gradient(90deg, transparent, oklch(0.637 0.237 275 / 0.30), transparent)`,
+              zIndex: 2,
             }} />
-            {/* Subtle inner glow */}
+            {/* Ambient inner glow */}
             <div style={{
               position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-              background: "radial-gradient(ellipse 60% 80% at 0% 50%, oklch(0.637 0.237 275 / 0.05) 0%, transparent 65%)",
+              background: `
+                radial-gradient(ellipse 60% 80% at 0% 50%, oklch(0.637 0.237 275 / 0.06) 0%, transparent 65%),
+                radial-gradient(ellipse 40% 60% at 100% 30%, oklch(0.65 0.25 290 / 0.04) 0%, transparent 55%)
+              `,
               pointerEvents: "none",
             }} />
 
             {/* Left text */}
-            <div className="relative pl-4">
+            <div className="relative pl-4" style={{ zIndex: 2 }}>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: C.primary, marginBottom: 10 }}>
                 Get Started Free
               </p>
@@ -630,22 +709,24 @@ export default function HomePage() {
             </div>
 
             {/* Right buttons */}
-            <div className="relative flex flex-col sm:flex-row gap-3 shrink-0">
+            <div className="relative flex flex-col sm:flex-row gap-3 shrink-0" style={{ zIndex: 2 }}>
               <Link href="/sign-up">
                 <button
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white whitespace-nowrap active:scale-[0.97]"
+                  className="pulse-ring inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white whitespace-nowrap active:scale-[0.97]"
                   style={{
                     background: `linear-gradient(135deg, ${C.primary}, ${C.mid})`,
                     boxShadow: `0 4px 18px oklch(0.637 0.237 275 / 0.40)`,
-                    transition: "filter 0.14s ease, box-shadow 0.14s ease",
+                    transition: "filter 0.14s ease, box-shadow 0.14s ease, transform 0.14s ease",
                   }}
                   onMouseEnter={e => {
                     e.currentTarget.style.filter = "brightness(1.1)";
-                    e.currentTarget.style.boxShadow = `0 6px 26px oklch(0.637 0.237 275 / 0.52)`;
+                    e.currentTarget.style.boxShadow = `0 6px 30px oklch(0.637 0.237 275 / 0.58)`;
+                    e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.filter = "none";
                     e.currentTarget.style.boxShadow = `0 4px 18px oklch(0.637 0.237 275 / 0.40)`;
+                    e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
                   Create Free Account
@@ -658,17 +739,19 @@ export default function HomePage() {
                   style={{
                     border: `1px solid ${C.border}`,
                     color: C.muted,
-                    transition: "border-color 0.14s ease, color 0.14s ease, background 0.14s ease",
+                    transition: "border-color 0.14s ease, color 0.14s ease, background 0.14s ease, box-shadow 0.14s ease",
                   }}
                   onMouseEnter={e => {
                     e.currentTarget.style.borderColor = "oklch(0.637 0.237 275 / 0.42)";
                     e.currentTarget.style.color = "var(--foreground)";
                     e.currentTarget.style.background = "oklch(0.637 0.237 275 / 0.06)";
+                    e.currentTarget.style.boxShadow = "0 0 20px oklch(0.637 0.237 275 / 0.08)";
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.borderColor = C.border;
                     e.currentTarget.style.color = C.muted;
                     e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.boxShadow = "none";
                   }}
                 >
                   Sign In
@@ -687,6 +770,7 @@ export default function HomePage() {
               height: 24, width: 24, borderRadius: 8,
               display: "flex", alignItems: "center", justifyContent: "center",
               background: `linear-gradient(135deg, ${C.primary}, ${C.mid})`,
+              boxShadow: `0 0 8px oklch(0.637 0.237 275 / 0.25)`,
             }}>
               <GraduationCap size={13} color="white" />
             </div>
