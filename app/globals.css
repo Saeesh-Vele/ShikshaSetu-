@@ -971,6 +971,343 @@
 }
 
 /* ============================================================
+   LANDING PAGE — Premium Animations & Effects
+   ============================================================ */
+
+/* ── Scroll-triggered reveal animations ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.40s; }
+
+/* ── Hero animated gradient mesh background ── */
+@keyframes meshShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 50% at 20% 40%, oklch(0.637 0.237 275 / 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 80% 20%, oklch(0.65 0.25 290 / 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 70% at 50% 80%, oklch(0.72 0.18 260 / 0.06) 0%, transparent 50%);
+  background-size: 200% 200%;
+  animation: meshShift 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Floating ambient orbs ── */
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  33%      { transform: translate(60px, -40px) scale(1.15); opacity: 0.7; }
+  66%      { transform: translate(-30px, 20px) scale(0.9); opacity: 0.4; }
+}
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  33%      { transform: translate(-50px, 30px) scale(1.1); opacity: 0.6; }
+  66%      { transform: translate(40px, -35px) scale(0.95); opacity: 0.3; }
+}
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+  50%      { transform: translate(25px, 45px) scale(1.08); opacity: 0.55; }
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.orb-1 {
+  width: 400px; height: 400px;
+  background: oklch(0.637 0.237 275 / 0.18);
+  top: -10%; left: 10%;
+  animation: orbFloat1 16s ease-in-out infinite;
+}
+.orb-2 {
+  width: 350px; height: 350px;
+  background: oklch(0.65 0.25 290 / 0.14);
+  top: 20%; right: 5%;
+  animation: orbFloat2 20s ease-in-out infinite;
+}
+.orb-3 {
+  width: 280px; height: 280px;
+  background: oklch(0.72 0.18 260 / 0.12);
+  bottom: 0%; left: 40%;
+  animation: orbFloat3 14s ease-in-out infinite;
+}
+
+/* ── Subtle dot grid pattern ── */
+.dot-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(oklch(0.637 0.237 275 / 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Animated gradient border (for CTA card) ── */
+@keyframes borderGlow {
+  0%   { --border-angle: 0deg; }
+  100% { --border-angle: 360deg; }
+}
+
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.animated-border {
+  --border-angle: 0deg;
+  position: relative;
+  border: 1px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: borderGlow 4s linear infinite;
+}
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--border-angle),
+    oklch(0.637 0.237 275 / 0.05) 0deg,
+    oklch(0.637 0.237 275 / 0.50) 60deg,
+    oklch(0.65 0.25 290 / 0.50) 120deg,
+    oklch(0.72 0.18 260 / 0.30) 180deg,
+    oklch(0.637 0.237 275 / 0.05) 240deg,
+    oklch(0.65 0.25 290 / 0.50) 300deg,
+    oklch(0.637 0.237 275 / 0.05) 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Animated text shimmer for hero heading ── */
+@keyframes heroTextShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    oklch(0.75 0.20 275) 0%,
+    oklch(0.85 0.18 280) 25%,
+    oklch(0.90 0.25 290) 50%,
+    oklch(0.85 0.18 280) 75%,
+    oklch(0.75 0.20 275) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heroTextShimmer 4s ease-in-out infinite;
+}
+
+/* ── Feature card enhanced hover glow ── */
+.feature-card-glow {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease;
+}
+.feature-card-glow:hover {
+  transform: translateY(-5px) scale(1.01);
+}
+.feature-card-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    transparent 30%,
+    oklch(1 0 0 / 0.015) 45%,
+    oklch(1 0 0 / 0.04) 50%,
+    oklch(1 0 0 / 0.015) 55%,
+    transparent 70%
+  );
+  background-size: 250% 250%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.feature-card-glow:hover::after {
+  opacity: 1;
+  animation: scholarshipCardShine 1.8s ease forwards;
+}
+
+/* ── Steps connector line (desktop) ── */
+.steps-connector {
+  position: relative;
+}
+.steps-connector::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    oklch(0.637 0.237 275 / 0.25) 15%,
+    oklch(0.65 0.25 290 / 0.35) 50%,
+    oklch(0.637 0.237 275 / 0.25) 85%,
+    transparent 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── CTA floating particles ── */
+@keyframes particleDrift1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  10%      { opacity: 0.6; }
+  90%      { opacity: 0.6; }
+  50%      { transform: translate(80px, -120px) rotate(180deg); }
+}
+@keyframes particleDrift2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  10%      { opacity: 0.4; }
+  90%      { opacity: 0.4; }
+  50%      { transform: translate(-60px, -100px) rotate(270deg); }
+}
+@keyframes particleDrift3 {
+  0%, 100% { transform: translate(0, 0); opacity: 0; }
+  10%      { opacity: 0.5; }
+  90%      { opacity: 0.5; }
+  50%      { transform: translate(40px, -80px); }
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.particle-1 {
+  width: 4px; height: 4px;
+  background: oklch(0.637 0.237 275 / 0.7);
+  bottom: 20%; left: 15%;
+  animation: particleDrift1 8s ease-in-out infinite;
+  box-shadow: 0 0 6px oklch(0.637 0.237 275 / 0.4);
+}
+.particle-2 {
+  width: 3px; height: 3px;
+  background: oklch(0.65 0.25 290 / 0.6);
+  bottom: 30%; right: 20%;
+  animation: particleDrift2 10s ease-in-out infinite 2s;
+  box-shadow: 0 0 5px oklch(0.65 0.25 290 / 0.3);
+}
+.particle-3 {
+  width: 5px; height: 5px;
+  background: oklch(0.72 0.18 260 / 0.5);
+  bottom: 25%; left: 50%;
+  animation: particleDrift3 12s ease-in-out infinite 4s;
+  box-shadow: 0 0 8px oklch(0.72 0.18 260 / 0.3);
+}
+.particle-4 {
+  width: 2px; height: 2px;
+  background: oklch(0.637 0.237 275 / 0.8);
+  bottom: 40%; left: 30%;
+  animation: particleDrift1 9s ease-in-out infinite 1s;
+  box-shadow: 0 0 4px oklch(0.637 0.237 275 / 0.5);
+}
+.particle-5 {
+  width: 3px; height: 3px;
+  background: oklch(0.65 0.25 290 / 0.7);
+  bottom: 15%; right: 35%;
+  animation: particleDrift2 11s ease-in-out infinite 3s;
+  box-shadow: 0 0 6px oklch(0.65 0.25 290 / 0.4);
+}
+
+/* ── Testimonial card hover ── */
+.testimonial-card {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease;
+}
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px oklch(0 0 0 / 0.40),
+              0 0 0 1px oklch(0.637 0.237 275 / 0.15);
+  border-color: oklch(0.637 0.237 275 / 0.25) !important;
+}
+
+/* ── Stat counter animation ── */
+@keyframes statPop {
+  0%   { transform: scale(0.8); opacity: 0; }
+  60%  { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.stat-pop {
+  animation: statPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.stat-pop:nth-child(1) { animation-delay: 0.1s; }
+.stat-pop:nth-child(2) { animation-delay: 0.2s; }
+.stat-pop:nth-child(3) { animation-delay: 0.3s; }
+.stat-pop:nth-child(4) { animation-delay: 0.4s; }
+
+/* ── Nav glass with enhanced blur ── */
+.nav-glass {
+  background: oklch(0.04 0.01 275 / 0.75);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+}
+
+/* ── Pulsing glow ring for CTA button ── */
+@keyframes pulseRing {
+  0%   { box-shadow: 0 0 0 0 oklch(0.637 0.237 275 / 0.45); }
+  70%  { box-shadow: 0 0 0 12px oklch(0.637 0.237 275 / 0); }
+  100% { box-shadow: 0 0 0 0 oklch(0.637 0.237 275 / 0); }
+}
+.pulse-ring {
+  animation: pulseRing 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ── Hero badge glow pulse ── */
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 0 12px oklch(0.637 0.237 275 / 0.15), inset 0 0 4px oklch(0.637 0.237 275 / 0.05); }
+  50%      { box-shadow: 0 0 20px oklch(0.637 0.237 275 / 0.28), inset 0 0 8px oklch(0.637 0.237 275 / 0.08); }
+}
+.badge-glow-pulse {
+  animation: badgeGlow 3s ease-in-out infinite;
+}
+
+/* ── Ensure smooth page load ── */
+@keyframes pageLoad {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.page-enter {
+  animation: pageLoad 0.6s ease-out both;
+}
+
+/* ============================================================
    LEGACY BUTTON HOVER (keeping backwards compat)
    ============================================================ */
 @layer base {
