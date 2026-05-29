@@ -47,7 +47,7 @@ middleware.js         → Edge route protection (cookie-based auth guard)
    npm run dev
    ```
 
-## Architecture Rules
+## Architecture Rules (Important)
 
 - **Feature isolation:** Each feature lives in `features/<name>/` with `components/`, `hooks/`, `services/`, and `data/` subfolders. Cross-feature imports go through `index.js` barrel exports only.
 - **Client vs server boundary:** `features/*/services/` contains client-side fetch wrappers. `services/` (root) contains server-side logic called only from `app/api/` routes. Never import from `services/` or `server/` in client components.
