@@ -11,36 +11,63 @@ export default function CareerOutcomesPage() {
   const selectedCourse = courses.find((c) => c.id === selectedCourseId);
 
   return (
-    <div className="min-h-screen bg-background pb-20 relative">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-secondary/10 blur-[120px]" />
-      </div>
+    <div className="min-h-screen flex flex-col" style={{ background: "var(--background)" }}>
+      {/* ── Ambient glow ── */}
+      <div className="fixed inset-0 pointer-events-none" style={{
+        background: "radial-gradient(ellipse 80% 50% at 50% -10%, oklch(0.637 0.237 275 / 0.10) 0%, transparent 60%)",
+      }} />
+      <div className="fixed top-0 right-0 w-[500px] h-[500px] pointer-events-none" style={{
+        background: "radial-gradient(ellipse, oklch(0.65 0.25 290 / 0.06) 0%, transparent 70%)",
+        filter: "blur(60px)",
+      }} />
 
-      <main className="relative z-10 flex justify-center p-6 lg:p-10">
-        <div className="w-full max-w-6xl animate-fade-in">
-          {/* Header Section */}
-          <div className="flex flex-col items-center justify-center mb-10 text-center">
-            <div className="inline-flex items-center justify-center p-3 mb-5 rounded-2xl bg-primary/10 border border-primary/20 shadow-glow-sm">
-              <Map className="w-8 h-8 text-primary" />
-            </div>
-            <h1 className="heading-xl gradient-text mb-4">Career Pathways</h1>
-            <p className="body-lg text-muted-foreground max-w-2xl mx-auto">
-              Explore structured academic and professional journeys. Select a course below to map out your future career possibilities.
-            </p>
+      {/* ── Hero Header ── */}
+      <div className="relative px-4 pt-8 pb-6">
+        {/* Section badge */}
+        <div className="flex justify-center mb-4 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest" style={{
+            background: "oklch(0.637 0.237 275 / 0.10)",
+            border: "1px solid oklch(0.637 0.237 275 / 0.28)",
+            color: "oklch(0.78 0.18 275)",
+          }}>
+            <Map className="h-3 w-3" />
+            Career Outcomes
           </div>
+        </div>
 
-          {/* Controls Section */}
-          <div className="flex justify-center mb-10">
-            <div className="relative w-full max-w-md group">
+        <h1 className="text-3xl md:text-5xl font-bold text-center mb-3 tracking-tight animate-slide-up" style={{
+          background: "linear-gradient(135deg, oklch(0.96 0.005 275) 0%, oklch(0.78 0.18 275) 100%)",
+          WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent",
+        }}>
+          Career Pathways
+        </h1>
+        <p className="text-center text-muted-foreground max-w-xl mx-auto text-sm md:text-base mb-8 animate-slide-up" style={{ animationDelay: "100ms" }}>
+          Explore structured academic and professional journeys. Select a course below to map out your future career possibilities.
+        </p>
+
+        {/* Controls Section */}
+        <div className="max-w-md mx-auto flex items-center mb-6 animate-slide-up" style={{ animationDelay: "200ms" }}>
+            <div className="relative flex-1">
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <GraduationCap className="w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                <GraduationCap className="h-4 w-4 text-muted-foreground" />
               </div>
               <select
                 value={selectedCourseId}
                 onChange={(e) => setSelectedCourseId(Number(e.target.value))}
-                className="w-full appearance-none bg-card/50 backdrop-blur-xl border border-border/50 text-foreground text-base rounded-2xl py-4 pl-12 pr-12 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm cursor-pointer hover:bg-card/80"
+                className="w-full pl-11 pr-11 py-3 rounded-xl text-sm text-foreground focus:outline-none appearance-none transition-all duration-200 cursor-pointer hover:bg-card/80"
+                style={{
+                  background: "oklch(0.10 0.015 275 / 0.85)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid oklch(0.22 0.030 275)",
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = "oklch(0.637 0.237 275 / 0.50)";
+                  e.currentTarget.style.boxShadow = "0 0 0 3px oklch(0.637 0.237 275 / 0.15)";
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = "oklch(0.22 0.030 275)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
               >
                 {courses.map((course) => (
                   <option key={course.id} value={course.id} className="bg-card text-foreground">
@@ -49,21 +76,30 @@ export default function CareerOutcomesPage() {
                 ))}
               </select>
               <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                <ChevronDown className="w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                <ChevronDown className="h-4 w-4 text-muted-foreground" />
               </div>
             </div>
-          </div>
+        </div>
+      </div>
 
-          {/* Flowchart Section */}
-          <div className="glass-card p-2 md:p-6 shadow-xl relative overflow-hidden">
-             {/* Subtle Inner Glow */}
-             <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none rounded-xl" />
-             <div className="relative z-10">
-                <CourseFlowchart course={selectedCourse} />
-             </div>
+      {/* Flowchart Section */}
+      <div className="px-4 pb-12 flex-1 flex flex-col items-center animate-slide-up" style={{ animationDelay: "300ms" }}>
+        <div className="w-full max-w-6xl relative overflow-hidden rounded-2xl" style={{
+          border: "1px solid oklch(0.637 0.237 275 / 0.22)",
+          boxShadow: "0 8px 40px oklch(0 0 0 / 0.50), 0 0 30px oklch(0.637 0.237 275 / 0.08)",
+          background: "oklch(0.08 0.012 275 / 0.5)",
+          backdropFilter: "blur(12px)",
+        }}>
+          {/* shimmer top */}
+          <div className="absolute inset-x-0 top-0 h-px z-10 pointer-events-none" style={{
+            background: "linear-gradient(90deg, transparent, oklch(0.637 0.237 275 / 0.45), transparent)",
+          }} />
+
+          <div className="p-4 md:p-8 relative z-10 min-h-[500px]">
+             <CourseFlowchart course={selectedCourse} />
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }
